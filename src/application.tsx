@@ -1,13 +1,19 @@
 import { ConfigProvider, ThemeProvider } from 'musae'
-import Layout from './layout'
+import { ApolloProvider } from '@apollo/client'
+import { client } from './api'
+import { lazy } from 'react'
+
+const Outlet = lazy(() => import('@aiszlab/bee/router').then((router) => ({ default: router.Outlet })))
 
 const Application = () => {
   return (
-    <ConfigProvider>
-      <ThemeProvider>
-        <Layout />
-      </ThemeProvider>
-    </ConfigProvider>
+    <ApolloProvider client={client}>
+      <ConfigProvider>
+        <ThemeProvider>
+          <Outlet />
+        </ThemeProvider>
+      </ConfigProvider>
+    </ApolloProvider>
   )
 }
 

@@ -1,7 +1,13 @@
 import { bootstrap } from '@aiszlab/bee'
 import Application from './application'
 import './styles.css'
-import Home from './pages/home'
+import { lazy } from 'react'
+
+const Layout = lazy(() => import('./layout'))
+const Home = lazy(() => import('./pages/home'))
+const Articles = lazy(() => import('./pages/articles'))
+const Editable = lazy(() => import('./pages/article/editable'))
+const SignIn = lazy(() => import('./pages/sign-in'))
 
 bootstrap({
   selectors: '#root',
@@ -11,8 +17,31 @@ bootstrap({
       element: <Application />,
       children: [
         {
-          path: '/',
-          element: <Home />
+          path: '',
+          Component: Layout,
+          children: [
+            {
+              path: '',
+              Component: Home
+            },
+            {
+              path: '/articles',
+              children: [
+                {
+                  path: '',
+                  Component: Articles
+                },
+                {
+                  path: 'add',
+                  Component: Editable
+                }
+              ]
+            }
+          ]
+        },
+        {
+          path: '/sign-in',
+          Component: SignIn
         }
       ]
     }
