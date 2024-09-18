@@ -6,7 +6,7 @@ import { lazy } from 'react'
 const Layout = lazy(() => import('./layout'))
 const Home = lazy(() => import('./pages/home'))
 const Articles = lazy(() => import('./pages/articles'))
-const Editable = lazy(() => import('./pages/article/editable'))
+const Editable = lazy(() => import('./pages/articles/editable'))
 const SignIn = lazy(() => import('./pages/sign-in'))
 
 bootstrap({
