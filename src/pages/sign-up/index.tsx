@@ -2,9 +2,26 @@ import { useTheme, Form, Input, Checkbox, Button } from 'musae'
 import styles from './styles.module.css'
 import { clsx } from '@aiszlab/relax'
 import { KeyboardArrowLeft, KeyboardDoubleArrowRight } from 'musae/icons'
+import { useMutation } from '@apollo/client'
+import { SIGN_UP } from '../../api/authentication'
+import { useCallback } from 'react'
 
 const SignIn = () => {
   const theme = useTheme()
+  const [_login] = useMutation(SIGN_UP)
+
+  const login = useCallback(async () => {
+    const jwt = (
+      await _login({
+        variables: {
+          loginBy: {
+            who: '',
+            password: ''
+          }
+        }
+      }).catch(() => null)
+    )?.data?.login
+  }, [])
 
   return (
     <main className='h-screen w-screen flex flex-row'>

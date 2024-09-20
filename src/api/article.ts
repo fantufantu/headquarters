@@ -1,7 +1,7 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
-import { Article, CreateArticleBy } from './article.type'
+import type { Article, CreateArticleBy } from './article.type'
 
-export const GET_ARTICLES = gql`
+export const GET_ARTICLES: TypedDocumentNode<{ articles: Article[] }, void> = gql`
   query GetArticles {
     articles(filterBy: {}) {
       items {

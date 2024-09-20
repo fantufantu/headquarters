@@ -11,7 +11,7 @@ const Layout = () => {
   return (
     <Bench
       title='水番二土'
-      guidance='side'
+      layout='side'
       navigations={navigations}
       classNames={{
         main: 'px-10 pb-8'
