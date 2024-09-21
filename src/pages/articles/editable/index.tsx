@@ -1,8 +1,9 @@
-import { Form, RichTextEditor, Input, Button, Space } from 'musae'
+import { Form, RichTextEditor, Input, Button, Space, Select } from 'musae'
 import { useNavigate } from '@aiszlab/bee/router'
 import { useCallback } from 'react'
 import { useMutation } from '@apollo/client'
 import { CREATE_ARTICLE } from '../../../api/article'
+import { useCategories } from './hooks'
 
 interface FormValues {
   title: string
@@ -11,8 +12,9 @@ interface FormValues {
 
 const Editable = () => {
   const navigate = useNavigate()
-  const form = Form.useForm()
+  const form = Form.useForm<FormValues>()
   const [_mutate] = useMutation(CREATE_ARTICLE)
+  const { categoryOptions, onSearch } = useCategories()
 
   const back = useCallback(() => {
     navigate('..', { relative: 'path' })
@@ -39,6 +41,10 @@ const Editable = () => {
     <Form form={form}>
       <Form.Item name='title' label='标题' required>
         <Input className='w-full' />
+      </Form.Item>
+
+      <Form.Item name='categories' label='分类' required>
+        <Select mode='multiple' options={categoryOptions} searchable onSearch={onSearch} onFilter={false} />
       </Form.Item>
 
       <Form.Item name='content' label='正文'>

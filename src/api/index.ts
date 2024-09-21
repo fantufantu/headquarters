@@ -1,18 +1,28 @@
 import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client'
-import { createSelector } from '@reduxjs/toolkit'
 import { store } from '../storage'
+import { onError } from '@apollo/client/link/error'
+import { Notification } from 'musae'
 
 const client = new ApolloClient({
-  uri: '/graphql',
   cache: new InMemoryCache(),
+
   link: from([
+    onError(({ graphQLErrors, networkError }) => {
+      const errorMessage = graphQLErrors?.[0].message ?? networkError?.message
+      if (!errorMessage) return
+
+      Notification.error({
+        title: '接口调用异常！',
+        description: errorMessage
+      })
+    }),
     new HttpLink({
-      uri: 'http://localhost:4000/graphql',
+      uri: '/graphql',
       fetch: (uri, options) => {
-        const _token = store.getState().authentication.token
+        const _authenticated = store.getState().authentication.authenticated
         const _headers = new Headers(options?.headers)
 
-        _token && _headers.append('Authorization', _token)
+        _authenticated && _headers.append('Authorization', `Bearer ${_authenticated}`)
 
         return fetch(uri, {
           ...options,

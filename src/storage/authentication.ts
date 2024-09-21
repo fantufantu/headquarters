@@ -1,24 +1,37 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { Who } from '../api/authentication.type'
 import { client } from '../api'
 import { WHO_AM_I } from '../api/authentication'
+import { AuthenticationToken, StorageToken } from './tokens'
 
 interface Authentication {
-  token?: string | null
-  who?: Who
+  authenticated: string | null
+  me: Who | null
 }
 
+const whoAmI = createAsyncThunk(AuthenticationToken.WhoAmI, async () => {
+  const me = (await client.query({ query: WHO_AM_I }).catch(() => null))?.data.whoAmI ?? null
+  return me
+})
+
 const authentication = createSlice({
-  name: 'authentication',
+  name: StorageToken.Authentication,
   initialState: (): Authentication => ({
-    token: window.localStorage.getItem('')
+    authenticated: window.localStorage.getItem(AuthenticationToken.Authenticated),
+    me: null
   }),
   reducers: {
-    whoAmI: () => {
-      client.query({ query: WHO_AM_I })
+    authenticate: (state, { payload }: { payload: string }) => {
+      state.authenticated = payload
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(whoAmI.fulfilled, (state, action) => {
+      state.me = action.payload
+    })
   }
 })
 
-export const { whoAmI } = authentication.actions
+export const { authenticate } = authentication.actions
+export { whoAmI }
 export default authentication.reducer

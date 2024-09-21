@@ -4,8 +4,8 @@ import './styles.css'
 import { lazy } from 'react'
 import 'musae/styles.css'
 import { store } from './storage'
+import Layout, { loader } from './layout'
 
-const Layout = lazy(() => import('./layout'))
 const Home = lazy(() => import('./pages/home'))
 const Articles = lazy(() => import('./pages/articles'))
 const Editable = lazy(() => import('./pages/articles/editable'))
@@ -15,43 +15,39 @@ const SignUp = lazy(() => import('./pages/sign-up'))
 bootstrap({
   selectors: '#root',
   store,
+  render: Application,
   routes: [
     {
       path: '/',
-      element: <Application />,
+      Component: Layout,
+      loader,
       children: [
         {
           path: '',
-          Component: Layout,
+          Component: Home
+        },
+        {
+          path: '/articles',
           children: [
             {
               path: '',
-              Component: Home
+              Component: Articles
             },
             {
-              path: '/articles',
-              children: [
-                {
-                  path: '',
-                  Component: Articles
-                },
-                {
-                  path: 'add',
-                  Component: Editable
-                }
-              ]
+              path: 'add',
+              Component: Editable
             }
           ]
-        },
-        {
-          path: '/sign-in',
-          Component: SignIn
-        },
-        {
-          path: '/sign-up',
-          Component: SignUp
         }
       ]
+    },
+    {
+      path: '/sign-in',
+      Component: SignIn
+    },
+    {
+      path: '/sign-up',
+      Component: SignUp
     }
   ]
 })

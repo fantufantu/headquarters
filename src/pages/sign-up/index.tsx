@@ -5,22 +5,46 @@ import { KeyboardArrowLeft, KeyboardDoubleArrowRight } from 'musae/icons'
 import { useMutation } from '@apollo/client'
 import { SIGN_UP } from '../../api/authentication'
 import { useCallback } from 'react'
+import { useWho } from '../../hooks/authentication.hooks'
+import { AuthenticationToken } from '../../storage/tokens'
+import { useNavigate } from '@aiszlab/bee/router'
+
+interface FormValues {
+  who: string
+  password: string
+  isRememberMe?: boolean
+}
 
 const SignIn = () => {
   const theme = useTheme()
   const [_login] = useMutation(SIGN_UP)
+  const form = Form.useForm<FormValues>()
+  const { whoAmI } = useWho()
+  const navigate = useNavigate()
 
+  // 用户登录
   const login = useCallback(async () => {
-    const jwt = (
+    const isValid = await form.trigger()
+    if (!isValid) return
+
+    const { isRememberMe, ...loginBy } = form.getValues()
+    const _authenticated = (
       await _login({
         variables: {
-          loginBy: {
-            who: '',
-            password: ''
-          }
+          loginBy
         }
       }).catch(() => null)
     )?.data?.login
+
+    if (!_authenticated) return
+
+    await whoAmI(_authenticated)
+    ;(isRememberMe ? window.localStorage : window.sessionStorage).setItem(
+      AuthenticationToken.Authenticated,
+      _authenticated
+    )
+
+    navigate('/')
   }, [])
 
   return (
@@ -73,16 +97,16 @@ const SignIn = () => {
           <section className='mt-28'>
             <h3 className='text-2xl font-bold'>Create your Account</h3>
 
-            <Form className='mt-10'>
-              <Form.Item label='Email Address or username'>
+            <Form className='mt-10' form={form}>
+              <Form.Item label='Email Address or username' required name='who'>
                 <Input className='w-full' />
               </Form.Item>
 
-              <Form.Item label='Password'>
+              <Form.Item label='Password' required name='password'>
                 <Input type='password' className='w-full' />
               </Form.Item>
 
-              <Form.Item className='flex items-center justify-between'>
+              <Form.Item className='flex items-center justify-between' name='isRememberMe'>
                 <Checkbox>Remember me</Checkbox>
                 <a
                   className='text-xs font-semibold'
@@ -96,7 +120,7 @@ const SignIn = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button className='w-52' suffix={<KeyboardDoubleArrowRight />}>
+                <Button className='w-52' suffix={<KeyboardDoubleArrowRight />} onClick={login}>
                   Sign In
                 </Button>
               </Form.Item>

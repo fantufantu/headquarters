@@ -1,4 +1,4 @@
-import { NavigationItem } from 'musae'
+import type { NavigationItem } from 'musae/types/bench'
 import { useMemo } from 'react'
 
 /**
