@@ -1,25 +1,23 @@
-import { Form, RichTextEditor, Input, Button, Space, Select, useNotification, useMessage } from 'musae'
+import { Form, RichTextEditor, Input, Button, Space, Select, useMessage, Loading } from 'musae'
 import { useNavigate } from '@aiszlab/bee/router'
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 import { useMutation } from '@apollo/client'
-import { CREATE_ARTICLE } from '../../../api/article'
-import { useCategories } from './hooks'
-
-interface FormValues {
-  title: string
-  content: string
-  categories: string[]
-}
+import { CREATE_ARTICLE, UPDATE_ARTICLE } from '../../../api/article'
+import { useArticle, useCategories } from './hooks'
+import { type FormValues } from './hooks'
+import { CreateArticleBy } from '../../../api/article.type'
 
 const Editable = () => {
   const navigate = useNavigate()
   const form = Form.useForm<FormValues>()
-  const [_mutate] = useMutation(CREATE_ARTICLE)
+  const [create] = useMutation(CREATE_ARTICLE)
+  const [update] = useMutation(UPDATE_ARTICLE)
   const { categoryOptions, onSearch } = useCategories()
   const [messager] = useMessage()
+  const { isLoading, article, id } = useArticle({ form })
 
   const back = useCallback(() => {
-    navigate('..', { relative: 'path' })
+    navigate('/articles')
   }, [])
 
   const submit = useCallback(async () => {
@@ -27,22 +25,34 @@ const Editable = () => {
     if (!isValid) return
 
     const { categories, ..._values } = form.getValues()
+    const _article: CreateArticleBy = {
+      ..._values,
+      categoryCodes: categories.map((_category) => _category.value.toString())
+    }
 
-    const _article = (
-      await _mutate({
-        variables: {
-          createBy: {
-            ..._values,
-            categoryCodes: categories.map((_category) => _category)
+    const isSucceed = !!id
+      ? await update({
+          variables: {
+            id,
+            updateBy: _article
           }
-        }
-      })
-    ).data?.createArticle
+        })
+      : !!(
+          await create({
+            variables: {
+              createBy: _article
+            }
+          })
+        ).data?.createArticle
 
-    if (!_article) return
+    if (!isSucceed) return
     messager.success({ description: '文章编辑成功' })
     back()
   }, [])
+
+  if (isLoading) {
+    return <Loading loading className='min-h-96' />
+  }
 
   return (
     <Form form={form}>
@@ -51,20 +61,11 @@ const Editable = () => {
       </Form.Item>
 
       <Form.Item name='categories' label='分类' required>
-        <Select
-          mode='multiple'
-          options={categoryOptions}
-          searchable
-          onSearch={onSearch}
-          onFilter={false}
-          onChange={(_) => {
-            console.log(_)
-          }}
-        />
+        <Select complex mode='multiple' options={categoryOptions} searchable onSearch={onSearch} onFilter={false} />
       </Form.Item>
 
       <Form.Item name='content' label='正文'>
-        <RichTextEditor />
+        <RichTextEditor defaultValue={article?.content} use='markdown' />
       </Form.Item>
 
       <Form.Item>

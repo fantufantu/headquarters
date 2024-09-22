@@ -1,3 +1,5 @@
+import { Category } from './category.type'
+
 /**
  * @description
  * article
@@ -9,6 +11,7 @@ export interface Article {
   title: string
   content: string
   cover: string
+  categories?: Category[]
 }
 
 /**
@@ -21,3 +24,9 @@ export interface CreateArticleBy {
   cover?: string
   categoryCodes: string[]
 }
+
+/**
+ * @description
+ * 更新文章实体
+ */
+export type UpdateArticleBy = Partial<CreateArticleBy>

@@ -36,6 +36,10 @@ bootstrap({
             {
               path: 'add',
               Component: Editable
+            },
+            {
+              path: 'edit/:id',
+              Component: Editable
             }
           ]
         }
