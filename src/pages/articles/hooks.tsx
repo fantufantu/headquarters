@@ -1,4 +1,3 @@
-import { Table } from 'musae'
 import { useMemo } from 'react'
 import type { Article } from '../../api/article.type'
 import { Link } from '@aiszlab/bee/router'

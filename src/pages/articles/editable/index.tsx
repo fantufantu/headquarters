@@ -1,6 +1,6 @@
 import { Form, RichTextEditor, Input, Button, Space, Select, useMessage, Loading } from 'musae'
 import { useNavigate } from '@aiszlab/bee/router'
-import { useCallback, useRef } from 'react'
+import { useCallback } from 'react'
 import { useMutation } from '@apollo/client'
 import { CREATE_ARTICLE, UPDATE_ARTICLE } from '../../../api/article'
 import { useArticle, useCategories } from './hooks'

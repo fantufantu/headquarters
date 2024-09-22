@@ -2,7 +2,7 @@ import { Table, Button, Pagination, Loading } from 'musae'
 import { Article } from '../../api/article.type'
 import { useColumns } from './hooks'
 import { useNavigate } from '@aiszlab/bee/router'
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_ARTICLES } from '../../api/article'
 
