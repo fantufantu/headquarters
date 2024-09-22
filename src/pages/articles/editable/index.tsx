@@ -1,4 +1,4 @@
-import { Form, RichTextEditor, Input, Button, Space, Select } from 'musae'
+import { Form, RichTextEditor, Input, Button, Space, Select, useNotification, useMessage } from 'musae'
 import { useNavigate } from '@aiszlab/bee/router'
 import { useCallback } from 'react'
 import { useMutation } from '@apollo/client'
@@ -8,6 +8,7 @@ import { useCategories } from './hooks'
 interface FormValues {
   title: string
   content: string
+  categories: string[]
 }
 
 const Editable = () => {
@@ -15,6 +16,7 @@ const Editable = () => {
   const form = Form.useForm<FormValues>()
   const [_mutate] = useMutation(CREATE_ARTICLE)
   const { categoryOptions, onSearch } = useCategories()
+  const [messager] = useMessage()
 
   const back = useCallback(() => {
     navigate('..', { relative: 'path' })
@@ -24,17 +26,22 @@ const Editable = () => {
     const isValid = await form.trigger()
     if (!isValid) return
 
-    const values = form.getValues()
+    const { categories, ..._values } = form.getValues()
 
-    const _created = await _mutate({
-      variables: {
-        createBy: {
-          title: '1',
-          content: '2',
-          categoryCodes: ['java-script']
+    const _article = (
+      await _mutate({
+        variables: {
+          createBy: {
+            ..._values,
+            categoryCodes: categories.map((_category) => _category)
+          }
         }
-      }
-    })
+      })
+    ).data?.createArticle
+
+    if (!_article) return
+    messager.success({ description: '文章编辑成功' })
+    back()
   }, [])
 
   return (
@@ -44,7 +51,16 @@ const Editable = () => {
       </Form.Item>
 
       <Form.Item name='categories' label='分类' required>
-        <Select mode='multiple' options={categoryOptions} searchable onSearch={onSearch} onFilter={false} />
+        <Select
+          mode='multiple'
+          options={categoryOptions}
+          searchable
+          onSearch={onSearch}
+          onFilter={false}
+          onChange={(_) => {
+            console.log(_)
+          }}
+        />
       </Form.Item>
 
       <Form.Item name='content' label='正文'>

@@ -22,7 +22,7 @@ export const GET_ARTICLES: TypedDocumentNode<{ articles: Article[] }, void> = gq
  */
 export const CREATE_ARTICLE: TypedDocumentNode<
   {
-    createEssay: Article
+    createArticle: Article
   },
   {
     createBy: CreateArticleBy
