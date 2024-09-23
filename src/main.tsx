@@ -8,6 +8,7 @@ import Layout, { loader } from './layout'
 
 const Home = lazy(() => import('./pages/home'))
 const Articles = lazy(() => import('./pages/articles'))
+const Categories = lazy(() => import('./pages/categories'))
 const Editable = lazy(() => import('./pages/articles/editable'))
 const SignIn = lazy(() => import('./pages/sign-in'))
 const SignUp = lazy(() => import('./pages/sign-up'))
@@ -42,6 +43,10 @@ bootstrap({
               Component: Editable
             }
           ]
+        },
+        {
+          path: '/categories',
+          Component: Categories
         }
       ]
     },

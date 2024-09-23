@@ -1,13 +1,13 @@
 import { useLazyQuery, useQuery } from '@apollo/client'
 import { GET_CATEGORIES } from '../../../api/category'
 import { usePagination } from '../../../hooks/pagination.hooks'
-import { type RefObject, useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import type { Option } from 'musae/types/option'
 import { useParams } from '@aiszlab/bee/router'
 import { GET_ARTICLE_BY_ID } from '../../../api/article'
 import { useMounted } from '@aiszlab/relax'
 import { UsedForm } from 'musae/types/form'
-import type { RichTextEditorRef } from 'musae/types/rich-text-editor'
+import { useCategories as _useCategories } from '../../../hooks/category.hooks'
 
 export interface FormValues {
   title: string
@@ -20,16 +20,7 @@ export interface FormValues {
  * categories
  */
 export const useCategories = () => {
-  const { page, onPageChange, onPageSizeChange, pageSize } = usePagination()
-
-  const { data: { articleCategories: { items: categories = [] } = {} } = {}, refetch } = useQuery(GET_CATEGORIES, {
-    variables: {
-      paginateBy: {
-        limit: pageSize,
-        page
-      }
-    }
-  })
+  const { categories, onPageChange, onPageSizeChange, onSearch, page } = _useCategories()
 
   const categoryOptions = useMemo<Option[]>(() => {
     return categories.map((_category) => {
@@ -39,14 +30,6 @@ export const useCategories = () => {
       }
     })
   }, [categories])
-
-  const onSearch = useCallback((_keyword: string) => {
-    refetch({
-      filterBy: {
-        keyword: _keyword
-      }
-    })
-  }, [])
 
   return {
     categories,
