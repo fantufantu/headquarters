@@ -20,8 +20,7 @@ const Articles = () => {
           page,
           limit: pageSize
         }
-      },
-      fetchPolicy: 'no-cache'
+      }
     }
   )
 

@@ -6,6 +6,12 @@ import { Notification } from 'musae'
 const client = new ApolloClient({
   cache: new InMemoryCache(),
 
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'network-only'
+    }
+  },
+
   link: from([
     onError(({ graphQLErrors, networkError }) => {
       const errorMessage = graphQLErrors?.[0].message ?? networkError?.message
