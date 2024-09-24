@@ -15,6 +15,10 @@ export const useNavigations = () => {
       {
         path: '/articles',
         label: '文章管理'
+      },
+      {
+        path: '/categories',
+        label: '分类管理'
       }
     ]
   }, [])

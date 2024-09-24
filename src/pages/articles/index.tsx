@@ -5,13 +5,25 @@ import { useNavigate } from '@aiszlab/bee/router'
 import { useCallback } from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_ARTICLES } from '../../api/article'
+import { usePagination } from '../../hooks/pagination.hooks'
 
 const Articles = () => {
   const columns = useColumns()
   const navigate = useNavigate()
 
-  const { loading, data: { articles: { items: articles } } = { articles: { items: [], total: 0 } } } =
-    useQuery(GET_ARTICLES)
+  const { page, onPageChange, onPageSizeChange, pageSize } = usePagination()
+  const { loading, data: { articles: { items: articles } } = { articles: { items: [], total: 0 } } } = useQuery(
+    GET_ARTICLES,
+    {
+      variables: {
+        paginateBy: {
+          page,
+          limit: pageSize
+        }
+      },
+      fetchPolicy: 'no-cache'
+    }
+  )
 
   const toAdd = useCallback(() => {
     navigate('/articles/add')
@@ -25,7 +37,7 @@ const Articles = () => {
 
       <Table<Article> columns={columns} bordered dataSource={articles} />
 
-      <Pagination />
+      <Pagination at={page} pageSize={pageSize} onChange={onPageChange} onPageSizeChange={onPageSizeChange} />
     </Loading>
   )
 }

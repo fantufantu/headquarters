@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import type { Article } from '../../api/article.type'
-import { Link } from '@aiszlab/bee/router'
 import type { Column } from 'musae/types/table'
+import Link from '../../components/Link'
+import { Space, Popconfirm } from 'musae'
 
 /**
  * @description
@@ -22,7 +23,14 @@ export const useColumns = () => {
         key: 'opeartions',
         title: '操作',
         render: (_, { id }) => {
-          return <Link to={`/articles/edit/${id}`}>编辑</Link>
+          return (
+            <Space>
+              <Link to={`/articles/edit/${id}`}>编辑</Link>
+              <Popconfirm title='确定删除吗？' content='删除后不可恢复'>
+                <span>删除</span>
+              </Popconfirm>
+            </Space>
+          )
         }
       }
     ]

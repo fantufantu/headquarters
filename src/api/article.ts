@@ -1,10 +1,15 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
 import type { Article, CreateArticleBy, UpdateArticleBy } from './article.type'
-import { Paginated } from './pagination.type'
+import type { PaginateBy, Paginated } from './pagination.type'
 
-export const GET_ARTICLES: TypedDocumentNode<{ articles: Paginated<Article> }, void> = gql`
-  query GetArticles {
-    articles(filterBy: {}) {
+export const GET_ARTICLES: TypedDocumentNode<
+  { articles: Paginated<Article> },
+  {
+    paginateBy?: PaginateBy
+  }
+> = gql`
+  query GetArticles($paginateBy: PaginateBy) {
+    articles(filterBy: {}, paginateBy: $paginateBy) {
       items {
         id
         title

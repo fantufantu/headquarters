@@ -2,7 +2,7 @@ import { bootstrap } from '@aiszlab/bee'
 import Application from './application'
 import './styles.css'
 import { lazy } from 'react'
-import 'musae/styles.css'
+import 'musae/styles'
 import { store } from './storage'
 import Layout, { loader } from './layout'
 

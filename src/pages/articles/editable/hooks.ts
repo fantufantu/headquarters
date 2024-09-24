@@ -47,7 +47,7 @@ export const useCategories = () => {
  */
 export const useArticle = ({ form }: { form: UsedForm<FormValues> }) => {
   const { id: _id = '' } = useParams<'id'>()
-  const [getArticle, { data }] = useLazyQuery(GET_ARTICLE_BY_ID)
+  const [getArticle, { data }] = useLazyQuery(GET_ARTICLE_BY_ID, { fetchPolicy: 'no-cache' })
   const [isLoading, setIsLoading] = useState(true)
   const id = _id ? +_id : null
 

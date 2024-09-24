@@ -22,7 +22,8 @@ export const useCategories = () => {
         limit: pageSize,
         page
       }
-    }
+    },
+    fetchPolicy: 'no-cache'
   })
 
   const onSearch = useCallback((_keyword: string) => {
