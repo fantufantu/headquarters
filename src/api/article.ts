@@ -85,3 +85,20 @@ export const UPDATE_ARTICLE: TypedDocumentNode<
     updateArticle(id: $id, updateBy: $updateBy)
   }
 `
+
+/**
+ * @description
+ * 根据id删除文章
+ */
+export const REMOVE_ARTICLE: TypedDocumentNode<
+  {
+    removeArticle: boolean
+  },
+  {
+    id: number
+  }
+> = gql`
+  mutation RemoveArticle($id: Int!) {
+    removeArticle(id: $id)
+  }
+`

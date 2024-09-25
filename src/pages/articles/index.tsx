@@ -3,12 +3,11 @@ import { Article } from '../../api/article.type'
 import { useColumns } from './hooks'
 import { useNavigate } from '@aiszlab/bee/router'
 import { useCallback } from 'react'
-import { useQuery } from '@apollo/client'
-import { GET_ARTICLES } from '../../api/article'
+import { useMutation, useQuery } from '@apollo/client'
+import { GET_ARTICLES, REMOVE_ARTICLE } from '../../api/article'
 import { usePagination } from '../../hooks/pagination.hooks'
 
 const Articles = () => {
-  const columns = useColumns()
   const navigate = useNavigate()
 
   const { page, onPageChange, onPageSizeChange, pageSize } = usePagination()
@@ -23,6 +22,10 @@ const Articles = () => {
       }
     }
   )
+
+  const columns = useColumns({
+    onPageChange
+  })
 
   const toAdd = useCallback(() => {
     navigate('/articles/add')
