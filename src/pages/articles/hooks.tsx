@@ -10,7 +10,7 @@ import { useMutation } from '@apollo/client'
  * @description
  * table columns
  */
-export const useColumns = ({ onPageChange }: { onPageChange: (page: number) => void }) => {
+export const useColumns = ({ refetch }: { refetch: () => void }) => {
   const navigate = useNavigate()
   const [_remove] = useMutation(REMOVE_ARTICLE)
   const [messager] = useMessage()
@@ -47,7 +47,7 @@ export const useColumns = ({ onPageChange }: { onPageChange: (page: number) => v
                   const isSucceed = (await _remove({ variables: { id } }).catch(() => null))?.data?.removeArticle
                   if (!isSucceed) return
                   messager.success({ description: '删除成功！' })
-                  onPageChange(1)
+                  refetch()
                 }}
               >
                 <Button variant='text' size='small'>

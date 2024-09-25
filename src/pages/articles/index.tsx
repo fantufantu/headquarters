@@ -3,28 +3,36 @@ import { Article } from '../../api/article.type'
 import { useColumns } from './hooks'
 import { useNavigate } from '@aiszlab/bee/router'
 import { useCallback } from 'react'
-import { useMutation, useQuery } from '@apollo/client'
-import { GET_ARTICLES, REMOVE_ARTICLE } from '../../api/article'
+import { useQuery } from '@apollo/client'
+import { GET_ARTICLES } from '../../api/article'
 import { usePagination } from '../../hooks/pagination.hooks'
+import { useEvent } from '@aiszlab/relax'
 
 const Articles = () => {
   const navigate = useNavigate()
 
   const { page, onPageChange, onPageSizeChange, pageSize } = usePagination()
-  const { loading, data: { articles: { items: articles } } = { articles: { items: [], total: 0 } } } = useQuery(
-    GET_ARTICLES,
-    {
-      variables: {
-        paginateBy: {
-          page,
-          limit: pageSize
-        }
+  const {
+    loading,
+    data: { articles: { items: articles } } = { articles: { items: [], total: 0 } },
+    refetch: _refetch
+  } = useQuery(GET_ARTICLES, {
+    variables: {
+      paginateBy: {
+        page,
+        limit: pageSize
       }
     }
-  )
+  })
+
+  const refetch = useEvent(() => {
+    const _page = 1
+    onPageChange(_page)
+    _refetch({ paginateBy: { page: _page, limit: pageSize } })
+  })
 
   const columns = useColumns({
-    onPageChange
+    refetch
   })
 
   const toAdd = useCallback(() => {
