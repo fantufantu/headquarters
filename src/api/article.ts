@@ -2,13 +2,13 @@ import { gql, TypedDocumentNode } from '@apollo/client'
 import type { Article, CreateArticleBy, UpdateArticleBy } from './article.type'
 import type { PaginateBy, Paginated } from './pagination.type'
 
-export const GET_ARTICLES: TypedDocumentNode<
+export const ARTICLES: TypedDocumentNode<
   { articles: Paginated<Article> },
   {
     paginateBy?: PaginateBy
   }
 > = gql`
-  query GetArticles($paginateBy: PaginateBy) {
+  query Articles($paginateBy: PaginateBy) {
     articles(filterBy: {}, paginateBy: $paginateBy) {
       items {
         id
@@ -48,7 +48,7 @@ export const CREATE_ARTICLE: TypedDocumentNode<
  * @description
  * 根据id查询文章
  */
-export const GET_ARTICLE_BY_ID: TypedDocumentNode<
+export const ARTICLE: TypedDocumentNode<
   {
     article: Article
   },
@@ -56,7 +56,7 @@ export const GET_ARTICLE_BY_ID: TypedDocumentNode<
     id: number
   }
 > = gql`
-  query GetArticle($id: Int!) {
+  query Article($id: Int!) {
     article(id: $id) {
       title
       content

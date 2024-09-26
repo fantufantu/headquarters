@@ -6,3 +6,8 @@ export interface Category {
 export interface FilterCategoriesBy {
   keyword?: string
 }
+
+export interface CreateCategoryBy {
+  code: string
+  name: string
+}

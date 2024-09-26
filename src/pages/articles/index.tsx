@@ -4,7 +4,7 @@ import { useColumns } from './hooks'
 import { useNavigate } from '@aiszlab/bee/router'
 import { useCallback } from 'react'
 import { useQuery } from '@apollo/client'
-import { GET_ARTICLES } from '../../api/article'
+import { ARTICLES } from '../../api/article'
 import { usePagination } from '../../hooks/pagination.hooks'
 import { useEvent } from '@aiszlab/relax'
 
@@ -16,7 +16,7 @@ const Articles = () => {
     loading,
     data: { articles: { items: articles } } = { articles: { items: [], total: 0 } },
     refetch: _refetch
-  } = useQuery(GET_ARTICLES, {
+  } = useQuery(ARTICLES, {
     variables: {
       paginateBy: {
         page,

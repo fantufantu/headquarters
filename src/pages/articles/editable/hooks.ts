@@ -1,13 +1,11 @@
-import { useLazyQuery, useQuery } from '@apollo/client'
-import { GET_CATEGORIES } from '../../../api/category'
-import { usePagination } from '../../../hooks/pagination.hooks'
-import { useCallback, useMemo, useState } from 'react'
+import { useLazyQuery } from '@apollo/client'
+import { useMemo, useState } from 'react'
 import type { Option } from 'musae/types/option'
 import { useParams } from '@aiszlab/bee/router'
-import { GET_ARTICLE_BY_ID } from '../../../api/article'
 import { useMounted } from '@aiszlab/relax'
 import { UsedForm } from 'musae/types/form'
 import { useCategories as _useCategories } from '../../../hooks/category.hooks'
+import { ARTICLE } from '../../../api/article'
 
 export interface FormValues {
   title: string
@@ -47,7 +45,7 @@ export const useCategories = () => {
  */
 export const useArticle = ({ form }: { form: UsedForm<FormValues> }) => {
   const { id: _id = '' } = useParams<'id'>()
-  const [getArticle, { data }] = useLazyQuery(GET_ARTICLE_BY_ID)
+  const [getArticle, { data }] = useLazyQuery(ARTICLE)
   const [isLoading, setIsLoading] = useState(true)
   const id = _id ? +_id : null
 
