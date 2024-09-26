@@ -25,13 +25,16 @@ export const useCategories = () => {
     }
   })
 
-  const onSearch = useCallback((_keyword: string) => {
-    refetch({
-      filterBy: {
-        keyword: _keyword
-      }
-    })
-  }, [])
+  const onSearch = useCallback(
+    (_keyword: string) => {
+      refetch({
+        filterBy: {
+          keyword: _keyword
+        }
+      })
+    },
+    [refetch]
+  )
 
   return {
     categories,

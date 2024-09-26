@@ -15,23 +15,26 @@ export const useWho = () => {
   const [notifier] = useNotification()
   const me = useSelector((store) => store.authentication.me)
 
-  const whoAmI = useCallback(async (authenticated?: string) => {
-    if (!authenticated) return
+  const whoAmI = useCallback(
+    async (authenticated?: string) => {
+      if (!authenticated) return
 
-    dispatch(authenticate(authenticated))
+      dispatch(authenticate(authenticated))
 
-    const _who = await dispatch(_whoAmI())
-      .unwrap()
-      .catch(() => null)
+      const _who = await dispatch(_whoAmI())
+        .unwrap()
+        .catch(() => null)
 
-    if (!_who) {
-      notifier.error({
-        title: '登录异常',
-        description: '系统繁忙！请重新登录！'
-      })
-      return
-    }
-  }, [])
+      if (!_who) {
+        notifier.error({
+          title: '登录异常',
+          description: '系统繁忙！请重新登录！'
+        })
+        return
+      }
+    },
+    [dispatch, notifier]
+  )
 
   return {
     me,
