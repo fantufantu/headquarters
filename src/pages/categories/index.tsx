@@ -17,8 +17,12 @@ const Categories = () => {
     total,
     refetch: _refetch
   } = useCategories()
-  const columns = useColumns()
+
   const ref = useRef<EditableDrawerRef>(null)
+
+  const columns = useColumns({
+    editableRef: ref
+  })
 
   const add = useEvent(() => {
     ref.current?.open()
