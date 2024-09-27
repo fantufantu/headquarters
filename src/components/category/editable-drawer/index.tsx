@@ -1,7 +1,7 @@
 import { Button, Drawer, Form, Input } from 'musae'
 import { useBoolean, useEvent } from '@aiszlab/relax'
 import { useLazyQuery, useMutation } from '@apollo/client'
-import { CREATE_CATEGORY, CATEGORY } from '../../../api/category'
+import { CREATE_CATEGORY, CATEGORY, UPDATE_CATEGORY } from '../../../api/category'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 
 interface FormValues {
@@ -13,11 +13,16 @@ export interface EditableDrawerRef {
   open: (id?: number) => void
 }
 
-const EditableDrawer = forwardRef<EditableDrawerRef>((_, ref) => {
+interface Props {
+  onSubmitted?: () => void | Promise<void>
+}
+
+const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, ref) => {
   const [isOpen, { turnOff, turnOn }] = useBoolean(false)
   const form = Form.useForm<FormValues>()
   const [refetch] = useLazyQuery(CATEGORY)
   const [create] = useMutation(CREATE_CATEGORY)
+  const [update] = useMutation(UPDATE_CATEGORY)
   const [id, setId] = useState<number>()
 
   useImperativeHandle(ref, () => {
@@ -48,21 +53,24 @@ const EditableDrawer = forwardRef<EditableDrawerRef>((_, ref) => {
     if (!isValid) return
 
     const _edited = form.getValues()
-    const isSucceed = !!(
-      await create({
-        variables: {
-          createArticleCategoryBy: _edited
-        }
-      })
-    ).data?.createArticleCategory
+    const isSucceed = !!id
+      ? update({ variables: { id, updateBy: _edited } })
+      : !!(
+          await create({
+            variables: {
+              createBy: _edited
+            }
+          })
+        ).data?.createArticleCategory
 
     if (!isSucceed) return
     turnOff()
+    await onSubmitted?.()
   })
 
   return (
     <Drawer open={isOpen} onClose={turnOff} title='编辑分类'>
-      <Form>
+      <Form form={form}>
         <Form.Item name='code' label='唯一标识' required>
           <Input />
         </Form.Item>

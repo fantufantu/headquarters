@@ -7,12 +7,26 @@ import { useRef } from 'react'
 import { useEvent } from '@aiszlab/relax'
 
 const Categories = () => {
-  const { categories, onPageChange, onPageSizeChange, page, isLoading, pageSize, total } = useCategories()
+  const {
+    categories,
+    onPageChange,
+    onPageSizeChange,
+    page,
+    isLoading,
+    pageSize,
+    total,
+    refetch: _refetch
+  } = useCategories()
   const columns = useColumns()
   const ref = useRef<EditableDrawerRef>(null)
 
   const add = useEvent(() => {
     ref.current?.open()
+  })
+
+  const refetch = useEvent(() => {
+    onPageChange(1)
+    _refetch({ paginateBy: { page: 1, limit: pageSize } })
   })
 
   return (
@@ -31,7 +45,7 @@ const Categories = () => {
         onPageSizeChange={onPageSizeChange}
       />
 
-      <EditableDrawer ref={ref} />
+      <EditableDrawer ref={ref} onSubmitted={refetch} />
     </Loading>
   )
 }

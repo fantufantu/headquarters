@@ -1,5 +1,5 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
-import type { Category, CreateCategoryBy, FilterCategoriesBy } from './category.type'
+import type { Category, CreateCategoryBy, FilterCategoriesBy, UpdateCategoryBy } from './category.type'
 import type { PaginateBy, Paginated } from './pagination.type'
 
 /**
@@ -49,13 +49,29 @@ export const CATEGORY: TypedDocumentNode<
 export const CREATE_CATEGORY: TypedDocumentNode<
   { createArticleCategory: Category },
   {
-    createArticleCategoryBy: CreateCategoryBy
+    createBy: CreateCategoryBy
   }
 > = gql`
-  mutation CreateCategory($code: String!, $name: String!) {
-    createArticleCategory(code: $code, name: $name) {
+  mutation CreateCategory($createBy: CreateArticleCategoryBy!) {
+    createArticleCategory(createBy: $createBy) {
       code
       name
     }
+  }
+`
+
+/**
+ * @description
+ * 更新分类
+ */
+export const UPDATE_CATEGORY: TypedDocumentNode<
+  { updateArticleCategory: Category },
+  {
+    id: number
+    updateBy: UpdateCategoryBy
+  }
+> = gql`
+  mutation UpdateCategory($id: Int!, $updateBy: UpdateArticleCategoryBy!) {
+    updateArticleCategory(id: $id, updateBy: $updateBy)
   }
 `

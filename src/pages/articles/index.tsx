@@ -37,7 +37,7 @@ const Articles = () => {
 
   const toAdd = useCallback(() => {
     navigate('/articles/add')
-  }, [])
+  }, [navigate])
 
   return (
     <Loading className='flex flex-col gap-4' loading={loading}>

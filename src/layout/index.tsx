@@ -1,7 +1,6 @@
 import { Bench } from 'musae'
 import { useNavigations } from './hooks'
-import { Outlet, redirect, useNavigate, useResolvedPath } from '@aiszlab/bee/router'
-import { store } from '../storage'
+import { Outlet, useNavigate, useResolvedPath } from '@aiszlab/bee/router'
 
 const Layout = () => {
   const navigations = useNavigations()
@@ -25,13 +24,3 @@ const Layout = () => {
 }
 
 export default Layout
-
-export const loader = () => {
-  const me = store.getState().authentication.me
-
-  if (!me) {
-    return redirect('/sign-up')
-  }
-
-  return null
-}

@@ -44,6 +44,7 @@ export const useCategories = () => {
     onPageSizeChange,
     onSearch,
     isLoading: loading,
-    total
+    total,
+    refetch
   }
 }

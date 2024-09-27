@@ -4,7 +4,8 @@ import './styles.css'
 import { lazy } from 'react'
 import 'musae/styles'
 import { store } from './storage'
-import Layout, { loader } from './layout'
+import Layout from './layout'
+import { redirect } from '@aiszlab/bee/router'
 
 const Home = lazy(() => import('./pages/home'))
 const Articles = lazy(() => import('./pages/articles'))
@@ -21,7 +22,12 @@ bootstrap({
     {
       path: '/',
       Component: Layout,
-      loader,
+      loader: () => {
+        if (!store.getState().authentication.me) {
+          return redirect('/sign-up')
+        }
+        return null
+      },
       children: [
         {
           path: '',
@@ -51,12 +57,23 @@ bootstrap({
       ]
     },
     {
-      path: '/sign-in',
-      Component: SignIn
-    },
-    {
-      path: '/sign-up',
-      Component: SignUp
+      path: '/',
+      loader: () => {
+        if (store.getState().authentication.me) {
+          return redirect('/')
+        }
+        return null
+      },
+      children: [
+        {
+          path: 'sign-in',
+          Component: SignIn
+        },
+        {
+          path: 'sign-up',
+          Component: SignUp
+        }
+      ]
     }
   ]
 })

@@ -18,7 +18,7 @@ const Editable = () => {
 
   const back = useCallback(() => {
     navigate('/articles')
-  }, [])
+  }, [navigate])
 
   const submit = useCallback(async () => {
     const isValid = await form.trigger()
@@ -48,7 +48,7 @@ const Editable = () => {
     if (!isSucceed) return
     messager.success({ description: '文章编辑成功' })
     back()
-  }, [])
+  }, [back, create, form, id, messager, update])
 
   if (isLoading) {
     return <Loading loading className='min-h-96' />
