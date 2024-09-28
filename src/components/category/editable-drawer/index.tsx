@@ -1,12 +1,14 @@
-import { Drawer, Form, Input } from 'musae'
+import { Drawer, Form, Input, Upload } from 'musae'
 import { useBoolean, useEvent } from '@aiszlab/relax'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { CREATE_CATEGORY, CATEGORY, UPDATE_CATEGORY } from '../../../api/category'
 import { forwardRef, useImperativeHandle, useState } from 'react'
+import { upload } from '../../../utils/upload'
 
 interface FormValues {
   code: string
   name: string
+  image: string
 }
 
 export interface EditableDrawerRef {
@@ -77,6 +79,10 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
 
         <Form.Item name='name' label='名称' required>
           <Input />
+        </Form.Item>
+
+        <Form.Item name='image' label='logo' required>
+          <Upload uploader={upload} />
         </Form.Item>
       </Form>
     </Drawer>
