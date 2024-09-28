@@ -1,4 +1,4 @@
-import { Button, Drawer, Form, Input } from 'musae'
+import { Drawer, Form, Input } from 'musae'
 import { useBoolean, useEvent } from '@aiszlab/relax'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { CREATE_CATEGORY, CATEGORY, UPDATE_CATEGORY } from '../../../api/category'
@@ -69,7 +69,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   })
 
   return (
-    <Drawer open={isOpen} onClose={turnOff} title='编辑分类'>
+    <Drawer open={isOpen} onClose={turnOff} title='编辑分类' onConfirm={submit}>
       <Form form={form}>
         <Form.Item name='code' label='唯一标识' required>
           <Input />
@@ -77,10 +77,6 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
 
         <Form.Item name='name' label='名称' required>
           <Input />
-        </Form.Item>
-
-        <Form.Item>
-          <Button onClick={submit}>提交</Button>
         </Form.Item>
       </Form>
     </Drawer>

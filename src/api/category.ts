@@ -16,6 +16,7 @@ export const GET_CATEGORIES: TypedDocumentNode<
   query Categories($filterBy: FilterArticleCategoriesBy, $paginateBy: PaginateBy) {
     articleCategories(filterBy: $filterBy, paginateBy: $paginateBy) {
       items {
+        id
         code
         name
       }
@@ -73,5 +74,15 @@ export const UPDATE_CATEGORY: TypedDocumentNode<
 > = gql`
   mutation UpdateCategory($id: Int!, $updateBy: UpdateArticleCategoryBy!) {
     updateArticleCategory(id: $id, updateBy: $updateBy)
+  }
+`
+
+/**
+ * @description
+ * 删除分类
+ */
+export const REMOVE_CATEGORY: TypedDocumentNode<{ removeArticleCategory: boolean }, { id: number }> = gql`
+  mutation RemoveCategory($id: Int!) {
+    removeArticleCategory(id: $id)
   }
 `

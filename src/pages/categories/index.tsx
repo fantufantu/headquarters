@@ -20,17 +20,18 @@ const Categories = () => {
 
   const ref = useRef<EditableDrawerRef>(null)
 
+  const refetch = useEvent(() => {
+    onPageChange(1)
+    _refetch({ paginateBy: { page: 1, limit: pageSize } })
+  })
+
   const columns = useColumns({
-    editableRef: ref
+    editableRef: ref,
+    refetch
   })
 
   const add = useEvent(() => {
     ref.current?.open()
-  })
-
-  const refetch = useEvent(() => {
-    onPageChange(1)
-    _refetch({ paginateBy: { page: 1, limit: pageSize } })
   })
 
   return (

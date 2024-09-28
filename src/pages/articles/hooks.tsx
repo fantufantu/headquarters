@@ -59,5 +59,5 @@ export const useColumns = ({ refetch }: { refetch: () => void }) => {
         }
       }
     ]
-  }, [])
+  }, [_remove, messager, navigate, refetch])
 }
