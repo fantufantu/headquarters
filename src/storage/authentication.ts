@@ -17,7 +17,7 @@ const whoAmI = createAsyncThunk(AuthenticationToken.WhoAmI, async () => {
   return {
     ...me,
     ...(!me.avatar && {
-      avatar: await random({ color: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}})` })
+      avatar: await random()
     })
   }
 })
