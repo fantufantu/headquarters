@@ -2,6 +2,7 @@ export interface Category {
   id: number
   code: string
   name: string
+  image: string
 }
 
 export interface FilterCategoriesBy {
@@ -11,6 +12,7 @@ export interface FilterCategoriesBy {
 export interface CreateCategoryBy {
   code: string
   name: string
+  image: string
 }
 
 export type UpdateCategoryBy = Partial<CreateCategoryBy>

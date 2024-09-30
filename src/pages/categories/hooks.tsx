@@ -27,6 +27,13 @@ export const useColumns = ({
         title: '名称'
       },
       {
+        valueAt: 'image',
+        title: 'logo',
+        render: (image) => {
+          return <img src={`https://${image}`} alt='logo' width={32} />
+        }
+      },
+      {
         key: 'actions',
         title: '操作',
         render: (_, { id }) => {

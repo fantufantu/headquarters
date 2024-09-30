@@ -3,6 +3,7 @@ import type { Who } from '../api/authentication.type'
 import { client } from '../api'
 import { WHO_AM_I } from '../api/authentication'
 import { AuthenticationToken, StorageToken } from './tokens'
+import { random } from '@aiszlab/fuzzy/dist/avatar'
 
 interface Authentication {
   authenticated: string | null
@@ -11,7 +12,14 @@ interface Authentication {
 
 const whoAmI = createAsyncThunk(AuthenticationToken.WhoAmI, async () => {
   const me = (await client.query({ query: WHO_AM_I }).catch(() => null))?.data.whoAmI ?? null
-  return me
+  if (!me) return null
+
+  return {
+    ...me,
+    ...(!me.avatar && {
+      avatar: await random({ color: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}})` })
+    })
+  }
 })
 
 const authentication = createSlice({

@@ -24,7 +24,7 @@ export const upload = async (file: File) => {
   const _uploaded = await _uploader.putObject({
     Bucket: credential.bucket,
     Region: credential.region,
-    Key: 'test-file',
+    Key: crypto.randomUUID(),
     Body: file
   })
 

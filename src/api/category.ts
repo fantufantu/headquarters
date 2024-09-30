@@ -19,6 +19,7 @@ export const GET_CATEGORIES: TypedDocumentNode<
         id
         code
         name
+        image
       }
       total
     }
@@ -39,6 +40,7 @@ export const CATEGORY: TypedDocumentNode<
     articleCategory(id: $id) {
       code
       name
+      image
     }
   }
 `
