@@ -1,7 +1,7 @@
 import { Bench, Avatar } from 'musae'
 import { useNavigations } from './hooks'
 import { Outlet, useNavigate, useResolvedPath } from '@aiszlab/bee/router'
-import { useSelector } from '../hooks/storage.hooks'
+import { useSelector } from '../../hooks/storage.hooks'
 
 const Layout = () => {
   const navigations = useNavigations()

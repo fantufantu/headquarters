@@ -4,7 +4,7 @@ import './styles.css'
 import { lazy } from 'react'
 import 'musae/styles'
 import { store } from './storage'
-import Layout from './layout'
+import Layout from './layouts/layout'
 import { redirect } from '@aiszlab/bee/router'
 
 const Home = lazy(() => import('./pages/home'))

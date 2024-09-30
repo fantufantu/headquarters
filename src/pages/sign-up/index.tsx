@@ -45,7 +45,7 @@ const SignIn = () => {
     )
 
     navigate('/')
-  }, [])
+  }, [_login, form, navigate, whoAmI])
 
   return (
     <main className='h-screen w-screen flex flex-row'>

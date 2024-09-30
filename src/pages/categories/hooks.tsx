@@ -1,6 +1,6 @@
-import { Column } from 'musae/types/table'
+import type { Column } from 'musae/types/table'
 import { useMemo, type RefObject } from 'react'
-import { Category } from '../../api/category.type'
+import type { Category } from '../../api/category.type'
 import { Button, Popconfirm, Space, useMessage } from 'musae'
 import { type EditableDrawerRef } from '../../components/category/editable-drawer'
 import { useMutation } from '@apollo/client'
