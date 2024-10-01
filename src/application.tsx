@@ -17,8 +17,8 @@ const Application = ({ children }: ApplicationProps) => {
   // 页面缓存中存在token，尝试换取用户信息
   // 再挂载页面内容
   useMounted(async () => {
-    // !!_authenticated && (await whoAmI(_authenticated))
-    // setIsLoading(false)
+    !!_authenticated && (await whoAmI(_authenticated))
+    setIsLoading(false)
   })
 
   return (
