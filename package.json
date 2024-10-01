@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@aiszlab/bee": "^1.4.2",
+    "@aiszlab/fuzzy": "^1.4.2",
     "@aiszlab/relax": "^1.4.2",
     "@apollo/client": "^3.11.8",
     "@reduxjs/toolkit": "^2.2.7",

@@ -3,7 +3,7 @@ import type { Who } from '../api/authentication.type'
 import { client } from '../api'
 import { WHO_AM_I } from '../api/authentication'
 import { AuthenticationToken, StorageToken } from './tokens'
-import { random } from '@aiszlab/fuzzy/dist/avatar'
+import { random } from '@aiszlab/fuzzy/avatar'
 
 interface Authentication {
   authenticated: string | null

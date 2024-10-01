@@ -11,6 +11,9 @@ importers:
       '@aiszlab/bee':
         specifier: ^1.4.2
         version: 1.4.2(@types/react@18.3.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@aiszlab/fuzzy':
+        specifier: ^1.4.2
+        version: 1.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@aiszlab/relax':
         specifier: ^1.4.2
         version: 1.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -65,6 +68,9 @@ packages:
     peerDependencies:
       react: '18'
       react-dom: '18'
+
+  '@aiszlab/fuzzy@1.4.2':
+    resolution: {integrity: sha512-MD/Ykthk+RDRweOyBk9njzo4IAZGU7HR7TnuemiCA2dKO4oKpu2HAFCgtkTHXjnYer5EgcghZkTW1xPRAkFXgw==}
 
   '@aiszlab/relax@1.4.2':
     resolution: {integrity: sha512-nmgZWVTtVKPY9BrSaPEBJHM3mTzKliKWnWfRvhoMwM1b1t677mU/yDGpD7F4tEiUB1yEVwByLUpVjMT2p642Jw==}
@@ -3065,6 +3071,14 @@ snapshots:
       redux: 5.0.1
     transitivePeerDependencies:
       - '@types/react'
+
+  '@aiszlab/fuzzy@1.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@aiszlab/relax': 1.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@babel/runtime': 7.25.6
+    transitivePeerDependencies:
+      - react
+      - react-dom
 
   '@aiszlab/relax@1.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
