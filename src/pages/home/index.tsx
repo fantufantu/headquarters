@@ -1,5 +1,4 @@
-import { Group } from '@visx/group'
-import ContributionCalendar from '../../components/contribution-calendar'
+import { ContributionCalendar } from 'musae'
 
 const Home = () => {
   return (
@@ -7,7 +6,7 @@ const Home = () => {
       <div>文章浏览量</div>
       <div>最近更新</div>
       <div>
-        <ContributionCalendar />
+        <ContributionCalendar year={2024} />
       </div>
 
       <div>想要更多数据分析，请提交工单</div>
