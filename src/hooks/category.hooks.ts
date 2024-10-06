@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { usePagination } from './pagination.hooks'
-import { GET_CATEGORIES } from '../api/category'
+import { CATEGORIES } from '../api/category'
 import { useCallback } from 'react'
 
 /**
@@ -16,7 +16,7 @@ export const useCategories = () => {
     data: { articleCategories: { items: categories = [], total = 0 } = {} } = {},
     refetch,
     loading
-  } = useQuery(GET_CATEGORIES, {
+  } = useQuery(CATEGORIES, {
     variables: {
       paginateBy: {
         limit: pageSize,

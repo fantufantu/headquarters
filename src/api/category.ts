@@ -6,7 +6,7 @@ import type { PaginateBy, Paginated } from './pagination.type'
  * @description
  * 查询分类列表
  */
-export const GET_CATEGORIES: TypedDocumentNode<
+export const CATEGORIES: TypedDocumentNode<
   { articleCategories: Paginated<Category> },
   {
     filterBy?: FilterCategoriesBy
