@@ -27,20 +27,20 @@
     ]
   },
   "dependencies": {
-    "@aiszlab/bee": "^1.4.2",
-    "@aiszlab/fuzzy": "^1.4.2",
-    "@aiszlab/relax": "^1.4.2",
+    "@aiszlab/bee": "^1.4.4",
+    "@aiszlab/fuzzy": "^1.4.4",
+    "@aiszlab/relax": "^1.4.4",
     "@apollo/client": "^3.11.8",
     "@reduxjs/toolkit": "^2.2.7",
     "cos-js-sdk-v5": "^1.8.4",
-    "musae": "^0.3.3",
+    "musae": "^0.3.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@aiszlab/wasp": "^1.4.2",
+    "@aiszlab/wasp": "^1.4.4",
     "@types/node": "^22.7.4",
-    "@types/react": "^18.3.10",
+    "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "eslint-config-react-app": "^7.0.1",
     "typescript": "^5.6.2"
