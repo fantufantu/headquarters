@@ -5,6 +5,6 @@ export interface LoginBy {
 
 export interface Who {
   id: number
-  nickname: string
-  avatar: string
+  username: string
+  avatar?: string
 }
