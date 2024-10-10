@@ -58,11 +58,13 @@ bootstrap({
     },
     {
       path: '/',
-      loader: () => {
-        if (store.getState().authentication.me) {
-          return redirect('/')
-        }
-        return null
+      loader: ({ request }) => {
+        if (!store.getState().authentication.me) return null
+
+        const authenticated = store.getState().authentication.authenticated
+        const _redirect = new URL(new URL(request.url).searchParams.get('redirect') ?? '/', window.location.href)
+        _redirect.searchParams.set('authenticated', authenticated ?? '')
+        return redirect(_redirect.toString())
       },
       children: [
         {
