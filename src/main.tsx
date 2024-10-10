@@ -62,7 +62,12 @@ bootstrap({
         if (!store.getState().authentication.me) return null
 
         const authenticated = store.getState().authentication.authenticated
-        const _redirect = new URL(new URL(request.url).searchParams.get('redirect') ?? '/', window.location.href)
+        const _redirectTo = new URL(request.url).searchParams.get('redirect')
+
+        // 非第三方站点单点登录，直接重定向到站点首页
+        if (!_redirectTo) return redirect('/')
+
+        const _redirect = new URL(_redirectTo)
         _redirect.searchParams.set('authenticated', authenticated ?? '')
         return redirect(_redirect.toString())
       },
