@@ -11,8 +11,8 @@ const Home = lazy(() => import('./pages/home'))
 const Articles = lazy(() => import('./pages/articles'))
 const Categories = lazy(() => import('./pages/categories'))
 const Editable = lazy(() => import('./pages/articles/editable'))
-const SignIn = lazy(() => import('./pages/sign-in'))
 const SignUp = lazy(() => import('./pages/sign-up'))
+const SignIn = lazy(() => import('./pages/sign-in'))
 
 bootstrap({
   selectors: '#root',
