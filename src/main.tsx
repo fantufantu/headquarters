@@ -6,6 +6,7 @@ import 'musae/styles'
 import { store } from './storage'
 import Layout from './layouts/layout'
 import { redirect } from '@aiszlab/bee/router'
+import { NavigationToken } from './utils/authenticate'
 
 const Home = lazy(() => import('./pages/home'))
 const Articles = lazy(() => import('./pages/articles'))
@@ -13,6 +14,8 @@ const Categories = lazy(() => import('./pages/categories'))
 const Editable = lazy(() => import('./pages/articles/editable'))
 const SignUp = lazy(() => import('./pages/sign-up'))
 const SignIn = lazy(() => import('./pages/sign-in'))
+const Issue = lazy(() => import('./pages/issue'))
+const Issues = lazy(() => import('./pages/issues'))
 
 bootstrap({
   selectors: '#root',
@@ -21,38 +24,55 @@ bootstrap({
   routes: [
     {
       path: '/',
-      Component: Layout,
-      loader: () => {
-        if (!store.getState().authentication.me) {
-          return redirect('/sign-up')
-        }
-        return null
+      loader: ({ request }) => {
+        // signed in, allow visit
+        if (store.getState().authentication.me) return null
+
+        const _redirect = new URL('/sign-in', request.url)
+        _redirect.searchParams.append(NavigationToken.Redirect, request.url)
+        return redirect(_redirect.toString())
       },
       children: [
+        // with layout
         {
           path: '',
-          Component: Home
-        },
-        {
-          path: '/articles',
+          Component: Layout,
           children: [
             {
               path: '',
-              Component: Articles
+              Component: Home
             },
             {
-              path: 'add',
-              Component: Editable
+              path: '/articles',
+              children: [
+                {
+                  path: '',
+                  Component: Articles
+                },
+                {
+                  path: 'add',
+                  Component: Editable
+                },
+                {
+                  path: 'edit/:id',
+                  Component: Editable
+                }
+              ]
             },
             {
-              path: 'edit/:id',
-              Component: Editable
+              path: '/categories',
+              Component: Categories
+            },
+            {
+              path: '/issues',
+              Component: Issues
             }
           ]
         },
+        // without layout
         {
-          path: '/categories',
-          Component: Categories
+          path: 'issue',
+          Component: Issue
         }
       ]
     },

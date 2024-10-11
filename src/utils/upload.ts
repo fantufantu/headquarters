@@ -1,11 +1,19 @@
+import { type UploadBody } from 'cos-js-sdk-v5'
 import { client } from '../api'
 import { CREDENTIAL } from '../api/cloud'
+import { exclude } from '@aiszlab/relax'
+
+export enum Dir {
+  Issues = 'issues',
+  StackLogos = 'stack-logos',
+  None = ''
+}
 
 /**
  * @description
  * 上传文件至腾讯云COS
  */
-export const upload = async (file: File) => {
+export const upload = async (uploading: UploadBody, dir = '', filename?: string) => {
   const [credential, COS] = await Promise.all([
     client
       .query({
@@ -24,8 +32,8 @@ export const upload = async (file: File) => {
   const _uploaded = await _uploader.putObject({
     Bucket: credential.bucket,
     Region: credential.region,
-    Key: crypto.randomUUID(),
-    Body: file
+    Key: exclude([dir, filename || crypto.randomUUID()], [Dir.None]).join('/'),
+    Body: uploading
   })
 
   return _uploaded.Location

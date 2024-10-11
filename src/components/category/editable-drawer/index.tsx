@@ -2,8 +2,8 @@ import { Drawer, Form, Input, Upload } from 'musae'
 import { useBoolean, useEvent } from '@aiszlab/relax'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { CREATE_CATEGORY, CATEGORY, UPDATE_CATEGORY } from '../../../api/category'
-import { forwardRef, useImperativeHandle, useState } from 'react'
-import { upload } from '../../../utils/upload'
+import { forwardRef, useCallback, useImperativeHandle, useState } from 'react'
+import { Dir, upload } from '../../../utils/upload'
 import type { UploadedItem } from 'musae/types/upload'
 
 interface FormValues {
@@ -81,6 +81,10 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
     await onSubmitted?.()
   })
 
+  const uploader = useCallback((file: File) => {
+    return upload(file, Dir.StackLogos)
+  }, [])
+
   return (
     <Drawer open={isOpen} onClose={turnOff} title='编辑分类' onConfirm={submit}>
       <Form form={form}>
@@ -93,7 +97,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
         </Form.Item>
 
         <Form.Item name='images' label='logo' required>
-          <Upload uploader={upload} limit={1} />
+          <Upload uploader={uploader} limit={1} />
         </Form.Item>
       </Form>
     </Drawer>

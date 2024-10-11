@@ -3,12 +3,30 @@ import styles from './styles.module.css'
 import { clsx, useEvent } from '@aiszlab/relax'
 import { KeyboardArrowLeft, KeyboardDoubleArrowRight } from 'musae/icons'
 import { Link } from '@aiszlab/bee/router'
+import { useMutation } from '@apollo/client'
+import { SIGN_UP } from '../../api/authentication'
+
+interface FormValues {
+  username: string
+  email: string
+  captcha: string
+}
 
 const SignIn = () => {
   const theme = useTheme()
-  const form = Form.useForm()
+  const form = Form.useForm<FormValues>()
+  const [_signUp] = useMutation(SIGN_UP)
 
-  const signUp = useEvent(() => {})
+  const signUp = useEvent(async () => {
+    const isValid = await form.trigger().catch(() => false)
+    if (!isValid) return
+
+    await _signUp({
+      variables: {
+        loginBy: form.getValues() as any
+      }
+    })
+  })
 
   return (
     <main className='h-screen w-screen flex flex-row'>
@@ -48,7 +66,7 @@ const SignIn = () => {
 
             <Link
               className='font-semibold'
-              to={`/sign-up${window.location.search}`}
+              to={`/sign-in${window.location.search}`}
               style={{
                 color: theme.colors.primary
               }}
@@ -61,21 +79,21 @@ const SignIn = () => {
             <h3 className='text-2xl font-bold'>Create your Account</h3>
 
             <Form className='mt-10' form={form}>
-              <Form.Item label='Username' required>
+              <Form.Item label='Username' required name='username'>
                 <Input className='w-full' />
               </Form.Item>
 
-              <Form.Item label='Email Address' required>
+              <Form.Item label='Email Address' required name='email'>
                 <Input className='w-full' />
               </Form.Item>
 
-              <Form.Item label='Captcha' className='flex items-center gap-2' required>
+              <Form.Item label='Captcha' className='flex items-center gap-2' required name='captcha'>
                 <Input className='w-full' />
                 <Countdown>GET</Countdown>
               </Form.Item>
 
               <Form.Item>
-                <Button className='w-52' suffix={<KeyboardDoubleArrowRight />}>
+                <Button className='w-52' suffix={<KeyboardDoubleArrowRight />} onClick={signUp}>
                   Sign Up
                 </Button>
               </Form.Item>
