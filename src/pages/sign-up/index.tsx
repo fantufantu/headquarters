@@ -1,10 +1,14 @@
-import { useTheme, Form, Input, Checkbox, Button } from 'musae'
+import { useTheme, Form, Input, Button, Countdown } from 'musae'
 import styles from './styles.module.css'
-import { clsx } from '@aiszlab/relax'
+import { clsx, useEvent } from '@aiszlab/relax'
 import { KeyboardArrowLeft, KeyboardDoubleArrowRight } from 'musae/icons'
+import { Link } from '@aiszlab/bee/router'
 
 const SignIn = () => {
   const theme = useTheme()
+  const form = Form.useForm()
+
+  const signUp = useEvent(() => {})
 
   return (
     <main className='h-screen w-screen flex flex-row'>
@@ -42,45 +46,37 @@ const SignIn = () => {
               I have an account!
             </span>
 
-            <a
+            <Link
               className='font-semibold'
-              href='/sign-up'
+              to={`/sign-up${window.location.search}`}
               style={{
                 color: theme.colors.primary
               }}
             >
-              Sign Up
-            </a>
+              Sign In
+            </Link>
           </div>
 
           <section className='mt-28'>
             <h3 className='text-2xl font-bold'>Create your Account</h3>
 
-            <Form className='mt-10'>
-              <Form.Item label='Email Address or username'>
+            <Form className='mt-10' form={form}>
+              <Form.Item label='Username' required>
                 <Input className='w-full' />
               </Form.Item>
 
-              <Form.Item label='Password'>
-                <Input type='password' className='w-full' />
+              <Form.Item label='Email Address' required>
+                <Input className='w-full' />
               </Form.Item>
 
-              <Form.Item className='flex items-center justify-between'>
-                <Checkbox>Remember me</Checkbox>
-                <a
-                  className='text-xs font-semibold'
-                  style={{
-                    color: theme.colors.primary
-                  }}
-                  href='/forgot-password'
-                >
-                  Forgot password?
-                </a>
+              <Form.Item label='Captcha' className='flex items-center gap-2' required>
+                <Input className='w-full' />
+                <Countdown>GET</Countdown>
               </Form.Item>
 
               <Form.Item>
                 <Button className='w-52' suffix={<KeyboardDoubleArrowRight />}>
-                  Sign In
+                  Sign Up
                 </Button>
               </Form.Item>
             </Form>

@@ -8,6 +8,7 @@ import { useCallback } from 'react'
 import { useWho } from '../../hooks/authentication.hooks'
 import { AuthenticationToken } from '../../storage/tokens'
 import { useNavigateAtAuthecticated } from '../../utils/authenticate'
+import { Link } from '@aiszlab/bee/router'
 
 interface FormValues {
   who: string
@@ -81,18 +82,18 @@ const SignIn = () => {
                 color: theme.colors['outline-variant']
               }}
             >
-              I have an account!
+              I am new here!
             </span>
 
-            <a
+            <Link
               className='font-semibold'
-              href='/sign-up'
+              to={`/sign-up${window.location.search}`}
               style={{
                 color: theme.colors.primary
               }}
             >
               Sign Up
-            </a>
+            </Link>
           </div>
 
           <section className='mt-28'>
