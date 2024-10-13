@@ -3,7 +3,7 @@ import styles from './styles.module.css'
 import { clsx } from '@aiszlab/relax'
 import { KeyboardArrowLeft, KeyboardDoubleArrowRight } from 'musae/icons'
 import { useMutation } from '@apollo/client'
-import { SIGN_UP } from '../../api/authentication'
+import { SIGN_IN } from '../../api/authentication'
 import { useCallback } from 'react'
 import { useWho } from '../../hooks/authentication.hooks'
 import { AuthenticationToken } from '../../storage/tokens'
@@ -18,7 +18,7 @@ interface FormValues {
 
 const SignIn = () => {
   const theme = useTheme()
-  const [_login] = useMutation(SIGN_UP)
+  const [_login] = useMutation(SIGN_IN)
   const form = Form.useForm<FormValues>()
   const { whoAmI } = useWho()
   const navigate = useNavigateAtAuthecticated()
@@ -40,7 +40,7 @@ const SignIn = () => {
     if (!_authenticated) return
 
     await whoAmI(_authenticated)
-    ;(isRememberMe ? window.localStorage : window.sessionStorage).setItem(
+    ;(isRememberMe ? globalThis.window.localStorage : globalThis.window.sessionStorage).setItem(
       AuthenticationToken.Authenticated,
       _authenticated
     )
@@ -53,12 +53,7 @@ const SignIn = () => {
     <main className='h-screen w-screen flex flex-row'>
       <div className={clsx('flex-1 flex justify-center items-center', styles.cover)}>
         <div className='relative my-52 mx-40'>
-          <img
-            width='100%'
-            height='auto'
-            src='https://s3-alpha-sig.figma.com/img/db9e/5204/baddde6ac60cef3494a2d9433b5f2293?Expires=1727654400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CsqxMaq7n3VF7td8~QvZJBWIUGy3waieRbJbIFZIdWNhOgaB-dkB9uYCWLDQXXQxXFc6Paxi~YLsEcG9hYFVj6NSn4mwW4TRGhW2LSz-MomxfU~4kHkqF0Z-kcC2RK5P1B~OpgWtFNBwUqRfX-EEL-cYu2R~8UD1r6S4PYd3MJE0nY~5bgYywG4rR0Ezl9h-JljplasJBqW0C-CVAqOUbbtkNjrR~XrAT0fhUlBPl1orRH-WvflmkGuAowLclxf81n7GGS~lUUSZ6igScEQ0i7KQfcOobkMV~2KqxMU~pUkDpJy7JlJLWNMiJGeJqkgFCgd-CaFUXXVVf6Hl8VdPNQ__'
-            alt='Sign In'
-          />
+          <img width='100%' height='auto' src='/account.png' alt='Sign In' />
           <span
             className='absolute left-0 top-0 text-5xl font-bold -translate-y-full -translate-x-4'
             style={{

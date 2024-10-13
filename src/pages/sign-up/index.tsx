@@ -1,43 +1,74 @@
-import { useTheme, Form, Input, Button, Countdown } from 'musae'
+import { useTheme, Form, Input, Button, Countdown, OtpInput, useMessage } from 'musae'
 import styles from './styles.module.css'
 import { clsx, useEvent } from '@aiszlab/relax'
 import { KeyboardArrowLeft, KeyboardDoubleArrowRight } from 'musae/icons'
 import { Link } from '@aiszlab/bee/router'
 import { useMutation } from '@apollo/client'
-import { SIGN_UP } from '../../api/authentication'
+import { SEND_CAPTCHA, SIGN_UP } from '../../api/authentication'
+import { useWho } from '../../hooks/authentication.hooks'
+import { useNavigateAtAuthecticated } from '../../utils/authenticate'
+import { AuthenticationToken } from '../../storage/tokens'
 
 interface FormValues {
   username: string
-  email: string
+  emailAddress: string
   captcha: string
+  password: string
 }
 
 const SignIn = () => {
   const theme = useTheme()
   const form = Form.useForm<FormValues>()
   const [_signUp] = useMutation(SIGN_UP)
+  const { whoAmI } = useWho()
+  const navigate = useNavigateAtAuthecticated()
+  const [_sendCaptcha] = useMutation(SEND_CAPTCHA)
+  const [messager] = useMessage()
 
   const signUp = useEvent(async () => {
     const isValid = await form.trigger().catch(() => false)
     if (!isValid) return
 
-    await _signUp({
-      variables: {
-        loginBy: form.getValues() as any
-      }
-    })
+    const _authenticated = (
+      await _signUp({
+        variables: {
+          registerBy: form.getValues()
+        }
+      }).catch(() => null)
+    )?.data?.register
+
+    if (!_authenticated) return
+
+    await whoAmI(_authenticated)
+    globalThis.window.sessionStorage.setItem(AuthenticationToken.Authenticated, _authenticated)
+
+    // 内部包含单点登录逻辑
+    navigate(_authenticated)
+  })
+
+  const { invalid: isEmailAddressInvalid } = form.getFieldState('emailAddress', form.formState)
+  const { emailAddress } = form.getValues()
+
+  const sendCaptcha = useEvent(async () => {
+    const sent = (
+      await _sendCaptcha({
+        variables: {
+          sendBy: {
+            to: emailAddress
+          }
+        }
+      }).catch(() => null)
+    )?.data?.sendCaptcha
+
+    if (!sent) return
+    messager.success({ description: '验证码已发送至您邮箱' })
   })
 
   return (
     <main className='h-screen w-screen flex flex-row'>
       <div className={clsx('flex-1 flex justify-center items-center', styles.cover)}>
         <div className='relative my-52 mx-40'>
-          <img
-            width='100%'
-            height='auto'
-            src='https://s3-alpha-sig.figma.com/img/db9e/5204/baddde6ac60cef3494a2d9433b5f2293?Expires=1727654400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CsqxMaq7n3VF7td8~QvZJBWIUGy3waieRbJbIFZIdWNhOgaB-dkB9uYCWLDQXXQxXFc6Paxi~YLsEcG9hYFVj6NSn4mwW4TRGhW2LSz-MomxfU~4kHkqF0Z-kcC2RK5P1B~OpgWtFNBwUqRfX-EEL-cYu2R~8UD1r6S4PYd3MJE0nY~5bgYywG4rR0Ezl9h-JljplasJBqW0C-CVAqOUbbtkNjrR~XrAT0fhUlBPl1orRH-WvflmkGuAowLclxf81n7GGS~lUUSZ6igScEQ0i7KQfcOobkMV~2KqxMU~pUkDpJy7JlJLWNMiJGeJqkgFCgd-CaFUXXVVf6Hl8VdPNQ__'
-            alt='Sign In'
-          />
+          <img width='100%' height='auto' src='/account.png' alt='Sign In' />
           <span
             className='absolute left-0 top-0 text-5xl font-bold -translate-y-full -translate-x-4'
             style={{
@@ -83,13 +114,19 @@ const SignIn = () => {
                 <Input className='w-full' />
               </Form.Item>
 
-              <Form.Item label='Email Address' required name='email'>
+              <Form.Item label='Email Address' required name='emailAddress'>
                 <Input className='w-full' />
               </Form.Item>
 
-              <Form.Item label='Captcha' className='flex items-center gap-2' required name='captcha'>
-                <Input className='w-full' />
-                <Countdown>GET</Countdown>
+              <Form.Item label='Password' required name='password'>
+                <Input className='w-full' type='password' />
+              </Form.Item>
+
+              <Form.Item label='Captcha' name='captcha' className='flex items-center gap-2' required>
+                <OtpInput className='w-full' />
+                <Countdown disabled={!emailAddress || isEmailAddressInvalid} onClick={sendCaptcha}>
+                  GET CAPTCHA
+                </Countdown>
               </Form.Item>
 
               <Form.Item>
