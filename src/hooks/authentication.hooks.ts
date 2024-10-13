@@ -41,11 +41,3 @@ export const useWho = () => {
     whoAmI
   }
 }
-
-/**
- * @description
- * 路由守卫
- *
- * 登录工作台页面时候，如果用户没有登录，则跳转到登录页面
- */
-export const useGuard = () => {}

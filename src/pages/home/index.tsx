@@ -6,7 +6,7 @@ const Home = () => {
       <div>文章浏览量</div>
       <div>最近更新</div>
       <div>
-        <ContributionCalendar year={2023} />
+        <ContributionCalendar year={2024} />
       </div>
 
       <div>想要更多数据分析，请提交工单</div>

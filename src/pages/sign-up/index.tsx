@@ -6,7 +6,7 @@ import { Link } from '@aiszlab/bee/router'
 import { useMutation } from '@apollo/client'
 import { SEND_CAPTCHA, SIGN_UP } from '../../api/authentication'
 import { useWho } from '../../hooks/authentication.hooks'
-import { useNavigateAtAuthecticated } from '../../utils/authenticate'
+import { redirectBy, RedirectToken } from '../../utils/redirect-by'
 import { AuthenticationToken } from '../../storage/tokens'
 
 interface FormValues {
@@ -21,7 +21,6 @@ const SignIn = () => {
   const form = Form.useForm<FormValues>()
   const [_signUp] = useMutation(SIGN_UP)
   const { whoAmI } = useWho()
-  const navigate = useNavigateAtAuthecticated()
   const [_sendCaptcha] = useMutation(SEND_CAPTCHA)
   const [messager] = useMessage()
 
@@ -29,7 +28,7 @@ const SignIn = () => {
     const isValid = await form.trigger().catch(() => false)
     if (!isValid) return
 
-    const _authenticated = (
+    const authenticated = (
       await _signUp({
         variables: {
           registerBy: form.getValues()
@@ -37,13 +36,13 @@ const SignIn = () => {
       }).catch(() => null)
     )?.data?.register
 
-    if (!_authenticated) return
+    if (!authenticated) return
 
-    await whoAmI(_authenticated)
-    globalThis.window.sessionStorage.setItem(AuthenticationToken.Authenticated, _authenticated)
+    await whoAmI(authenticated)
+    globalThis.window.sessionStorage.setItem(AuthenticationToken.Authenticated, authenticated)
 
-    // 内部包含单点登录逻辑
-    navigate(_authenticated)
+    // 重定向-单点登录
+    redirectBy(({ isSameOrigin }) => ({ ...(!isSameOrigin && { [RedirectToken.Redirect]: authenticated }) }))
   })
 
   const { invalid: isEmailAddressInvalid } = form.getFieldState('emailAddress', form.formState)

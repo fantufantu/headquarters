@@ -44,3 +44,13 @@ export const SEND_CAPTCHA: TypedDocumentNode<{ sendCaptcha: string }, { sendBy: 
     sendCaptcha(sendBy: $sendBy)
   }
 `
+
+/**
+ * @description
+ * 用户退出登录
+ */
+export const LOGOUT: TypedDocumentNode<{ logout: boolean }> = gql`
+  mutation Logout {
+    logout
+  }
+`

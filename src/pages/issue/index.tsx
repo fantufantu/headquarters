@@ -1,18 +1,15 @@
-import { Button, Form, Input, Space, useMessage } from 'musae'
+import { Button, Form, Space, useMessage } from 'musae'
 import { useCallback } from 'react'
 import { Dir, upload } from '../../utils/upload'
-
-interface FormValues {
-  title: string
-  content: string
-}
+import IssueForm, { type FormValues as IssueFormValues } from '../../components/issue/form'
+import { redirectBy } from '../../utils/redirect-by'
 
 const Issue = () => {
-  const form = Form.useForm<FormValues>()
   const [messager] = useMessage()
+  const form = Form.useForm<IssueFormValues>()
 
   const back = useCallback(() => {
-    window.history.back()
+    redirectBy()
   }, [])
 
   const submit = useCallback(async () => {
@@ -29,29 +26,19 @@ const Issue = () => {
     }
 
     back()
-  }, [back, form, messager])
+  }, [messager, form, back])
 
   return (
     <div className='p-5 flex justify-center'>
       <div className='max-w-2xl w-full'>
-        <Form form={form}>
-          <Form.Item label='标题' name='title' required>
-            <Input className='w-full' />
-          </Form.Item>
+        <IssueForm form={form} />
 
-          <Form.Item label='反馈' name='content' required>
-            <Input className='w-full' />
-          </Form.Item>
-
-          <Form.Item>
-            <Space gutter={12}>
-              <Button onClick={submit}>提交</Button>
-              <Button color='secondary' variant='outlined' onClick={back}>
-                返回
-              </Button>
-            </Space>
-          </Form.Item>
-        </Form>
+        <Space gutter={12}>
+          <Button onClick={submit}>提交</Button>
+          <Button color='secondary' variant='outlined' onClick={back}>
+            返回
+          </Button>
+        </Space>
       </div>
     </div>
   )

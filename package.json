@@ -27,18 +27,18 @@
     ]
   },
   "dependencies": {
-    "@aiszlab/bee": "^1.4.5",
-    "@aiszlab/fuzzy": "^1.4.5",
-    "@aiszlab/relax": "^1.4.5",
+    "@aiszlab/bee": "^1.4.6",
+    "@aiszlab/fuzzy": "^1.4.6",
+    "@aiszlab/relax": "^1.4.6",
     "@apollo/client": "^3.11.8",
     "@reduxjs/toolkit": "^2.2.8",
     "cos-js-sdk-v5": "^1.8.4",
-    "musae": "^0.3.9",
+    "musae": "^0.3.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@aiszlab/wasp": "^1.4.5",
+    "@aiszlab/wasp": "^1.4.6",
     "@types/node": "^22.7.5",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",

@@ -6,7 +6,7 @@ import 'musae/styles'
 import { store } from './storage'
 import Layout from './layouts/layout'
 import { redirect } from '@aiszlab/bee/router'
-import { NavigationToken } from './utils/authenticate'
+import { RedirectToken } from './utils/redirect-by'
 
 const Home = lazy(() => import('./pages/home'))
 const Articles = lazy(() => import('./pages/articles'))
@@ -29,7 +29,7 @@ bootstrap({
         if (store.getState().authentication.me) return null
 
         const _redirect = new URL('/sign-in', request.url)
-        _redirect.searchParams.append(NavigationToken.Redirect, request.url)
+        _redirect.searchParams.append(RedirectToken.Redirect, request.url)
         return redirect(_redirect.toString())
       },
       children: [

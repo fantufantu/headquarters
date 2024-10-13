@@ -7,7 +7,7 @@ import { SIGN_IN } from '../../api/authentication'
 import { useCallback } from 'react'
 import { useWho } from '../../hooks/authentication.hooks'
 import { AuthenticationToken } from '../../storage/tokens'
-import { useNavigateAtAuthecticated } from '../../utils/authenticate'
+import { redirectBy, RedirectToken } from '../../utils/redirect-by'
 import { Link } from '@aiszlab/bee/router'
 
 interface FormValues {
@@ -21,7 +21,6 @@ const SignIn = () => {
   const [_login] = useMutation(SIGN_IN)
   const form = Form.useForm<FormValues>()
   const { whoAmI } = useWho()
-  const navigate = useNavigateAtAuthecticated()
 
   // 用户登录
   const login = useCallback(async () => {
@@ -29,7 +28,7 @@ const SignIn = () => {
     if (!isValid) return
 
     const { isRememberMe, ...loginBy } = form.getValues()
-    const _authenticated = (
+    const authenticated = (
       await _login({
         variables: {
           loginBy
@@ -37,17 +36,17 @@ const SignIn = () => {
       }).catch(() => null)
     )?.data?.login
 
-    if (!_authenticated) return
+    if (!authenticated) return
 
-    await whoAmI(_authenticated)
+    await whoAmI(authenticated)
     ;(isRememberMe ? globalThis.window.localStorage : globalThis.window.sessionStorage).setItem(
       AuthenticationToken.Authenticated,
-      _authenticated
+      authenticated
     )
 
-    // 内部包含单点登录逻辑
-    navigate(_authenticated)
-  }, [_login, form, navigate, whoAmI])
+    // 重定向-单点登录
+    redirectBy(({ isSameOrigin }) => ({ ...(!isSameOrigin && { [RedirectToken.Authenticated]: authenticated }) }))
+  }, [_login, form, whoAmI])
 
   return (
     <main className='h-screen w-screen flex flex-row'>
