@@ -31,7 +31,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
 
     const formValues = form.getValues()
     const blob = new Blob([JSON.stringify(formValues)], { type: 'application/json' })
-    const url = await upload(blob, Dir.Issues, formValues.title).catch(() => null)
+    const url = await upload(blob, Dir.Issues, `${formValues.title}.json`).catch(() => null)
     if (!url) return
 
     turnOff()

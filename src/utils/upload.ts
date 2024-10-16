@@ -13,7 +13,7 @@ export enum Dir {
  * @description
  * 上传文件至腾讯云COS
  */
-export const upload = async (uploading: UploadBody, dir = '', filename?: string) => {
+export const upload = async (uploading: UploadBody, dir = Dir.None, filename?: string) => {
   const [credential, COS] = await Promise.all([
     client
       .query({
@@ -32,9 +32,9 @@ export const upload = async (uploading: UploadBody, dir = '', filename?: string)
   const _uploaded = await _uploader.putObject({
     Bucket: credential.bucket,
     Region: credential.region,
-    Key: exclude([dir, filename || crypto.randomUUID()], [Dir.None]).join('/'),
+    Key: exclude([dir, filename ?? crypto.randomUUID()], [Dir.None]).join('/'),
     Body: uploading
   })
 
-  return _uploaded.Location
+  return `https://${_uploaded.Location}`
 }

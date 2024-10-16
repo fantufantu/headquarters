@@ -1,4 +1,4 @@
-import { Form, Input } from 'musae'
+import { Form, Input, Textarea } from 'musae'
 
 export interface FormValues {
   title: string
@@ -17,7 +17,7 @@ const _Form = ({ form }: Props) => {
       </Form.Item>
 
       <Form.Item label='反馈' name='content' required>
-        <Input className='w-full' />
+        <Textarea />
       </Form.Item>
     </Form>
   )
