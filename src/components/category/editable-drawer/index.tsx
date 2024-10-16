@@ -97,7 +97,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
         </Form.Item>
 
         <Form.Item name='images' label='logo' required>
-          <Upload uploader={uploader} limit={1} />
+          <Upload uploader={uploader} limit={1} renderItem='picture' />
         </Form.Item>
       </Form>
     </Drawer>

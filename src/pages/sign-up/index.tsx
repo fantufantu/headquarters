@@ -1,4 +1,4 @@
-import { useTheme, Form, Input, Button, Countdown, OtpInput, useMessage } from 'musae'
+import { useTheme, Form, Input, Button, Countdown, OtpInput, useMessage, PasswordInput } from 'musae'
 import styles from './styles.module.css'
 import { clsx, useEvent } from '@aiszlab/relax'
 import { KeyboardArrowLeft, KeyboardDoubleArrowRight } from 'musae/icons'
@@ -118,7 +118,7 @@ const SignIn = () => {
               </Form.Item>
 
               <Form.Item label='Password' required name='password'>
-                <Input className='w-full' type='password' />
+                <PasswordInput className='w-full' />
               </Form.Item>
 
               <Form.Item label='Captcha' name='captcha' className='flex items-center gap-2' required>

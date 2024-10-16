@@ -1,4 +1,4 @@
-import { useTheme, Form, Input, Checkbox, Button } from 'musae'
+import { useTheme, Form, Input, Checkbox, Button, PasswordInput } from 'musae'
 import styles from './styles.module.css'
 import { clsx } from '@aiszlab/relax'
 import { KeyboardArrowLeft, KeyboardDoubleArrowRight } from 'musae/icons'
@@ -99,7 +99,7 @@ const SignIn = () => {
               </Form.Item>
 
               <Form.Item label='Password' required name='password'>
-                <Input type='password' className='w-full' />
+                <PasswordInput className='w-full' />
               </Form.Item>
 
               <Form.Item className='flex items-center justify-between' name='isRememberMe'>
