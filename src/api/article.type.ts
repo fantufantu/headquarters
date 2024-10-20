@@ -30,3 +30,21 @@ export interface CreateArticleBy {
  * 更新文章实体
  */
 export type UpdateArticleBy = Partial<CreateArticleBy>
+
+/**
+ * @description
+ * 查询贡献数参数
+ */
+export interface ArticleContributionsBy {
+  from: Date
+  to: Date
+}
+
+/**
+ * @description
+ * 文章贡献数
+ */
+export interface ArticleContribution {
+  contributedAt: string
+  count: number
+}

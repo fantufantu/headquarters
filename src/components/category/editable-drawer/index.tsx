@@ -32,21 +32,20 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
     return {
       open: async (_id) => {
         setId(_id)
+        form.reset()
 
         if (!_id) {
-          form.reset()
           turnOn()
           return
         }
 
         const _category = (await refetch({ variables: { id: _id } }).catch(() => null))?.data?.articleCategory
-        if (!_category) {
-          form.reset()
-        } else {
+        if (_category) {
           form.setValue('code', _category.code)
           form.setValue('name', _category.name)
           form.setValue('images', [{ url: _category.image, key: _category.image, status: 'success' }])
         }
+
         turnOn()
       }
     }

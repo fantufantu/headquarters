@@ -15,6 +15,8 @@ export interface Who {
   id: number
   username: string
   avatar?: string
+  nickname?: string
+  emailAddress: string
 }
 
 export interface SendCaptchaBy {

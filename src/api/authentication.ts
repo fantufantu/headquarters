@@ -30,7 +30,9 @@ export const WHO_AM_I: TypedDocumentNode<{ whoAmI: Who }> = gql`
     whoAmI {
       id
       username
+      nickname
       avatar
+      emailAddress
     }
   }
 `

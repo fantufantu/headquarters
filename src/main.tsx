@@ -16,6 +16,7 @@ const SignUp = lazy(() => import('./pages/sign-up'))
 const SignIn = lazy(() => import('./pages/sign-in'))
 const Issue = lazy(() => import('./pages/issue'))
 const Issues = lazy(() => import('./pages/issues'))
+const Setting = lazy(() => import('./pages/setting'))
 
 bootstrap({
   selectors: '#root',
@@ -66,6 +67,10 @@ bootstrap({
             {
               path: '/issues',
               Component: Issues
+            },
+            {
+              path: '/setting',
+              Component: Setting
             }
           ]
         },

@@ -1,5 +1,11 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
-import type { Article, CreateArticleBy, UpdateArticleBy } from './article.type'
+import type {
+  Article,
+  ArticleContribution,
+  ArticleContributionsBy,
+  CreateArticleBy,
+  UpdateArticleBy
+} from './article.type'
 import type { PaginateBy, Paginated } from './pagination.type'
 
 export const ARTICLES: TypedDocumentNode<
@@ -100,5 +106,25 @@ export const REMOVE_ARTICLE: TypedDocumentNode<
 > = gql`
   mutation RemoveArticle($id: Int!) {
     removeArticle(id: $id)
+  }
+`
+
+/**
+ * @description
+ * 查询自己的贡献数
+ */
+export const ARTICLE_CONTRIBUTIONS: TypedDocumentNode<
+  {
+    articleContributions: ArticleContribution[]
+  },
+  {
+    queryBy: ArticleContributionsBy
+  }
+> = gql`
+  query ArticleContributions($queryBy: ArticleContributionsBy!) {
+    articleContributions(queryBy: $queryBy) {
+      contributedAt
+      count
+    }
   }
 `

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import type { Article } from '../../api/article.type'
 import type { Column } from 'musae/types/table'
-import { Space, Popconfirm, Button, useMessage } from 'musae'
+import { Space, Popconfirm, Button, useMessage, Divider } from 'musae'
 import { useNavigate } from '@aiszlab/bee/router'
 import { REMOVE_ARTICLE } from '../../api/article'
 import { useMutation } from '@apollo/client'
@@ -40,6 +40,7 @@ export const useColumns = ({ refetch }: { refetch: () => void }) => {
               >
                 编辑
               </Button>
+              <Divider orientation='vertical' />
               <Popconfirm
                 title='确定删除吗？'
                 content='删除后不可恢复'

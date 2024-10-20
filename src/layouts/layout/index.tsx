@@ -1,4 +1,4 @@
-import { Bench, Avatar, Popover, Menu } from 'musae'
+import { Bench, Avatar, Popover, Menu, useTheme, Button } from 'musae'
 import { useNavigations } from './hooks'
 import { Outlet, useNavigate, useResolvedPath } from '@aiszlab/bee/router'
 import { useSelector } from '../../hooks/storage.hooks'
@@ -12,11 +12,16 @@ const Layout = () => {
   const navigate = useNavigate()
   const _me = useSelector((_) => _.authentication.me)
   const [logout] = useMutation(LOGOUT)
+  const { toggle } = useTheme()
 
   const onLogout = useCallback(async () => {
     await logout()
     window.location.reload()
   }, [logout])
+
+  const toSetting = useCallback(() => {
+    navigate('/setting')
+  }, [navigate])
 
   return (
     <Bench
@@ -29,24 +34,34 @@ const Layout = () => {
         main: 'px-10 pb-8'
       }}
       trailing={
-        <Popover
-          content={
-            <div className='flex flex-col items-center gap-2'>
-              <span>你好，{_me?.username}</span>
-              <Menu
-                items={[
-                  {
-                    label: '退出登录',
-                    key: 'logout',
-                    onClick: onLogout
-                  }
-                ]}
-              />
-            </div>
-          }
-        >
-          <Avatar src={_me?.avatar} />
-        </Popover>
+        <>
+          <Button onClick={toggle}>12321</Button>
+          <Popover
+            content={
+              <div className='flex flex-col items-center gap-2'>
+                <span>你好，{_me?.nickname ?? _me?.username}</span>
+                <Menu
+                  items={[
+                    {
+                      label: '修改个人信息',
+                      key: 'edit',
+                      onClick: toSetting,
+                      className: 'justify-center'
+                    },
+                    {
+                      label: '退出登录',
+                      key: 'logout',
+                      onClick: onLogout,
+                      className: 'justify-center'
+                    }
+                  ]}
+                />
+              </div>
+            }
+          >
+            <Avatar src={_me?.avatar} />
+          </Popover>
+        </>
       }
     >
       <Outlet />
