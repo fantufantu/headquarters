@@ -4,8 +4,10 @@ const configuration = {
   theme: {
     extend: {}
   },
-  important: true,
-  plugins: []
+  plugins: [],
+  corePlugins: {
+    preflight: false
+  }
 }
 
 export default configuration
