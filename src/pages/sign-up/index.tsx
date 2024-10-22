@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/client'
 import { SEND_CAPTCHA, SIGN_UP } from '../../api/authentication'
 import { useWho } from '../../hooks/authentication.hooks'
 import { redirectBy, RedirectToken } from '../../utils/redirect-by'
-import { AuthenticationToken } from '../../storage/tokens'
+import { AuthenticationToken } from '../../store/tokens'
 
 interface FormValues {
   username: string

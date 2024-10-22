@@ -25,7 +25,7 @@ export const redirectBy = (
 
   const _redirect = new URL(_redirectTo)
   const isSameOrigin = _redirect.origin === globalThis.window.location.origin
-  const _searchParams = toFunction<(options: Options) => Voidable<Record<string, string>>>(searchParams)({
+  const _searchParams = toFunction(searchParams)({
     isSameOrigin
   })
 

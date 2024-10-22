@@ -1,7 +1,7 @@
 import { ConfigProvider, ThemeProvider } from 'musae'
 import { ApolloProvider } from '@apollo/client'
 import { client } from './api'
-import { AuthenticationToken } from './storage/tokens'
+import { AuthenticationToken } from './store/tokens'
 import { useMounted } from '@aiszlab/relax'
 import { useState } from 'react'
 import { useWho } from './hooks/authentication.hooks'

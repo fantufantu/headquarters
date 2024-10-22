@@ -6,6 +6,7 @@ import { exclude } from '@aiszlab/relax'
 export enum Dir {
   Issues = 'issues',
   StackLogos = 'stack-logos',
+  Avatars = 'avatars',
   None = ''
 }
 

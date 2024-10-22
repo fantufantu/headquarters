@@ -1,7 +1,6 @@
 import { useCallback } from 'react'
-import { useDispatch, useSelector } from './storage.hooks'
-import { whoAmI as _whoAmI, authenticate } from '../storage/authentication'
 import { useNotification } from 'musae'
+import { useAuthentication } from '../store/authentication'
 
 /**
  * @description
@@ -11,19 +10,16 @@ import { useNotification } from 'musae'
  * 并且完成登录和兑换用户信息后，需要重定向到首页
  */
 export const useWho = () => {
-  const dispatch = useDispatch()
   const [notifier] = useNotification()
-  const me = useSelector((store) => store.authentication.me)
+  const { me, authenticate, whoAmI: _whoAmI } = useAuthentication()
 
   const whoAmI = useCallback(
     async (authenticated?: string) => {
       if (!authenticated) return
 
-      dispatch(authenticate(authenticated))
+      authenticate(authenticated)
 
-      const _who = await dispatch(_whoAmI())
-        .unwrap()
-        .catch(() => null)
+      const _who = await _whoAmI().catch(() => null)
 
       if (!_who) {
         notifier.error({
@@ -33,7 +29,7 @@ export const useWho = () => {
         return
       }
     },
-    [dispatch, notifier]
+    [notifier]
   )
 
   return {

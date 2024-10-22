@@ -5,9 +5,7 @@ const configuration = {
     extend: {}
   },
   plugins: [],
-  corePlugins: {
-    preflight: false
-  }
+  corePlugins: {}
 }
 
 export default configuration

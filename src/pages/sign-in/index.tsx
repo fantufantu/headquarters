@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client'
 import { SIGN_IN } from '../../api/authentication'
 import { useCallback } from 'react'
 import { useWho } from '../../hooks/authentication.hooks'
-import { AuthenticationToken } from '../../storage/tokens'
+import { AuthenticationToken } from '../../store/tokens'
 import { redirectBy, RedirectToken } from '../../utils/redirect-by'
 import { Link } from '@aiszlab/bee/router'
 

@@ -1,12 +1,14 @@
 import { bootstrap } from '@aiszlab/bee'
-import Application from './application'
-import './styles.css'
 import { lazy } from 'react'
-import 'musae/styles'
-import { store } from './storage'
-import Layout from './layouts/layout'
 import { redirect } from '@aiszlab/bee/router'
 import { RedirectToken } from './utils/redirect-by'
+
+import './styles.css'
+import 'musae/styles.css'
+
+import Application from './application'
+import Layout from './layouts/layout'
+import { useAuthentication } from './store/authentication'
 
 const Home = lazy(() => import('./pages/home'))
 const Articles = lazy(() => import('./pages/articles'))
@@ -20,14 +22,13 @@ const Setting = lazy(() => import('./pages/setting'))
 
 bootstrap({
   selectors: '#root',
-  store,
   render: Application,
   routes: [
     {
       path: '/',
       loader: ({ request }) => {
         // signed in, allow visit
-        if (store.getState().authentication.me) return null
+        if (useAuthentication.state.me) return null
 
         const _redirect = new URL('/sign-in', request.url)
         _redirect.searchParams.append(RedirectToken.Redirect, request.url)
@@ -84,9 +85,9 @@ bootstrap({
     {
       path: '/',
       loader: ({ request }) => {
-        if (!store.getState().authentication.me) return null
+        if (!useAuthentication.state.me) return null
 
-        const authenticated = store.getState().authentication.authenticated
+        const authenticated = useAuthentication.state.authenticated
         const _redirectTo = new URL(request.url).searchParams.get('redirect')
 
         // 非第三方站点单点登录，直接重定向到站点首页

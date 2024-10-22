@@ -1,10 +1,11 @@
 import { Button, Form, Image, Input, Menu, Popconfirm, Popover, Upload, useMessage } from 'musae'
-import { useSelector } from '../../hooks/storage.hooks'
-import { useEvent, useMounted } from '@aiszlab/relax'
-import { useState } from 'react'
-import { random } from '@aiszlab/fuzzy/avatar'
+import { first, useEvent, useMounted } from '@aiszlab/relax'
+import { useMemo, useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { UPDATE_USER } from '../../api/user'
+import { useAuthentication } from '../../store/authentication'
+import { Dir, upload } from '../../utils/upload'
+import type { FileItem } from 'musae/types/upload'
 
 interface FormValues {
   nickname: string
@@ -13,11 +14,13 @@ interface FormValues {
 }
 
 const Setting = () => {
-  const me = useSelector((store) => store.authentication.me)
+  const { me } = useAuthentication()
   const form = Form.useForm<FormValues>()
-  const [avatar, setAvatar] = useState(me?.avatar ?? '')
+  const [avatar, setAvatar] = useState<string | null>()
   const [_update] = useMutation(UPDATE_USER)
   const [messager] = useMessage()
+  const _validAvatar = useMemo(() => avatar ?? me?.avatar ?? '', [avatar, me?.avatar])
+  const { whoAmI } = useAuthentication()
 
   useMounted(() => {
     if (!me) return
@@ -28,7 +31,7 @@ const Setting = () => {
   })
 
   const removeAvatar = useEvent(async () => {
-    setAvatar(await random())
+    setAvatar(null)
   })
 
   const submit = useEvent(async () => {
@@ -40,7 +43,8 @@ const Setting = () => {
       await _update({
         variables: {
           updateUserBy: {
-            nickname: nickname ?? null
+            nickname,
+            avatar
           }
         }
       }).catch(() => null)
@@ -50,7 +54,30 @@ const Setting = () => {
     messager.success({
       description: '更新成功！'
     })
+
+    // 重新请求用户信息
+    whoAmI()
   })
+
+  const onUpload = useEvent((files: FileItem[]) => {
+    const _file = first(files)
+    if (!_file?.url) return
+    setAvatar(_file.url)
+  })
+
+  const uploader = useEvent((file: File) => {
+    return upload(file, Dir.Avatars)
+  })
+
+  const avatars = useMemo<FileItem[]>(
+    () => [
+      {
+        url: _validAvatar,
+        status: 'success'
+      }
+    ],
+    [_validAvatar]
+  )
 
   return (
     <div className='flex gap-40'>
@@ -77,7 +104,16 @@ const Setting = () => {
         </Form.Item>
       </Form>
       <div className='relative w-50 h-fit'>
-        <Image width={200} height={200} src={avatar} className='rounded-full' previewable={false} />
+        <Image
+          width={200}
+          height={200}
+          src={_validAvatar}
+          className='rounded-full'
+          previewable={false}
+          crossOrigin='anonymous'
+          referrerPolicy='strict-origin-when-cross-origin'
+        />
+
         <Popover
           content={
             <Menu
@@ -85,7 +121,11 @@ const Setting = () => {
               items={[
                 {
                   key: 'upload',
-                  label: <Upload renderItem={false}>上传头像</Upload>
+                  label: (
+                    <Upload value={avatars} renderItem={false} onChange={onUpload} limit={1} uploader={uploader}>
+                      上传头像
+                    </Upload>
+                  )
                 },
                 {
                   key: 'remove',

@@ -8,8 +8,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "author": "tutu@fantufantu.com",
@@ -27,22 +26,23 @@
     ]
   },
   "dependencies": {
-    "@aiszlab/bee": "^1.4.7",
-    "@aiszlab/fuzzy": "^1.4.7",
-    "@aiszlab/relax": "^1.4.7",
+    "@aiszlab/bee": "^1.5.2",
+    "@aiszlab/fuzzy": "^1.5.2",
+    "@aiszlab/relax": "^1.5.2",
     "@apollo/client": "^3.11.8",
     "@reduxjs/toolkit": "^2.3.0",
     "cos-js-sdk-v5": "^1.8.6",
     "dayjs": "^1.11.13",
-    "musae": "0.4.0",
+    "musae": "^0.4.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@aiszlab/wasp": "^1.4.7",
-    "@types/node": "^22.7.7",
+    "@aiszlab/wasp": "^1.5.2",
+    "@types/node": "^22.7.8",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
+    "eslint": "^8.57.1",
     "eslint-config-react-app": "^7.0.1",
     "typescript": "^5.6.3"
   }
