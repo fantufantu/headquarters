@@ -1,7 +1,7 @@
 import { useTheme, Form, Input, Checkbox, Button, PasswordInput } from 'musae'
 import styles from './styles.module.css'
 import { clsx } from '@aiszlab/relax'
-import { KeyboardArrowLeft, KeyboardDoubleArrowRight } from 'musae/icons'
+import { KeyboardDoubleArrowRight } from 'musae/icons'
 import { useMutation } from '@apollo/client'
 import { SIGN_IN } from '../../api/authentication'
 import { useCallback } from 'react'
@@ -66,10 +66,6 @@ const SignIn = () => {
       <div className='flex-1 flex flex-col'>
         <div className='px-20 py-10 flex-1'>
           <div className='flex items-center gap-2'>
-            <Button variant='text' prefix={<KeyboardArrowLeft size={24} />}>
-              Back
-            </Button>
-
             <span
               className='ml-auto font-medium'
               style={{

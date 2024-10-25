@@ -1,7 +1,7 @@
 import { useTheme, Form, Input, Button, Countdown, OtpInput, useMessage, PasswordInput } from 'musae'
 import styles from './styles.module.css'
 import { clsx, useEvent } from '@aiszlab/relax'
-import { KeyboardArrowLeft, KeyboardDoubleArrowRight } from 'musae/icons'
+import { KeyboardDoubleArrowRight } from 'musae/icons'
 import { Link } from '@aiszlab/bee/router'
 import { useMutation } from '@apollo/client'
 import { SEND_CAPTCHA, SIGN_UP } from '../../api/authentication'
@@ -81,10 +81,6 @@ const SignIn = () => {
       <div className='flex-1 flex flex-col'>
         <div className='px-20 py-10 flex-1'>
           <div className='flex items-center gap-2'>
-            <Button variant='text' prefix={<KeyboardArrowLeft size={24} />}>
-              Back
-            </Button>
-
             <span
               className='ml-auto font-medium'
               style={{

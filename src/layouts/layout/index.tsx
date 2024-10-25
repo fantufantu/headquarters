@@ -1,4 +1,4 @@
-import { Bench, Avatar, Popover, Menu, useTheme, Button } from 'musae'
+import { Bench, Avatar, Popover, Menu, useTheme, IconButton } from 'musae'
 import { useNavigations } from './hooks'
 import { Outlet, useNavigate, useResolvedPath } from '@aiszlab/bee/router'
 import { useMutation } from '@apollo/client'
@@ -35,10 +35,10 @@ const Layout = () => {
         main: 'px-10 pb-8'
       }}
       trailing={
-        <>
-          <Button onClick={toggle} variant='text' shape='circular'>
+        <div className='flex gap-4'>
+          <IconButton onClick={toggle} variant='text' size='small'>
             {createElement(mode === 'light' ? Bedtime : WbSunny)}
-          </Button>
+          </IconButton>
           <Popover
             content={
               <div className='flex flex-col items-center gap-2'>
@@ -64,7 +64,7 @@ const Layout = () => {
           >
             <Avatar src={me?.avatar} crossOrigin='anonymous' referrerPolicy='strict-origin-when-cross-origin' />
           </Popover>
-        </>
+        </div>
       }
     >
       <Outlet />
