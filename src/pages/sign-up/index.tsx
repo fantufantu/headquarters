@@ -1,6 +1,7 @@
 import { useTheme, Form, Input, Button, Countdown, OtpInput, useMessage, PasswordInput } from 'musae'
 import styles from './styles.module.css'
-import { clsx, useEvent } from '@aiszlab/relax'
+import { useEvent } from '@aiszlab/relax'
+import { stringify } from '@aiszlab/relax/class-name'
 import { KeyboardDoubleArrowRight } from 'musae/icons'
 import { Link } from '@aiszlab/bee/router'
 import { useMutation } from '@apollo/client'
@@ -65,7 +66,7 @@ const SignIn = () => {
 
   return (
     <main className='h-screen w-screen flex flex-row'>
-      <div className={clsx('flex-1 flex justify-center items-center', styles.cover)}>
+      <div className={stringify('flex-1 flex justify-center items-center', styles.cover)}>
         <div className='relative my-52 mx-40'>
           <img width='100%' height='auto' src='/account.png' alt='Sign In' />
           <span

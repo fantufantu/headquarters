@@ -1,6 +1,6 @@
 import { useTheme, Form, Input, Checkbox, Button, PasswordInput } from 'musae'
 import styles from './styles.module.css'
-import { clsx } from '@aiszlab/relax'
+import { stringify } from '@aiszlab/relax/class-name'
 import { KeyboardDoubleArrowRight } from 'musae/icons'
 import { useMutation } from '@apollo/client'
 import { SIGN_IN } from '../../api/authentication'
@@ -50,7 +50,7 @@ const SignIn = () => {
 
   return (
     <main className='h-screen w-screen flex flex-row'>
-      <div className={clsx('flex-1 flex justify-center items-center', styles.cover)}>
+      <div className={stringify('flex-1 flex justify-center items-center', styles.cover)}>
         <div className='relative my-52 mx-40'>
           <img width='100%' height='auto' src='/account.png' alt='Sign In' />
           <span
