@@ -1,4 +1,4 @@
-import { Form, RichTextEditor, Input, Button, Space, Select, useMessage, Loading } from 'musae'
+import { Form, Input, Button, Space, Select, useMessage, Loading, RichTextEditor } from 'musae'
 import { useNavigate } from '@aiszlab/bee/router'
 import { useCallback } from 'react'
 import { useMutation } from '@apollo/client'
