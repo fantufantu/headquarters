@@ -14,7 +14,7 @@ const Articles = () => {
   const { page, onPageChange, onPageSizeChange, pageSize } = usePagination()
   const {
     loading,
-    data: { articles: { items: articles } } = { articles: { items: [], total: 0 } },
+    data: { articles: { items: articles, total } } = { articles: { items: [], total: 0 } },
     refetch: _refetch
   } = useQuery(ARTICLES, {
     variables: {
@@ -47,7 +47,13 @@ const Articles = () => {
 
       <Table<Article> columns={columns} bordered dataSource={articles} />
 
-      <Pagination at={page} pageSize={pageSize} onChange={onPageChange} onPageSizeChange={onPageSizeChange} />
+      <Pagination
+        at={page}
+        pageSize={pageSize}
+        total={total}
+        onChange={onPageChange}
+        onPageSizeChange={onPageSizeChange}
+      />
     </Loading>
   )
 }

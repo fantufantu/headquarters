@@ -29,7 +29,7 @@
     "@aiszlab/bee": "^1.5.6",
     "@aiszlab/fuzzy": "^1.5.6",
     "@aiszlab/relax": "^1.5.6",
-    "@apollo/client": "^3.11.8",
+    "@apollo/client": "^3.11.9",
     "cos-js-sdk-v5": "^1.8.6",
     "dayjs": "^1.11.13",
     "musae": "^0.5.7",
