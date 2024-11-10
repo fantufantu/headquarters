@@ -1,5 +1,5 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
-import type { LoginBy, RegisterBy, SendCaptchaBy, Who } from './authentication.type'
+import type { LoginBy, RegisterBy, Who } from './authentication.type'
 
 /**
  * @description
@@ -41,9 +41,9 @@ export const WHO_AM_I: TypedDocumentNode<{ whoAmI: Who }> = gql`
  * @description
  * 发送注册验证码
  */
-export const SEND_CAPTCHA: TypedDocumentNode<{ sendCaptcha: string }, { sendBy: SendCaptchaBy }> = gql`
-  mutation SendCaptcha($sendBy: SendCaptchaBy!) {
-    sendCaptcha(sendBy: $sendBy)
+export const SEND_REIGSTER_CAPTCHA: TypedDocumentNode<{ sendRegisterCaptcha: string }, { to: string }> = gql`
+  mutation SendRegisterCaptcha($to: String!) {
+    sendRegisterCaptcha(to: $to)
   }
 `
 

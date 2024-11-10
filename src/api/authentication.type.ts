@@ -18,7 +18,3 @@ export interface Who {
   nickname?: string
   emailAddress: string
 }
-
-export interface SendCaptchaBy {
-  to: string
-}

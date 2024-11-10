@@ -5,7 +5,7 @@ import { stringify } from '@aiszlab/relax/class-name'
 import { KeyboardDoubleArrowRight } from 'musae/icons'
 import { Link } from '@aiszlab/bee/router'
 import { useMutation } from '@apollo/client'
-import { SEND_CAPTCHA, SIGN_UP } from '../../api/authentication'
+import { SEND_REIGSTER_CAPTCHA, SIGN_UP } from '../../api/authentication'
 import { useWho } from '../../hooks/authentication.hooks'
 import { redirectBy, RedirectToken } from '../../utils/redirect-by'
 import { AuthenticationToken } from '../../store/tokens'
@@ -22,7 +22,7 @@ const SignIn = () => {
   const form = Form.useForm<FormValues>()
   const [_signUp] = useMutation(SIGN_UP)
   const { whoAmI } = useWho()
-  const [_sendCaptcha] = useMutation(SEND_CAPTCHA)
+  const [_sendCaptcha] = useMutation(SEND_REIGSTER_CAPTCHA)
   const [messager] = useMessage()
 
   const signUp = useEvent(async () => {
@@ -53,12 +53,10 @@ const SignIn = () => {
     const sent = (
       await _sendCaptcha({
         variables: {
-          sendBy: {
-            to: emailAddress
-          }
+          to: emailAddress
         }
       }).catch(() => null)
-    )?.data?.sendCaptcha
+    )?.data?.sendRegisterCaptcha
 
     if (!sent) return
     messager.success({ description: '验证码已发送至您邮箱' })
