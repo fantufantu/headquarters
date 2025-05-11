@@ -1,6 +1,5 @@
-@layer tailwind-base {
-  @tailwind base;
-}
+@import "@aiszlab/wasp/tailwindcss";
 
-@tailwind components;
-@tailwind utilities;
+@layer components {
+  @import "musae";
+}
