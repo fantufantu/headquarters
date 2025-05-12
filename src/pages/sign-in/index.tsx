@@ -27,13 +27,13 @@ const SignIn = () => {
     const isValid = await form.validate();
     if (!isValid) return;
 
-    const { isRememberMe, ...loginBy } = form.getFieldsValue();
+    const { isRememberMe, who = "", password = "" } = form.getFieldsValue();
     const authenticated = (
       await _login({
         variables: {
           loginBy: {
-            password: loginBy.password ?? "",
-            who: loginBy.who ?? "",
+            password,
+            who,
           },
         },
       }).catch(() => null)
@@ -101,11 +101,31 @@ const SignIn = () => {
 
             {/* className="mt-10" */}
             <Form form={form}>
-              <Form.Item label="Email Address or username" required name="who">
+              <Form.Item
+                label="Email Address or username"
+                required
+                name="who"
+                rules={[
+                  {
+                    validate: (_v) => !!_v,
+                    message: "请输入邮箱或用户名",
+                  },
+                ]}
+              >
                 <Input className="w-full" />
               </Form.Item>
 
-              <Form.Item label="Password" required name="password">
+              <Form.Item
+                label="Password"
+                required
+                name="password"
+                rules={[
+                  {
+                    validate: (_v) => !!_v,
+                    message: "请输入密码",
+                  },
+                ]}
+              >
                 <PasswordInput className="w-full" />
               </Form.Item>
 

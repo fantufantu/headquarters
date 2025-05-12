@@ -1,4 +1,6 @@
 onlyBuiltDependencies:
-  - "@tailwindcss/oxide"
+  - '@tailwindcss/oxide'
   - esbuild
   - musae
+overrides:
+  musae: link:../musae
