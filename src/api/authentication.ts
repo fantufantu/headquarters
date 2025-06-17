@@ -56,3 +56,16 @@ export const LOGOUT: TypedDocumentNode<{ logout: boolean }> = gql`
     logout
   }
 `
+
+/**
+ * @description
+ * 发送密码验证码
+ */
+export const SEND_CHANGE_PASSWORD_CAPTCHA: TypedDocumentNode<
+  { sendChangePasswordCaptcha: string },
+  { to: string }
+> = gql`
+  mutation SendChangePasswordCaptcha($to: String!) {
+    sendChangePasswordCaptcha(to: $to)
+  }
+`

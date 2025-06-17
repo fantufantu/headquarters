@@ -11,6 +11,8 @@ const CaptchaField = ({ dependency }: Props) => {
   const to = Form.useWatch(dependency)
   const [messager] = useMessage()
 
+  console.log('to=======', to)
+
   const [_sendCaptcha] = useMutation(SEND_REIGSTER_CAPTCHA)
 
   const sendCaptcha = useEvent(async () => {
@@ -27,8 +29,9 @@ const CaptchaField = ({ dependency }: Props) => {
   })
 
   return (
-    <Form.Item label='Captcha' name='captcha' className='flex items-center gap-2' required>
-      <OtpInput className='w-full' />
+    <Form.Item label='Captcha' name='captcha' className='flex justify-between items-center gap-2' required>
+      <OtpInput />
+
       <Countdown disabled={!to} onClick={sendCaptcha}>
         GET CAPTCHA
       </Countdown>
