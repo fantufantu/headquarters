@@ -11,8 +11,6 @@ const CaptchaField = ({ dependency }: Props) => {
   const to = Form.useWatch(dependency)
   const [messager] = useMessage()
 
-  console.log('to=======', to)
-
   const [_sendCaptcha] = useMutation(SEND_REIGSTER_CAPTCHA)
 
   const sendCaptcha = useEvent(async () => {
