@@ -1,115 +1,115 @@
-import { bootstrap } from '@aiszlab/bee'
-import { lazy } from 'react'
-import { redirect } from '@aiszlab/bee/router'
-import { RedirectToken } from './utils/redirect-by'
+import { bootstrap } from "@aiszlab/bee";
+import { lazy } from "react";
+import { redirect } from "@aiszlab/bee/router";
+import { RedirectToken } from "./utils/redirect-by";
 
-import './styles.css'
-import 'musae/styles.css'
+import "./styles.css";
+import "musae/styles.css";
 
-import Application from './application'
-import Layout from './layouts/layout'
-import { useAuthentication } from './store/authentication'
+import Application from "./application";
+import Layout from "./layouts/layout";
+import { useAuthentication } from "./store/authentication";
 
-const Home = lazy(() => import('./pages/home'))
-const Articles = lazy(() => import('./pages/articles'))
-const Categories = lazy(() => import('./pages/categories'))
-const Editable = lazy(() => import('./pages/articles/editable'))
-const SignUp = lazy(() => import('./pages/sign-up'))
-const SignIn = lazy(() => import('./pages/sign-in'))
-const Issue = lazy(() => import('./pages/issue'))
-const Issues = lazy(() => import('./pages/issues'))
-const Setting = lazy(() => import('./pages/setting'))
-const ForgotPassword = lazy(() => import('./pages/forgot-password'))
+const Home = lazy(() => import("./pages/home"));
+const Articles = lazy(() => import("./pages/articles"));
+const Categories = lazy(() => import("./pages/categories"));
+const Editable = lazy(() => import("./pages/articles/editable"));
+const SignUp = lazy(() => import("./pages/sign-up"));
+const SignIn = lazy(() => import("./pages/sign-in"));
+const Issue = lazy(() => import("./pages/issue"));
+const Issues = lazy(() => import("./pages/issues"));
+const Setting = lazy(() => import("./pages/setting"));
+const ForgotPassword = lazy(() => import("./pages/forgot-password"));
 
 bootstrap({
-  selectors: '#root',
+  selectors: "#root",
   render: Application,
   routes: [
     {
-      path: '/',
+      path: "/",
       loader: ({ request }) => {
         // signed in, allow visit
-        if (useAuthentication.state.me) return null
+        if (useAuthentication.state.me) return null;
 
-        const _redirect = new URL('/sign-in', request.url)
-        _redirect.searchParams.append(RedirectToken.Redirect, request.url)
-        return redirect(_redirect.toString())
+        const _redirect = new URL("/sign-in", request.url);
+        _redirect.searchParams.append(RedirectToken.Redirect, request.url);
+        return redirect(_redirect.toString());
       },
       children: [
         {
           Component: Layout,
           children: [
             {
-              path: '',
-              Component: Home
+              path: "",
+              Component: Home,
             },
             {
-              path: '/articles',
+              path: "/articles",
               children: [
                 {
-                  path: '',
-                  Component: Articles
+                  path: "",
+                  Component: Articles,
                 },
                 {
-                  path: 'add',
-                  Component: Editable
+                  path: "add",
+                  Component: Editable,
                 },
                 {
-                  path: 'edit/:id',
-                  Component: Editable
-                }
-              ]
+                  path: "edit/:id",
+                  Component: Editable,
+                },
+              ],
             },
             {
-              path: '/categories',
-              Component: Categories
+              path: "/categories",
+              Component: Categories,
             },
             {
-              path: '/issues',
-              Component: Issues
+              path: "/issues",
+              Component: Issues,
             },
             {
-              path: '/setting',
-              Component: Setting
-            }
-          ]
+              path: "/setting",
+              Component: Setting,
+            },
+          ],
         },
         {
-          path: 'issue',
-          Component: Issue
-        }
-      ]
+          path: "issue",
+          Component: Issue,
+        },
+      ],
     },
     {
-      path: '/',
-      // loader: ({ request }) => {
-      //   if (!useAuthentication.state.me) return
+      path: "/",
+      loader: ({ request }) => {
+        if (!useAuthentication.state.me) return;
 
-      //   const authenticated = useAuthentication.state.authenticated
-      //   const _redirectTo = new URL(request.url).searchParams.get('redirect')
+        const authenticated = useAuthentication.state.authenticated;
+        const _redirectTo = new URL(request.url).searchParams.get("redirect");
 
-      //   // 非第三方站点单点登录，直接重定向到站点首页
-      //   if (!_redirectTo) return redirect('/')
+        // 非第三方站点单点登录，直接重定向到站点首页
+        if (!_redirectTo) return redirect("/");
 
-      //   const _redirect = new URL(_redirectTo)
-      //   _redirect.searchParams.set('authenticated', authenticated ?? '')
-      //   return redirect(_redirect.toString())
-      // },
+        const _redirect = new URL(_redirectTo);
+        _redirect.searchParams.set("authenticated", authenticated ?? "");
+        return redirect(_redirect.toString());
+      },
       children: [
         {
-          path: 'sign-in',
+          path: "sign-in",
           Component: SignIn,
-          index: true
+          index: true,
         },
         {
-          path: 'sign-up',
-          Component: SignUp
+          path: "sign-up",
+          Component: SignUp,
         },
         {
-          path: 'forgot-password',
-          Component: ForgotPassword
-        }
-      ]
-    }
-  ]
-})
+          path: "forgot-password",
+          Component: ForgotPassword,
+        },
+      ],
+    },
+  ],
+});
