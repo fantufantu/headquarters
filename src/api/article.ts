@@ -5,8 +5,8 @@ import type {
   ArticleContributionsBy,
   CreateArticleBy,
   UpdateArticleBy
-} from './article.type'
-import type { PaginateBy, Paginated } from './pagination.type'
+} from './article.types'
+import type { PaginateBy, Paginated } from './pagination.types'
 
 export const ARTICLES: TypedDocumentNode<
   { articles: Paginated<Article> },

@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import type { Article } from '../../api/article.type'
+import type { Article } from '../../api/article.types'
 import type { Column } from 'musae/types/table'
 import { Space, Popconfirm, Button, useMessage, Divider } from 'musae'
 import { useNavigate } from '@aiszlab/bee/router'

@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client'
 import { CREATE_ARTICLE, UPDATE_ARTICLE } from '../../../api/article'
 import { useArticle, useCategories } from './hooks'
 import { type FormValues } from './hooks'
-import type { CreateArticleBy } from '../../../api/article.type'
+import type { CreateArticleBy } from '../../../api/article.types'
 
 const Editable = () => {
   const navigate = useNavigate()

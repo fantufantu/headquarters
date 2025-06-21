@@ -1,8 +1,8 @@
-import { gql, type TypedDocumentNode } from '@apollo/client'
-import type { Credential } from './cloud.type'
+import { gql, type TypedDocumentNode } from "@apollo/client";
+import type { Credential } from "./cloud.types";
 
 export const CREDENTIAL: TypedDocumentNode<{
-  credential: Credential
+  credential: Credential;
 }> = gql`
   query Credential {
     credential {
@@ -13,4 +13,4 @@ export const CREDENTIAL: TypedDocumentNode<{
       region
     }
   }
-`
+`;

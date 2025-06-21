@@ -1,5 +1,5 @@
 import { Table, Button, Pagination, Loading } from 'musae'
-import type { Article } from '../../api/article.type'
+import type { Article } from '../../api/article.types'
 import { useColumns } from './hooks'
 import { useNavigate } from '@aiszlab/bee/router'
 import { useCallback } from 'react'

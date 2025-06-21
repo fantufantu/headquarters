@@ -1,4 +1,4 @@
-import type { Who } from '../api/authentication.type'
+import type { Who } from '../api/authentication.types'
 import { client } from '../api'
 import { WHO_AM_I } from '../api/authentication'
 import { AuthenticationToken } from './tokens'

@@ -1,6 +1,6 @@
 import { Table, Pagination, Loading, Button } from 'musae'
 import { useCategories } from '../../hooks/category.hooks'
-import type { Category } from '../../api/category.type'
+import type { Category } from '../../api/category.types'
 import { useColumns } from './hooks'
 import EditableDrawer, { type EditableDrawerRef } from '../../components/category/editable-drawer'
 import { useRef } from 'react'

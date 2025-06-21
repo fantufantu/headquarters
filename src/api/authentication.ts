@@ -1,25 +1,31 @@
-import { gql, TypedDocumentNode } from '@apollo/client'
-import type { LoginBy, RegisterBy, Who } from './authentication.type'
+import { gql, TypedDocumentNode } from "@apollo/client";
+import type { LoginInput, RegisterInput, Who } from "./authentication.types";
 
 /**
  * @description
  * 登录
  */
-export const SIGN_IN: TypedDocumentNode<{ login: string }, { loginBy: LoginBy }> = gql`
-  mutation Login($loginBy: LoginBy!) {
-    login(loginBy: $loginBy)
+export const SIGN_IN: TypedDocumentNode<
+  { login: string },
+  { loginInput: LoginInput }
+> = gql`
+  mutation Login($loginInput: LoginInput!) {
+    login(loginInput: $loginInput)
   }
-`
+`;
 
 /**
  * @description
  * 注册
  */
-export const SIGN_UP: TypedDocumentNode<{ register: string }, { registerBy: RegisterBy }> = gql`
-  mutation Register($registerBy: RegisterBy!) {
-    register(registerBy: $registerBy)
+export const SIGN_UP: TypedDocumentNode<
+  { register: string },
+  { registerInput: RegisterInput }
+> = gql`
+  mutation Register($registerInput: RegisterInput!) {
+    register(registerInput: $registerInput)
   }
-`
+`;
 
 /**
  * @description
@@ -35,17 +41,20 @@ export const WHO_AM_I: TypedDocumentNode<{ whoAmI: Who }> = gql`
       emailAddress
     }
   }
-`
+`;
 
 /**
  * @description
  * 发送注册验证码
  */
-export const SEND_REIGSTER_CAPTCHA: TypedDocumentNode<{ sendRegisterCaptcha: string }, { to: string }> = gql`
+export const SEND_REIGSTER_CAPTCHA: TypedDocumentNode<
+  { sendRegisterCaptcha: string },
+  { to: string }
+> = gql`
   mutation SendRegisterCaptcha($to: String!) {
     sendRegisterCaptcha(to: $to)
   }
-`
+`;
 
 /**
  * @description
@@ -55,7 +64,7 @@ export const LOGOUT: TypedDocumentNode<{ logout: boolean }> = gql`
   mutation Logout {
     logout
   }
-`
+`;
 
 /**
  * @description
@@ -68,4 +77,4 @@ export const SEND_CHANGE_PASSWORD_CAPTCHA: TypedDocumentNode<
   mutation SendChangePasswordCaptcha($to: String!) {
     sendChangePasswordCaptcha(to: $to)
   }
-`
+`;

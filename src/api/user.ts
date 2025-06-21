@@ -1,5 +1,5 @@
-import { gql, TypedDocumentNode } from '@apollo/client'
-import type { UpdateUserBy } from './user.type'
+import { gql, TypedDocumentNode } from "@apollo/client";
+import type { UpdateUserBy } from "./user.types";
 
 /**
  * @description
@@ -7,13 +7,13 @@ import type { UpdateUserBy } from './user.type'
  */
 export const UPDATE_USER: TypedDocumentNode<
   {
-    updateUser: boolean
+    updateUser: boolean;
   },
   {
-    updateUserBy: UpdateUserBy
+    updateUserBy: UpdateUserBy;
   }
 > = gql`
   mutation UpdateUser($updateUserBy: UpdateUserBy!) {
     updateUser(updateBy: $updateUserBy)
   }
-`
+`;
