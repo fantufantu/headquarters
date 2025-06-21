@@ -33,7 +33,7 @@ const SignIn = () => {
     const authenticated = (
       await _signUp({
         variables: {
-          registerBy: {
+          registerInput: {
             username,
             emailAddress,
             password,

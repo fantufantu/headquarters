@@ -1,16 +1,13 @@
 import { useMutation } from "@apollo/client";
 import { Button, Form, Input, PasswordInput, useTheme } from "musae";
 import {
+  CHANGE_PASSWORD,
   SEND_CHANGE_PASSWORD_CAPTCHA,
-  SIGN_UP,
 } from "../../api/authentication";
-import { useWho } from "../../hooks/authentication.hooks";
 import { useEvent } from "@aiszlab/relax";
-import { AuthenticationToken } from "../../store/tokens";
-import { redirectBy, RedirectToken } from "../../utils/redirect-by";
 import { stringify } from "@aiszlab/relax/class-name";
 import styles from "./styles.module.css";
-import { Link } from "@aiszlab/bee/router";
+import { Link, useNavigate } from "@aiszlab/bee/router";
 import CaptchaField from "../../components/authentication/captcha-field";
 import { KeyboardDoubleArrowRight } from "musae/icons";
 
@@ -24,11 +21,11 @@ interface FormValues {
 const ForgotPassword = () => {
   const theme = useTheme();
   const form = Form.useForm<FormValues>();
-  const [_signUp] = useMutation(SIGN_UP);
-  const { whoAmI } = useWho();
+  const [_changePassword] = useMutation(CHANGE_PASSWORD);
   const [_sendCaptcha] = useMutation(SEND_CHANGE_PASSWORD_CAPTCHA);
+  const navigate = useNavigate();
 
-  const signUp = useEvent(async () => {
+  const submit = useEvent(async () => {
     const isValid = await form.validate().catch(() => false);
     if (!isValid) return;
 
@@ -37,30 +34,24 @@ const ForgotPassword = () => {
       emailAddress = "",
       password = "",
     } = form.getFieldsValue();
-    const authenticated = (
-      await _signUp({
-        variables: {
-          registerInput: {
-            emailAddress,
-            password,
-            captcha,
+
+    const isSucceed =
+      (
+        await _changePassword({
+          variables: {
+            changePasswordInput: {
+              who: emailAddress,
+              password,
+              captcha,
+            },
           },
-        },
-      }).catch(() => null)
-    )?.data?.register;
+        }).catch(() => null)
+      )?.data?.changePassword ?? false;
 
-    if (!authenticated) return;
+    if (!isSucceed) return;
 
-    await whoAmI(authenticated);
-    globalThis.window.sessionStorage.setItem(
-      AuthenticationToken.Authenticated,
-      authenticated
-    );
-
-    // 重定向-单点登录
-    redirectBy(({ isSameOrigin }) => ({
-      ...(!isSameOrigin && { [RedirectToken.Redirect]: authenticated }),
-    }));
+    // 重定向到登录页面
+    navigate("/sign-in");
   });
 
   return (
@@ -138,7 +129,7 @@ const ForgotPassword = () => {
                 <Button
                   className="w-52"
                   suffix={<KeyboardDoubleArrowRight />}
-                  onClick={signUp}
+                  onClick={submit}
                 >
                   Change Password
                 </Button>

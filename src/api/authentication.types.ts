@@ -18,3 +18,9 @@ export interface Who {
   nickname?: string;
   emailAddress: string;
 }
+
+export interface ChangePasswordInput {
+  who: string;
+  captcha: string;
+  password: string;
+}

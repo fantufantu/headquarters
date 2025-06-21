@@ -1,5 +1,10 @@
 import { gql, TypedDocumentNode } from "@apollo/client";
-import type { LoginInput, RegisterInput, Who } from "./authentication.types";
+import type {
+  ChangePasswordInput,
+  LoginInput,
+  RegisterInput,
+  Who,
+} from "./authentication.types";
 
 /**
  * @description
@@ -76,5 +81,22 @@ export const SEND_CHANGE_PASSWORD_CAPTCHA: TypedDocumentNode<
 > = gql`
   mutation SendChangePasswordCaptcha($to: String!) {
     sendChangePasswordCaptcha(to: $to)
+  }
+`;
+
+/**
+ * @description
+ * 修改密码
+ */
+export const CHANGE_PASSWORD: TypedDocumentNode<
+  {
+    changePassword: boolean;
+  },
+  {
+    changePasswordInput: ChangePasswordInput;
+  }
+> = gql`
+  mutation ChangePassword($changePasswordInput: ChangePasswordInput!) {
+    changePassword(changePasswordInput: $changePasswordInput)
   }
 `;
