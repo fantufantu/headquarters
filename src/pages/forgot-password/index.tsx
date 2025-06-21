@@ -1,5 +1,12 @@
 import { useMutation } from "@apollo/client";
-import { Button, Form, Input, PasswordInput, useTheme } from "musae";
+import {
+  Button,
+  Form,
+  Input,
+  PasswordInput,
+  useMessage,
+  useTheme,
+} from "musae";
 import {
   CHANGE_PASSWORD,
   SEND_CHANGE_PASSWORD_CAPTCHA,
@@ -24,6 +31,7 @@ const ForgotPassword = () => {
   const [_changePassword] = useMutation(CHANGE_PASSWORD);
   const [_sendCaptcha] = useMutation(SEND_CHANGE_PASSWORD_CAPTCHA);
   const navigate = useNavigate();
+  const { "0": messager } = useMessage();
 
   const submit = useEvent(async () => {
     const isValid = await form.validate().catch(() => false);
@@ -51,7 +59,18 @@ const ForgotPassword = () => {
     if (!isSucceed) return;
 
     // 重定向到登录页面
+    messager.success({ description: "密码修改成功，请前往登录页登录！" });
     navigate("/sign-in");
+  });
+
+  const sendCaptcha = useEvent(async (to: string) => {
+    return !!(
+      await _sendCaptcha({
+        variables: {
+          to,
+        },
+      })
+    )?.data?.sendChangePasswordCaptcha;
   });
 
   return (
@@ -105,7 +124,7 @@ const ForgotPassword = () => {
                 <Input className="w-full" />
               </Form.Item>
 
-              <CaptchaField dependency="emailAddress" />
+              <CaptchaField dependency="emailAddress" onSend={sendCaptcha} />
 
               <Form.Item label="Password" required name="password">
                 <PasswordInput className="w-full" />

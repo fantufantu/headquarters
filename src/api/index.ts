@@ -23,7 +23,7 @@ const client = new ApolloClient({
       })
     }),
     new HttpLink({
-      uri: 'https://api.fantufantu.com',
+      uri: '/graphql',
       fetch: (uri, options) => {
         const _authenticated = useAuthentication.state.authenticated
         const _headers = new Headers(options?.headers)
