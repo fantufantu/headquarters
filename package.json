@@ -26,7 +26,7 @@
     ]
   },
   "dependencies": {
-    "@aiszlab/bee": "^2.0.5",
+    "@aiszlab/bee": "2.0.6-beta.7",
     "@aiszlab/fuzzy": "^2.0.5",
     "@aiszlab/relax": "^2.0.5",
     "@apollo/client": "^3.13.8",
