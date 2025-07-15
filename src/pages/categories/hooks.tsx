@@ -10,7 +10,7 @@ export const useColumns = ({
   editableRef,
   refetch
 }: {
-  editableRef: RefObject<EditableDrawerRef>
+  editableRef: RefObject<EditableDrawerRef | null>
   refetch: VoidFunction
 }) => {
   const [_remove] = useMutation(REMOVE_CATEGORY)
