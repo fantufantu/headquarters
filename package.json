@@ -44,5 +44,11 @@
     "eslint": "^9.26.0",
     "eslint-config-react-app": "^7.0.1",
     "typescript": "^5.8.3"
+  },
+  "prettier": {
+    "semi": true,
+    "printWidth": 120,
+    "singleQuote": false,
+    "trailingComma": "all"
   }
 }
