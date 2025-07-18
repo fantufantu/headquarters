@@ -21,6 +21,10 @@ export const useNavigations = () => {
         label: '分类管理'
       },
       {
+        path: '/resume-templates',
+        label: '简历模板管理'
+      },
+      {
         path: '/issues',
         label: '反馈管理'
       }

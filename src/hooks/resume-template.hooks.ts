@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { usePagination } from './pagination.hooks'
 import { RESUME_TEMPLATES } from '../api/resume-template'
+import { useEvent } from '@aiszlab/relax'
 
 /**
  * @description
@@ -8,27 +9,38 @@ import { RESUME_TEMPLATES } from '../api/resume-template'
  * 1. 通用的分页逻辑
  */
 export const useResumeTemplates = () => {
-  const { page, onPageChange, onPageSizeChange, pageSize } = usePagination()
+  const { page, limit, changePage, changeLimit } = usePagination()
 
   const {
     data: { resumeTemplates: { items: resumeTemplates = [], total = 0 } = {} } = {},
-    refetch,
+    refetch: _refetch,
     loading
   } = useQuery(RESUME_TEMPLATES, {
     variables: {
       paginateBy: {
-        limit: pageSize,
+        limit,
         page
       }
     }
   })
 
+  const refetch = useEvent(async (_page: number = page) => {
+    changePage(_page)
+
+    await _refetch({
+      paginateBy: {
+        limit,
+        page: _page
+      }
+    })
+  })
+
   return {
     resumeTemplates,
     page,
-    pageSize,
-    onPageChange,
-    onPageSizeChange,
+    limit,
+    changePage,
+    changeLimit,
     isLoading: loading,
     total,
     refetch

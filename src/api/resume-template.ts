@@ -1,5 +1,5 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
-import { ResumeTemplate } from './resume-template.types'
+import { CreateResumeTemplateInput, ResumeTemplate, UpdateResumeTemplateInput } from './resume-template.types'
 import { PaginateBy, Paginated } from './pagination.types'
 
 /**
@@ -33,5 +33,45 @@ export const RESUME_TEMPLATE: TypedDocumentNode<{ resumeTemplate: ResumeTemplate
       name
       cover
     }
+  }
+`
+
+/**
+ * 创建简历模板
+ * @description 创建简历模板
+ */
+export const CREATE_RESUME_TEMPLATE: TypedDocumentNode<
+  { createResumeTemplate: ResumeTemplate },
+  { input: CreateResumeTemplateInput }
+> = gql`
+  mutation CreateResumeTemplate($input: CreateResumeTemplateInput!) {
+    createResumeTemplate(createResumeTemplateInput: $input) {
+      id
+      name
+      cover
+    }
+  }
+`
+
+/**
+ * 更新简历模板
+ * @description 更新简历模板
+ */
+export const UPDATE_RESUME_TEMPLATE: TypedDocumentNode<
+  { updateResumeTemplate: boolean },
+  { id: number; input: UpdateResumeTemplateInput }
+> = gql`
+  mutation UpdateResumeTemplate($id: Int!, $input: UpdateResumeTemplateInput!) {
+    updateResumeTemplate(id: $id, updateResumeTemplateInput: $input)
+  }
+`
+
+/**
+ * 删除简历模板
+ * @description 删除简历模板
+ */
+export const REMOVE_RESUME_TEMPLATE: TypedDocumentNode<{ removeResumeTemplate: boolean }, { id: number }> = gql`
+  mutation RemoveResumeTemplate($id: Int!) {
+    removeResumeTemplate(id: $id)
   }
 `

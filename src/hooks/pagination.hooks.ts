@@ -6,20 +6,20 @@ import { useCallback, useState } from 'react'
  */
 export const usePagination = () => {
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
+  const [limit, setLimit] = useState(10)
 
-  const onPageChange = useCallback((_page: number) => {
+  const changePage = useCallback((_page: number) => {
     setPage(_page)
   }, [])
 
-  const onPageSizeChange = useCallback((_pageSize: number) => {
-    setPageSize(_pageSize)
+  const changeLimit = useCallback((_limit: number) => {
+    setLimit(_limit)
   }, [])
 
   return {
     page,
-    pageSize,
-    onPageChange,
-    onPageSizeChange
+    limit,
+    changePage,
+    changeLimit
   }
 }
