@@ -32,7 +32,7 @@
     "@apollo/client": "^3.13.8",
     "cos-js-sdk-v5": "^1.8.7",
     "dayjs": "^1.11.13",
-    "musae": "1.0.7-beta.25",
+    "musae": "1.0.7-beta.27",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
@@ -47,7 +47,7 @@
   },
   "prettier": {
     "semi": true,
-    "printWidth": 120,
+    "printWidth": 100,
     "singleQuote": false,
     "trailingComma": "all"
   }

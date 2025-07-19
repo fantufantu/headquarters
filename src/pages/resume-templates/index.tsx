@@ -1,27 +1,27 @@
-import { Table, Pagination, Loading, Button } from 'musae'
-import { useColumns } from './hooks'
-import Editor, { type EditorRef } from '../../components/resume-template/editor'
-import { useRef } from 'react'
-import { useEvent } from '@aiszlab/relax'
-import { useResumeTemplates } from '../../hooks/resume-template.hooks'
-import { ResumeTemplate } from '../../api/resume-template.types'
+import { Table, Pagination, Loading, Button } from "musae";
+import { useColumns } from "./hooks";
+import Editor, { type EditorRef } from "../../components/resume-template/editor";
+import { useRef } from "react";
+import { useEvent } from "@aiszlab/relax";
+import { useResumeTemplates } from "../../hooks/resume-template.hooks";
+import { ResumeTemplate } from "../../api/resume-template.types";
 
 const ResumeTemplates = () => {
-  const { resumeTemplates, changePage, changeLimit, page, isLoading, limit, total, refetch } = useResumeTemplates()
+  const { resumeTemplates, changePage, changeLimit, page, isLoading, limit, total, refetch } = useResumeTemplates();
 
-  const editorRef = useRef<EditorRef>(null)
+  const editorRef = useRef<EditorRef>(null);
 
   const columns = useColumns({
     editorRef,
-    onRemove: () => refetch(1)
-  })
+    onRemove: () => refetch(1),
+  });
 
   const add = useEvent(() => {
-    editorRef.current?.open()
-  })
+    editorRef.current?.open();
+  });
 
   return (
-    <Loading className='flex flex-col gap-4' loading={isLoading}>
+    <Loading className="flex flex-col gap-4" loading={isLoading}>
       <div>
         <Button onClick={add}>新增简历模板</Button>
       </div>
@@ -30,9 +30,13 @@ const ResumeTemplates = () => {
 
       <Pagination at={page} pageSize={limit} total={total} onChange={changePage} onPageSizeChange={changeLimit} />
 
-      <Editor ref={editorRef} />
+      <Editor
+        ref={editorRef}
+        // 提交后重新获取数据
+        onSubmit={refetch}
+      />
     </Loading>
-  )
-}
+  );
+};
 
-export default ResumeTemplates
+export default ResumeTemplates;

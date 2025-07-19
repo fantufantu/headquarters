@@ -8,12 +8,17 @@ export interface EditorRef {
   open: (id?: number) => Promise<void>;
 }
 
+interface Props {
+  onSubmit?: () => void;
+}
+
 interface FormValue {
+  code: string;
   name: string;
   cover: string;
 }
 
-const Editor = forwardRef<EditorRef>((_, ref) => {
+const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
   const [isVisible, { turnOn, turnOff }] = useBoolean(false);
   const [id, setId] = useState<number>();
   const form = Form.useForm<FormValue>();
@@ -32,6 +37,7 @@ const Editor = forwardRef<EditorRef>((_, ref) => {
           if (!_resumeTemplate) return;
 
           form.setFieldsValue({
+            code: _resumeTemplate.code,
             name: _resumeTemplate.name,
             cover: _resumeTemplate.cover,
           });
@@ -59,11 +65,16 @@ const Editor = forwardRef<EditorRef>((_, ref) => {
 
     if (!isSucceed) return;
     turnOff();
+    onSubmit?.();
   };
 
   return (
     <Dialog title="编辑" open={isVisible} onClose={turnOff} onConfirm={submit}>
       <Form form={form}>
+        <Form.Item label="模板 code" name="code" required>
+          <Input placeholder="请输入模板 code" />
+        </Form.Item>
+
         <Form.Item label="模板名称" name="name" required>
           <Input placeholder="请输入模板名称" />
         </Form.Item>
