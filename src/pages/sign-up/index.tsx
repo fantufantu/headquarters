@@ -39,16 +39,11 @@ const SignIn = () => {
     const isValid = await form.validate().catch(() => false);
     if (!isValid) return;
 
-    const {
-      username = "",
-      captcha = "",
-      emailAddress = "",
-      password = "",
-    } = form.getFieldsValue();
+    const { username = "", captcha = "", emailAddress = "", password = "" } = form.getFieldsValue();
     const authenticated = (
       await _signUp({
         variables: {
-          registerInput: {
+          input: {
             username,
             emailAddress,
             password,
@@ -61,10 +56,7 @@ const SignIn = () => {
     if (!authenticated) return;
 
     await whoAmI(authenticated);
-    globalThis.window.sessionStorage.setItem(
-      AuthenticationToken.Authenticated,
-      authenticated
-    );
+    globalThis.window.sessionStorage.setItem(AuthenticationToken.Authenticated, authenticated);
 
     // 重定向-单点登录
     redirectBy(({ isSameOrigin }) => ({
@@ -74,12 +66,7 @@ const SignIn = () => {
 
   return (
     <main className="h-screen w-screen flex flex-row">
-      <div
-        className={stringify(
-          "flex-1 flex justify-center items-center",
-          styles.cover
-        )}
-      >
+      <div className={stringify("flex-1 flex justify-center items-center", styles.cover)}>
         <div className="relative my-52 mx-40">
           <img width="100%" height="auto" src="/account.png" alt="Sign In" />
           <span
@@ -134,11 +121,7 @@ const SignIn = () => {
               <CaptchaField dependency="emailAddress" onSend={sendCaptcha} />
 
               <Form.Item>
-                <Button
-                  className="w-52"
-                  suffix={<KeyboardDoubleArrowRight />}
-                  onClick={signUp}
-                >
+                <Button className="w-52" suffix={<KeyboardDoubleArrowRight />} onClick={signUp}>
                   Sign Up
                 </Button>
               </Form.Item>

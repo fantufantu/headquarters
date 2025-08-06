@@ -1,9 +1,9 @@
-export interface PaginateBy {
-  page: number
-  limit: number
+export interface Pagination {
+  page: number;
+  limit: number;
 }
 
 export interface Paginated<T> {
-  items: T[]
-  total: number
+  items: T[];
+  total: number;
 }

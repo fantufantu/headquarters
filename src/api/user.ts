@@ -14,6 +14,6 @@ export const UPDATE_USER: TypedDocumentNode<
   }
 > = gql`
   mutation UpdateUser($updateUserBy: UpdateUserBy!) {
-    updateUser(updateBy: $updateUserBy)
+    updateUser(input: $updateUserBy)
   }
 `;

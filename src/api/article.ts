@@ -1,21 +1,21 @@
-import { gql, TypedDocumentNode } from '@apollo/client'
+import { gql, TypedDocumentNode } from "@apollo/client";
 import type {
   Article,
   ArticleContribution,
-  ArticleContributionsBy,
+  FilterArticleContributionsInput,
   CreateArticleBy,
-  UpdateArticleBy
-} from './article.types'
-import type { PaginateBy, Paginated } from './pagination.types'
+  UpdateArticleBy,
+} from "./article.types";
+import type { Pagination, Paginated } from "./pagination.types";
 
 export const ARTICLES: TypedDocumentNode<
   { articles: Paginated<Article> },
   {
-    paginateBy?: PaginateBy
+    pagination?: Pagination;
   }
 > = gql`
-  query Articles($paginateBy: PaginateBy) {
-    articles(filterBy: {}, paginateBy: $paginateBy) {
+  query Articles($pagination: Pagination) {
+    articles(filter: {}, pagination: $pagination) {
       items {
         id
         title
@@ -27,7 +27,7 @@ export const ARTICLES: TypedDocumentNode<
       total
     }
   }
-`
+`;
 
 /**
  * @description
@@ -35,21 +35,21 @@ export const ARTICLES: TypedDocumentNode<
  */
 export const CREATE_ARTICLE: TypedDocumentNode<
   {
-    createArticle: Article
+    createArticle: Article;
   },
   {
-    createBy: CreateArticleBy
+    input: CreateArticleBy;
   }
 > = gql`
-  mutation CreateArticle($createBy: CreateArticleBy!) {
-    createArticle(createBy: $createBy) {
+  mutation CreateArticle($input: CreateArticleBy!) {
+    createArticle(input: $input) {
       id
       title
       content
       cover
     }
   }
-`
+`;
 
 /**
  * @description
@@ -57,10 +57,10 @@ export const CREATE_ARTICLE: TypedDocumentNode<
  */
 export const ARTICLE: TypedDocumentNode<
   {
-    article: Article
+    article: Article;
   },
   {
-    id: number
+    id: number;
   }
 > = gql`
   query Article($id: Int!) {
@@ -73,7 +73,7 @@ export const ARTICLE: TypedDocumentNode<
       }
     }
   }
-`
+`;
 
 /**
  * @description
@@ -81,17 +81,17 @@ export const ARTICLE: TypedDocumentNode<
  */
 export const UPDATE_ARTICLE: TypedDocumentNode<
   {
-    updateArticle: Article
+    updateArticle: Article;
   },
   {
-    id: number
-    updateBy: UpdateArticleBy
+    id: number;
+    input: UpdateArticleBy;
   }
 > = gql`
-  mutation UpdateArticle($id: Int!, $updateBy: UpdateArticleBy!) {
-    updateArticle(id: $id, updateBy: $updateBy)
+  mutation UpdateArticle($id: Int!, $input: UpdateArticleBy!) {
+    updateArticle(id: $id, input: $input)
   }
-`
+`;
 
 /**
  * @description
@@ -99,16 +99,16 @@ export const UPDATE_ARTICLE: TypedDocumentNode<
  */
 export const REMOVE_ARTICLE: TypedDocumentNode<
   {
-    removeArticle: boolean
+    removeArticle: boolean;
   },
   {
-    id: number
+    id: number;
   }
 > = gql`
   mutation RemoveArticle($id: Int!) {
     removeArticle(id: $id)
   }
-`
+`;
 
 /**
  * @description
@@ -116,16 +116,16 @@ export const REMOVE_ARTICLE: TypedDocumentNode<
  */
 export const ARTICLE_CONTRIBUTIONS: TypedDocumentNode<
   {
-    articleContributions: ArticleContribution[]
+    articleContributions: ArticleContribution[];
   },
   {
-    queryBy: ArticleContributionsBy
+    filter: FilterArticleContributionsInput;
   }
 > = gql`
-  query ArticleContributions($queryBy: ArticleContributionsBy!) {
-    articleContributions(queryBy: $queryBy) {
+  query ArticleContributions($filter: FilterArticleContributionsInput!) {
+    articleContributions(filter: $filter) {
       contributedAt
       count
     }
   }
-`
+`;

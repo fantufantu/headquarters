@@ -31,7 +31,7 @@ const SignIn = () => {
     const authenticated = (
       await _login({
         variables: {
-          loginInput: {
+          input: {
             password,
             who,
           },
@@ -42,10 +42,10 @@ const SignIn = () => {
     if (!authenticated) return;
 
     await whoAmI(authenticated);
-    (isRememberMe
-      ? globalThis.window.localStorage
-      : globalThis.window.sessionStorage
-    ).setItem(AuthenticationToken.Authenticated, authenticated);
+    (isRememberMe ? globalThis.window.localStorage : globalThis.window.sessionStorage).setItem(
+      AuthenticationToken.Authenticated,
+      authenticated,
+    );
 
     // 重定向-单点登录
     redirectBy(({ isSameOrigin }) => ({
@@ -55,12 +55,7 @@ const SignIn = () => {
 
   return (
     <main className="h-screen w-screen flex flex-row">
-      <div
-        className={stringify(
-          "flex-1 flex justify-center items-center",
-          styles.cover
-        )}
-      >
+      <div className={stringify("flex-1 flex justify-center items-center", styles.cover)}>
         <div className="relative my-52 mx-40">
           <img width="100%" height="auto" src="/account.png" alt="Sign In" />
           <span
@@ -129,10 +124,7 @@ const SignIn = () => {
                 <PasswordInput className="w-full" />
               </Form.Item>
 
-              <Form.Item
-                className="flex items-center justify-between"
-                name="isRememberMe"
-              >
+              <Form.Item className="flex items-center justify-between" name="isRememberMe">
                 <Checkbox>Remember me</Checkbox>
                 <a
                   className="text-xs font-semibold"
@@ -146,11 +138,7 @@ const SignIn = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button
-                  className="w-52"
-                  suffix={<KeyboardDoubleArrowRight />}
-                  onClick={login}
-                >
+                <Button className="w-52" suffix={<KeyboardDoubleArrowRight />} onClick={login}>
                   Sign In
                 </Button>
               </Form.Item>

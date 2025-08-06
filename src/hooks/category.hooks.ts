@@ -1,7 +1,7 @@
-import { useQuery } from '@apollo/client'
-import { usePagination } from './pagination.hooks'
-import { CATEGORIES } from '../api/category'
-import { useCallback } from 'react'
+import { useQuery } from "@apollo/client";
+import { usePagination } from "./pagination.hooks";
+import { CATEGORIES } from "../api/category";
+import { useCallback } from "react";
 
 /**
  * @description
@@ -10,41 +10,41 @@ import { useCallback } from 'react'
  * 2. 通用的关键字搜索
  */
 export const useCategories = () => {
-  const { page, onPageChange, onPageSizeChange, pageSize } = usePagination()
+  const { page, changePage, changeLimit, limit } = usePagination();
 
   const {
     data: { articleCategories: { items: categories = [], total = 0 } = {} } = {},
     refetch,
-    loading
+    loading,
   } = useQuery(CATEGORIES, {
     variables: {
-      paginateBy: {
-        limit: pageSize,
-        page
-      }
-    }
-  })
+      pagination: {
+        limit,
+        page,
+      },
+    },
+  });
 
   const onSearch = useCallback(
     (_keyword: string) => {
       refetch({
-        filterBy: {
-          keyword: _keyword
-        }
-      })
+        filter: {
+          keyword: _keyword,
+        },
+      });
     },
-    [refetch]
-  )
+    [refetch],
+  );
 
   return {
     categories,
     page,
-    pageSize,
-    onPageChange,
-    onPageSizeChange,
+    limit,
+    changePage,
+    changeLimit,
     onSearch,
     isLoading: loading,
     total,
-    refetch
-  }
-}
+    refetch,
+  };
+};

@@ -1,6 +1,11 @@
-import { gql, TypedDocumentNode } from '@apollo/client'
-import type { Category, CreateCategoryBy, FilterCategoriesBy, UpdateCategoryBy } from './category.types'
-import type { PaginateBy, Paginated } from './pagination.types'
+import { gql, TypedDocumentNode } from "@apollo/client";
+import type {
+  Category,
+  CreateCategoryInput,
+  FilterCategoriesInput,
+  UpdateCategoryInput,
+} from "./category.types";
+import type { Pagination, Paginated } from "./pagination.types";
 
 /**
  * @description
@@ -9,14 +14,13 @@ import type { PaginateBy, Paginated } from './pagination.types'
 export const CATEGORIES: TypedDocumentNode<
   { articleCategories: Paginated<Category> },
   {
-    filterBy?: FilterCategoriesBy
-    paginateBy?: PaginateBy
+    filter?: FilterCategoriesInput;
+    pagination?: Pagination;
   }
 > = gql`
-  query Categories($filterBy: FilterArticleCategoriesBy, $paginateBy: PaginateBy) {
-    articleCategories(filterBy: $filterBy, paginateBy: $paginateBy) {
+  query Categories($filter: FilterArticleCategoriesInput, $pagination: Pagination) {
+    articleCategories(filter: $filter, pagination: $pagination) {
       items {
-        id
         code
         name
         image
@@ -24,7 +28,7 @@ export const CATEGORIES: TypedDocumentNode<
       total
     }
   }
-`
+`;
 
 /**
  * @description
@@ -33,17 +37,17 @@ export const CATEGORIES: TypedDocumentNode<
 export const CATEGORY: TypedDocumentNode<
   { articleCategory: Category },
   {
-    id: number
+    code: string;
   }
 > = gql`
-  query Category($id: Int!) {
-    articleCategory(id: $id) {
+  query Category($code: String!) {
+    articleCategory(code: $code) {
       code
       name
       image
     }
   }
-`
+`;
 
 /**
  * @description
@@ -52,16 +56,16 @@ export const CATEGORY: TypedDocumentNode<
 export const CREATE_CATEGORY: TypedDocumentNode<
   { createArticleCategory: Category },
   {
-    createBy: CreateCategoryBy
+    input: CreateCategoryInput;
   }
 > = gql`
-  mutation CreateCategory($createBy: CreateArticleCategoryBy!) {
-    createArticleCategory(createBy: $createBy) {
+  mutation CreateCategory($input: CreateArticleCategoryInput!) {
+    createArticleCategory(input: $input) {
       code
       name
     }
   }
-`
+`;
 
 /**
  * @description
@@ -70,21 +74,24 @@ export const CREATE_CATEGORY: TypedDocumentNode<
 export const UPDATE_CATEGORY: TypedDocumentNode<
   { updateArticleCategory: Category },
   {
-    id: number
-    updateBy: UpdateCategoryBy
+    code: string;
+    input: UpdateCategoryInput;
   }
 > = gql`
-  mutation UpdateCategory($id: Int!, $updateBy: UpdateArticleCategoryBy!) {
-    updateArticleCategory(id: $id, updateBy: $updateBy)
+  mutation UpdateCategory($id: Int!, $input: UpdateArticleCategoryInput!) {
+    updateArticleCategory(id: $id, input: $input)
   }
-`
+`;
 
 /**
  * @description
  * 删除分类
  */
-export const REMOVE_CATEGORY: TypedDocumentNode<{ removeArticleCategory: boolean }, { id: number }> = gql`
-  mutation RemoveCategory($id: Int!) {
-    removeArticleCategory(id: $id)
+export const REMOVE_CATEGORY: TypedDocumentNode<
+  { removeArticleCategory: boolean },
+  { code: string }
+> = gql`
+  mutation RemoveCategory($code: String!) {
+    removeArticleCategory(code: $code)
   }
-`
+`;

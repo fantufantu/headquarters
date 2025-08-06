@@ -4,7 +4,7 @@ import {
   ResumeTemplate,
   UpdateResumeTemplateInput,
 } from "./resume-template.types";
-import { PaginateBy, Paginated } from "./pagination.types";
+import { Pagination, Paginated } from "./pagination.types";
 
 /**
  * @description 查询简历模板列表
@@ -12,13 +12,12 @@ import { PaginateBy, Paginated } from "./pagination.types";
 export const RESUME_TEMPLATES: TypedDocumentNode<
   { resumeTemplates: Paginated<ResumeTemplate> },
   {
-    paginateBy?: PaginateBy;
+    pagination?: Pagination;
   }
 > = gql`
-  query ResumeTemplates($paginateBy: PaginateBy) {
-    resumeTemplates(paginateBy: $paginateBy) {
+  query ResumeTemplates($pagination: Pagination) {
+    resumeTemplates(pagination: $pagination) {
       items {
-        id
         code
         name
         cover

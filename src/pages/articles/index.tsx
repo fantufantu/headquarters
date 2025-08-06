@@ -1,46 +1,46 @@
-import { Table, Button, Pagination, Loading } from 'musae'
-import type { Article } from '../../api/article.types'
-import { useColumns } from './hooks'
-import { useNavigate } from '@aiszlab/bee/router'
-import { useCallback } from 'react'
-import { useQuery } from '@apollo/client'
-import { ARTICLES } from '../../api/article'
-import { usePagination } from '../../hooks/pagination.hooks'
-import { useEvent } from '@aiszlab/relax'
+import { Table, Button, Pagination, Loading } from "musae";
+import type { Article } from "../../api/article.types";
+import { useColumns } from "./hooks";
+import { useNavigate } from "@aiszlab/bee/router";
+import { useCallback } from "react";
+import { useQuery } from "@apollo/client";
+import { ARTICLES } from "../../api/article";
+import { usePagination } from "../../hooks/pagination.hooks";
+import { useEvent } from "@aiszlab/relax";
 
 const Articles = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const { page, onPageChange, onPageSizeChange, pageSize } = usePagination()
+  const { page, changePage, changeLimit, limit } = usePagination();
   const {
     loading,
     data: { articles: { items: articles, total } } = { articles: { items: [], total: 0 } },
-    refetch: _refetch
+    refetch: _refetch,
   } = useQuery(ARTICLES, {
     variables: {
-      paginateBy: {
+      pagination: {
         page,
-        limit: pageSize
-      }
-    }
-  })
+        limit,
+      },
+    },
+  });
 
   const refetch = useEvent(() => {
-    const _page = 1
-    onPageChange(_page)
-    _refetch({ paginateBy: { page: _page, limit: pageSize } })
-  })
+    const _page = 1;
+    changeLimit(_page);
+    _refetch({ pagination: { page: _page, limit } });
+  });
 
   const columns = useColumns({
-    refetch
-  })
+    refetch,
+  });
 
   const toAdd = useCallback(() => {
-    navigate('/articles/add')
-  }, [navigate])
+    navigate("/articles/add");
+  }, [navigate]);
 
   return (
-    <Loading className='flex flex-col gap-4' loading={loading}>
+    <Loading className="flex flex-col gap-4" loading={loading}>
       <div>
         <Button onClick={toAdd}>新增文章</Button>
       </div>
@@ -49,13 +49,13 @@ const Articles = () => {
 
       <Pagination
         at={page}
-        pageSize={pageSize}
+        pageSize={limit}
         total={total}
-        onChange={onPageChange}
-        onPageSizeChange={onPageSizeChange}
+        onChange={changePage}
+        onPageSizeChange={changeLimit}
       />
     </Loading>
-  )
-}
+  );
+};
 
-export default Articles
+export default Articles;

@@ -1,10 +1,10 @@
-import { Table, Pagination, Loading, Button } from 'musae'
-import { useCategories } from '../../hooks/category.hooks'
-import type { Category } from '../../api/category.types'
-import { useColumns } from './hooks'
-import EditableDrawer, { type EditableDrawerRef } from '../../components/category/editable-drawer'
-import { useRef } from 'react'
-import { useEvent } from '@aiszlab/relax'
+import { Table, Pagination, Loading, Button } from "musae";
+import { useCategories } from "../../hooks/category.hooks";
+import type { Category } from "../../api/category.types";
+import { useColumns } from "./hooks";
+import EditableDrawer, { type EditableDrawerRef } from "../../components/category/editable-drawer";
+import { useRef } from "react";
+import { useEvent } from "@aiszlab/relax";
 
 const Categories = () => {
   const {
@@ -15,27 +15,27 @@ const Categories = () => {
     isLoading,
     pageSize,
     total,
-    refetch: _refetch
-  } = useCategories()
+    refetch: _refetch,
+  } = useCategories();
 
-  const ref = useRef<EditableDrawerRef>(null)
+  const ref = useRef<EditableDrawerRef>(null);
 
   const refetch = useEvent(() => {
-    onPageChange(1)
-    _refetch({ paginateBy: { page: 1, limit: pageSize } })
-  })
+    onPageChange(1);
+    _refetch({ pagination: { page: 1, limit: pageSize } });
+  });
 
   const columns = useColumns({
     editableRef: ref,
-    refetch
-  })
+    refetch,
+  });
 
   const add = useEvent(() => {
-    ref.current?.open()
-  })
+    ref.current?.open();
+  });
 
   return (
-    <Loading className='flex flex-col gap-4' loading={isLoading}>
+    <Loading className="flex flex-col gap-4" loading={isLoading}>
       <div>
         <Button onClick={add}>新增分类</Button>
       </div>
@@ -52,7 +52,7 @@ const Categories = () => {
 
       <EditableDrawer ref={ref} onSubmitted={refetch} />
     </Loading>
-  )
-}
+  );
+};
 
-export default Categories
+export default Categories;

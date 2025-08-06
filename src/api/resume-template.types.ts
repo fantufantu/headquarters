@@ -1,5 +1,4 @@
 export interface ResumeTemplate {
-  id: number;
   code: string;
   name: string;
   cover: string;

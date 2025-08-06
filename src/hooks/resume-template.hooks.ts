@@ -1,7 +1,7 @@
-import { useQuery } from '@apollo/client'
-import { usePagination } from './pagination.hooks'
-import { RESUME_TEMPLATES } from '../api/resume-template'
-import { useEvent } from '@aiszlab/relax'
+import { useQuery } from "@apollo/client";
+import { usePagination } from "./pagination.hooks";
+import { RESUME_TEMPLATES } from "../api/resume-template";
+import { useEvent } from "@aiszlab/relax";
 
 /**
  * @description
@@ -9,31 +9,31 @@ import { useEvent } from '@aiszlab/relax'
  * 1. 通用的分页逻辑
  */
 export const useResumeTemplates = () => {
-  const { page, limit, changePage, changeLimit } = usePagination()
+  const { page, limit, changePage, changeLimit } = usePagination();
 
   const {
     data: { resumeTemplates: { items: resumeTemplates = [], total = 0 } = {} } = {},
     refetch: _refetch,
-    loading
+    loading,
   } = useQuery(RESUME_TEMPLATES, {
     variables: {
-      paginateBy: {
+      pagination: {
         limit,
-        page
-      }
-    }
-  })
+        page,
+      },
+    },
+  });
 
   const refetch = useEvent(async (_page: number = page) => {
-    changePage(_page)
+    changePage(_page);
 
     await _refetch({
-      paginateBy: {
+      pagination: {
         limit,
-        page: _page
-      }
-    })
-  })
+        page: _page,
+      },
+    });
+  });
 
   return {
     resumeTemplates,
@@ -43,6 +43,6 @@ export const useResumeTemplates = () => {
     changeLimit,
     isLoading: loading,
     total,
-    refetch
-  }
-}
+    refetch,
+  };
+};

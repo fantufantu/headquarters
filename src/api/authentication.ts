@@ -1,21 +1,13 @@
 import { gql, TypedDocumentNode } from "@apollo/client";
-import type {
-  ChangePasswordInput,
-  LoginInput,
-  RegisterInput,
-  Who,
-} from "./authentication.types";
+import type { ChangePasswordInput, LoginInput, RegisterInput, Who } from "./authentication.types";
 
 /**
  * @description
  * 登录
  */
-export const SIGN_IN: TypedDocumentNode<
-  { login: string },
-  { loginInput: LoginInput }
-> = gql`
-  mutation Login($loginInput: LoginInput!) {
-    login(loginInput: $loginInput)
+export const SIGN_IN: TypedDocumentNode<{ login: string }, { input: LoginInput }> = gql`
+  mutation Login($input: LoginInput!) {
+    login(input: $input)
   }
 `;
 
@@ -23,12 +15,9 @@ export const SIGN_IN: TypedDocumentNode<
  * @description
  * 注册
  */
-export const SIGN_UP: TypedDocumentNode<
-  { register: string },
-  { registerInput: RegisterInput }
-> = gql`
-  mutation Register($registerInput: RegisterInput!) {
-    register(registerInput: $registerInput)
+export const SIGN_UP: TypedDocumentNode<{ register: string }, { input: RegisterInput }> = gql`
+  mutation Register($input: RegisterInput!) {
+    register(input: $input)
   }
 `;
 
