@@ -32,10 +32,6 @@ export const useColumns = ({
   return useMemo<Column<ResumeTemplate>[]>(() => {
     return [
       {
-        valueAt: "id",
-        title: "ID",
-      },
-      {
         valueAt: "code",
         title: "简历模板 code",
       },
@@ -46,14 +42,14 @@ export const useColumns = ({
       {
         key: "actions",
         title: "操作",
-        render: (_, { id }) => (
+        render: (_, { code }) => (
           <div className="flex gap-2">
-            <Button variant="text" size="small" onClick={() => editorRef.current?.open(id)}>
+            <Button variant="text" size="small" onClick={() => editorRef.current?.open(code)}>
               编辑
             </Button>
             <Popconfirm
               onConfirm={() => {
-                remove({ variables: { id } });
+                remove({ variables: { code } });
               }}
               content="确定删除吗？"
             >

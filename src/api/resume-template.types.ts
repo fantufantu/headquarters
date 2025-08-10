@@ -4,7 +4,6 @@ export interface ResumeTemplate {
   cover: string;
 }
 
-export interface CreateResumeTemplateInput
-  extends Pick<ResumeTemplate, "code" | "name" | "cover"> {}
+export interface CreateResumeTemplateInput extends ResumeTemplate {}
 
-export interface UpdateResumeTemplateInput extends Partial<CreateResumeTemplateInput> {}
+export interface UpdateResumeTemplateInput extends Omit<CreateResumeTemplateInput, "code"> {}

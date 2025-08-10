@@ -32,11 +32,10 @@ export const RESUME_TEMPLATES: TypedDocumentNode<
  */
 export const RESUME_TEMPLATE: TypedDocumentNode<
   { resumeTemplate: ResumeTemplate },
-  { id: number }
+  { code: string }
 > = gql`
-  query ResumeTemplate($id: Int!) {
-    resumeTemplate(id: $id) {
-      id
+  query ResumeTemplate($code: String!) {
+    resumeTemplate(code: $code) {
       code
       name
       cover
@@ -53,8 +52,8 @@ export const CREATE_RESUME_TEMPLATE: TypedDocumentNode<
   { input: CreateResumeTemplateInput }
 > = gql`
   mutation CreateResumeTemplate($input: CreateResumeTemplateInput!) {
-    createResumeTemplate(createResumeTemplateInput: $input) {
-      id
+    createResumeTemplate(input: $input) {
+      code
       name
       cover
     }
@@ -67,10 +66,10 @@ export const CREATE_RESUME_TEMPLATE: TypedDocumentNode<
  */
 export const UPDATE_RESUME_TEMPLATE: TypedDocumentNode<
   { updateResumeTemplate: boolean },
-  { id: number; input: UpdateResumeTemplateInput }
+  { code: string; input: UpdateResumeTemplateInput }
 > = gql`
-  mutation UpdateResumeTemplate($id: Int!, $input: UpdateResumeTemplateInput!) {
-    updateResumeTemplate(id: $id, updateResumeTemplateInput: $input)
+  mutation UpdateResumeTemplate($code: String!, $input: UpdateResumeTemplateInput!) {
+    updateResumeTemplate(code: $code, input: $input)
   }
 `;
 
@@ -80,9 +79,9 @@ export const UPDATE_RESUME_TEMPLATE: TypedDocumentNode<
  */
 export const REMOVE_RESUME_TEMPLATE: TypedDocumentNode<
   { removeResumeTemplate: boolean },
-  { id: number }
+  { code: string }
 > = gql`
-  mutation RemoveResumeTemplate($id: Int!) {
-    removeResumeTemplate(id: $id)
+  mutation RemoveResumeTemplate($code: String!) {
+    removeResumeTemplate(code: $code)
   }
 `;
