@@ -9,11 +9,11 @@ import { useEvent } from "@aiszlab/relax";
 const Categories = () => {
   const {
     categories,
-    onPageChange,
-    onPageSizeChange,
+    changePage,
+    changeLimit,
     page,
     isLoading,
-    pageSize,
+    limit,
     total,
     refetch: _refetch,
   } = useCategories();
@@ -21,8 +21,7 @@ const Categories = () => {
   const ref = useRef<EditableDrawerRef>(null);
 
   const refetch = useEvent(() => {
-    onPageChange(1);
-    _refetch({ pagination: { page: 1, limit: pageSize } });
+    changePage(1);
   });
 
   const columns = useColumns({
@@ -44,10 +43,10 @@ const Categories = () => {
 
       <Pagination
         at={page}
-        pageSize={pageSize}
+        pageSize={limit}
         total={total}
-        onChange={onPageChange}
-        onPageSizeChange={onPageSizeChange}
+        onChange={changePage}
+        onPageSizeChange={changeLimit}
       />
 
       <EditableDrawer ref={ref} onSubmitted={refetch} />

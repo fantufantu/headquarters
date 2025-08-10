@@ -25,7 +25,7 @@ export const useCategories = () => {
     },
   });
 
-  const onSearch = useCallback(
+  const search = useCallback(
     (_keyword: string) => {
       refetch({
         filter: {
@@ -42,7 +42,7 @@ export const useCategories = () => {
     limit,
     changePage,
     changeLimit,
-    onSearch,
+    search,
     isLoading: loading,
     total,
     refetch,

@@ -1,25 +1,26 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState } from "react";
 
 /**
  * @description
  * pagination
  */
 export const usePagination = () => {
-  const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(10)
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
 
   const changePage = useCallback((_page: number) => {
-    setPage(_page)
-  }, [])
+    setPage(_page);
+  }, []);
 
   const changeLimit = useCallback((_limit: number) => {
-    setLimit(_limit)
-  }, [])
+    setPage(1);
+    setLimit(_limit);
+  }, []);
 
   return {
     page,
     limit,
     changePage,
-    changeLimit
-  }
-}
+    changeLimit,
+  };
+};
