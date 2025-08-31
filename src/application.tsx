@@ -1,12 +1,12 @@
 import { ConfigProvider, ThemeProvider } from "musae";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./api";
-import { AuthenticationToken } from "./store/tokens";
 import { useMounted } from "@aiszlab/relax";
 import { useState } from "react";
 import { useWho } from "./hooks/authentication.hooks";
 import { type ApplicationProps } from "@aiszlab/bee";
 import Placeholder from "./layouts/placeholder";
+import { AuthenticationToken } from "./constants/authentication";
 
 const Application = ({ children }: ApplicationProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,12 +16,8 @@ const Application = ({ children }: ApplicationProps) => {
   // 再挂载页面内容
   useMounted(async () => {
     const _authenticated =
-      globalThis.window.localStorage.getItem(
-        AuthenticationToken.Authenticated
-      ) ??
-      globalThis.window.sessionStorage.getItem(
-        AuthenticationToken.Authenticated
-      );
+      globalThis.window.localStorage.getItem(AuthenticationToken.Authentication) ??
+      globalThis.window.sessionStorage.getItem(AuthenticationToken.Authentication);
 
     !!_authenticated && (await whoAmI(_authenticated));
 

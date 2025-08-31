@@ -7,9 +7,9 @@ import { Link } from "@aiszlab/bee/router";
 import { useMutation } from "@apollo/client";
 import { SEND_REIGSTER_CAPTCHA, SIGN_UP } from "../../api/authentication";
 import { useWho } from "../../hooks/authentication.hooks";
-import { redirectBy, RedirectToken } from "../../utils/redirect-by";
-import { AuthenticationToken } from "../../store/tokens";
+import { redirectBy } from "../../utils/redirect-by";
 import CaptchaField from "../../components/authentication/captcha-field";
+import { AuthenticationToken } from "../../constants/authentication";
 
 interface FormValues {
   username: string;
@@ -56,11 +56,11 @@ const SignIn = () => {
     if (!authenticated) return;
 
     await whoAmI(authenticated);
-    globalThis.window.sessionStorage.setItem(AuthenticationToken.Authenticated, authenticated);
+    globalThis.window.sessionStorage.setItem(AuthenticationToken.Authentication, authenticated);
 
     // 重定向-单点登录
     redirectBy(({ isSameOrigin }) => ({
-      ...(!isSameOrigin && { [RedirectToken.Redirect]: authenticated }),
+      ...(!isSameOrigin && { [AuthenticationToken.Redirect]: authenticated }),
     }));
   });
 
