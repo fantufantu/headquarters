@@ -6,9 +6,9 @@ import { useMutation } from "@apollo/client";
 import { SIGN_IN } from "../../api/authentication";
 import { useCallback } from "react";
 import { useWho } from "../../hooks/authentication.hooks";
-import { AuthenticationToken } from "../../store/tokens";
-import { redirectBy, RedirectToken } from "../../utils/redirect-by";
+import { redirectBy } from "../../utils/redirect-by";
 import { Link } from "@aiszlab/bee/router";
+import { AuthenticationToken } from "../../constants/authentication";
 
 interface FormValues {
   who: string;
@@ -43,13 +43,13 @@ const SignIn = () => {
 
     await whoAmI(authenticated);
     (isRememberMe ? globalThis.window.localStorage : globalThis.window.sessionStorage).setItem(
-      AuthenticationToken.Authenticated,
+      AuthenticationToken.Authentication,
       authenticated,
     );
 
     // 重定向-单点登录
     redirectBy(({ isSameOrigin }) => ({
-      ...(!isSameOrigin && { [RedirectToken.Authenticated]: authenticated }),
+      ...(!isSameOrigin && { [AuthenticationToken.Authentication]: authenticated }),
     }));
   }, [_login, form, whoAmI]);
 

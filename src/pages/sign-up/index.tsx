@@ -60,7 +60,7 @@ const SignIn = () => {
 
     // 重定向-单点登录
     redirectBy(({ isSameOrigin }) => ({
-      ...(!isSameOrigin && { [AuthenticationToken.Redirect]: authenticated }),
+      ...(!isSameOrigin && { [AuthenticationToken.Authentication]: authenticated }),
     }));
   });
 
