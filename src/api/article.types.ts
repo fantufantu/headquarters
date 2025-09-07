@@ -18,7 +18,7 @@ export interface Article {
  * @description
  * 创建文章实体
  */
-export interface CreateArticleBy {
+export interface CreateArticleInput {
   title: string;
   content: string;
   cover?: string;
@@ -29,7 +29,7 @@ export interface CreateArticleBy {
  * @description
  * 更新文章实体
  */
-export type UpdateArticleBy = Partial<CreateArticleBy>;
+export type UpdateArticleBy = Partial<CreateArticleInput>;
 
 /**
  * @description 查询贡献数参数

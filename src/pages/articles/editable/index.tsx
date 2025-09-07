@@ -1,18 +1,18 @@
 import { Form, Input, Button, Space, Select, useMessage, Loading, RichTextEditor } from "musae";
 import { useNavigate } from "@aiszlab/bee/router";
 import { useCallback } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { CREATE_ARTICLE, UPDATE_ARTICLE } from "../../../api/article";
 import { useArticle, useCategories } from "./hooks";
 import { type FormValues } from "./hooks";
-import type { CreateArticleBy } from "../../../api/article.types";
+import type { CreateArticleInput } from "../../../api/article.types";
 
 const Editable = () => {
   const navigate = useNavigate();
   const form = Form.useForm<FormValues>();
   const [create] = useMutation(CREATE_ARTICLE);
   const [update] = useMutation(UPDATE_ARTICLE);
-  const { categoryOptions, onSearch } = useCategories();
+  const { categoryOptions, search } = useCategories();
   const [messager] = useMessage();
   const { isLoading, article, id } = useArticle({ form });
 
@@ -21,12 +21,14 @@ const Editable = () => {
   }, [navigate]);
 
   const submit = useCallback(async () => {
-    const isValid = await form.trigger();
+    const isValid = await form.validate();
     if (!isValid) return;
 
-    const { categories, ..._values } = form.getValues();
-    const _article: CreateArticleBy = {
-      ..._values,
+    const { categories = [], ..._values } = form.getFieldsValue();
+    const _article: CreateArticleInput = {
+      title: _values.title ?? "",
+      content: _values.content ?? "",
+      cover: _values.cover,
       categoryCodes: categories.map((_category) => _category.value.toString()),
     };
 
@@ -66,7 +68,7 @@ const Editable = () => {
           mode="multiple"
           options={categoryOptions}
           searchable
-          onSearch={onSearch}
+          onSearch={search}
           onFilter={false}
         />
       </Form.Item>

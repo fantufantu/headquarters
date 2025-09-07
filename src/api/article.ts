@@ -3,7 +3,7 @@ import type {
   Article,
   ArticleContribution,
   FilterArticleContributionsInput,
-  CreateArticleBy,
+  CreateArticleInput,
   UpdateArticleBy,
 } from "./article.types";
 import type { Pagination, Paginated } from "./pagination.types";
@@ -38,10 +38,10 @@ export const CREATE_ARTICLE: TypedDocumentNode<
     createArticle: Article;
   },
   {
-    input: CreateArticleBy;
+    input: CreateArticleInput;
   }
 > = gql`
-  mutation CreateArticle($input: CreateArticleBy!) {
+  mutation CreateArticle($input: CreateArticleInput!) {
     createArticle(input: $input) {
       id
       title

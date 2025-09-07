@@ -1,15 +1,16 @@
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client/react";
 import { useMemo, useState } from "react";
 import type { Option } from "musae/types/option";
 import { useParams } from "@aiszlab/bee/router";
 import { useMounted } from "@aiszlab/relax";
-import { UsedForm } from "musae/types/form";
+import type { UsedForm } from "musae/types/form";
 import { useCategories as _useCategories } from "../../../hooks/category.hooks";
 import { ARTICLE } from "../../../api/article";
 
 export interface FormValues {
   title: string;
   content: string;
+  cover?: string;
   categories: Option[];
 }
 
@@ -18,7 +19,7 @@ export interface FormValues {
  * categories
  */
 export const useCategories = () => {
-  const { categories, changePage, changeLimit, onSearch, page } = _useCategories();
+  const { categories, changePage, changeLimit, search, page } = _useCategories();
 
   const categoryOptions = useMemo<Option[]>(() => {
     return categories.map((_category) => {
@@ -35,7 +36,7 @@ export const useCategories = () => {
     page,
     changePage,
     changeLimit,
-    onSearch,
+    search,
   };
 };
 

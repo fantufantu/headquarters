@@ -1,5 +1,5 @@
 import { useBoolean } from "@aiszlab/relax";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { Dialog, Form, Input } from "musae";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import {

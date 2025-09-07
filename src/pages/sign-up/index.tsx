@@ -4,7 +4,7 @@ import { useEvent } from "@aiszlab/relax";
 import { stringify } from "@aiszlab/relax/class-name";
 import { KeyboardDoubleArrowRight } from "musae/icons";
 import { Link } from "@aiszlab/bee/router";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { SEND_REIGSTER_CAPTCHA, SIGN_UP } from "../../api/authentication";
 import { useWho } from "../../hooks/authentication.hooks";
 import { redirectBy } from "../../utils/redirect-by";

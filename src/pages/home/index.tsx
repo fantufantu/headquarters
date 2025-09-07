@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import { ContributionCalendar } from "musae";
 import { ARTICLE_CONTRIBUTIONS } from "../../api/article";
 import dayjs from "dayjs";

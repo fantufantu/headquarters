@@ -1,7 +1,7 @@
 import { Bench, Avatar, Popover, Menu, useTheme, IconButton } from "musae";
 import { useNavigations } from "./hooks";
 import { Outlet, useNavigate, useResolvedPath } from "@aiszlab/bee/router";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { LOGOUT } from "../../api/authentication";
 import { createElement, useCallback } from "react";
 import { useAuthentication } from "../../store/authentication";

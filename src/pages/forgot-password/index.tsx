@@ -1,16 +1,6 @@
-import { useMutation } from "@apollo/client";
-import {
-  Button,
-  Form,
-  Input,
-  PasswordInput,
-  useMessage,
-  useTheme,
-} from "musae";
-import {
-  CHANGE_PASSWORD,
-  SEND_CHANGE_PASSWORD_CAPTCHA,
-} from "../../api/authentication";
+import { useMutation } from "@apollo/client/react";
+import { Button, Form, Input, PasswordInput, useMessage, useTheme } from "musae";
+import { CHANGE_PASSWORD, SEND_CHANGE_PASSWORD_CAPTCHA } from "../../api/authentication";
 import { useEvent } from "@aiszlab/relax";
 import { stringify } from "@aiszlab/relax/class-name";
 import styles from "./styles.module.css";
@@ -37,11 +27,7 @@ const ForgotPassword = () => {
     const isValid = await form.validate().catch(() => false);
     if (!isValid) return;
 
-    const {
-      captcha = "",
-      emailAddress = "",
-      password = "",
-    } = form.getFieldsValue();
+    const { captcha = "", emailAddress = "", password = "" } = form.getFieldsValue();
 
     const isSucceed =
       (
@@ -75,12 +61,7 @@ const ForgotPassword = () => {
 
   return (
     <main className="h-screen w-screen flex flex-row">
-      <div
-        className={stringify(
-          "flex-1 flex justify-center items-center",
-          styles.cover
-        )}
-      >
+      <div className={stringify("flex-1 flex justify-center items-center", styles.cover)}>
         <div className="relative my-52 mx-40">
           <img width="100%" height="auto" src="/account.png" alt="Sign In" />
           <span
@@ -145,11 +126,7 @@ const ForgotPassword = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button
-                  className="w-52"
-                  suffix={<KeyboardDoubleArrowRight />}
-                  onClick={submit}
-                >
+                <Button className="w-52" suffix={<KeyboardDoubleArrowRight />} onClick={submit}>
                   Change Password
                 </Button>
               </Form.Item>

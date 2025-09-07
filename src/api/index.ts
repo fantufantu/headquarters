@@ -1,7 +1,8 @@
 import { ApolloClient, from, HttpLink, InMemoryCache } from "@apollo/client";
-import { onError } from "@apollo/client/link/error";
+import { ErrorLink } from "@apollo/client/link/error";
 import { Notification } from "musae";
 import { useAuthentication } from "../store/authentication";
+import { ApolloLink } from "@apollo/client";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -12,15 +13,16 @@ const client = new ApolloClient({
     },
   },
 
-  link: from([
-    onError(({ graphQLErrors, networkError }) => {
-      const errorMessage = graphQLErrors?.[0].message ?? networkError?.message;
-      if (!errorMessage) return;
+  link: ApolloLink.from([
+    new ErrorLink(({ error }) => {
+      console.log("error=======", error);
 
-      Notification.error({
-        title: "接口调用异常！",
-        description: errorMessage,
-      });
+      // const errorMessage = graphQLErrors?.[0].message ?? networkError?.message;
+      // if (!errorMessage) return;
+      // Notification.error({
+      //   title: "接口调用异常！",
+      //   description: errorMessage,
+      // });
     }),
     new HttpLink({
       uri: "https://api.fantufantu.com",
@@ -28,8 +30,7 @@ const client = new ApolloClient({
         const _authenticated = useAuthentication.state.authenticated;
         const _headers = new Headers(options?.headers);
 
-        _authenticated &&
-          _headers.append("Authorization", `Bearer ${_authenticated}`);
+        _authenticated && _headers.append("Authorization", `Bearer ${_authenticated}`);
 
         return fetch(uri, {
           ...options,

@@ -3,7 +3,7 @@ import type { Column } from "musae/types/table";
 import { RefObject, useMemo } from "react";
 import { ResumeTemplate } from "../../api/resume-template.types";
 import { EditorRef } from "../../components/resume-template/editor";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { REMOVE_RESUME_TEMPLATE } from "../../api/resume-template";
 
 /**

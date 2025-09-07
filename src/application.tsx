@@ -1,5 +1,5 @@
 import { ConfigProvider, ThemeProvider } from "musae";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client/react";
 import { client } from "./api";
 import { useMounted } from "@aiszlab/relax";
 import { useState } from "react";
