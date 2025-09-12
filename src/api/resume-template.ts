@@ -21,6 +21,8 @@ export const RESUME_TEMPLATES: TypedDocumentNode<
         code
         name
         cover
+        tags
+        description
       }
       total
     }
@@ -39,6 +41,8 @@ export const RESUME_TEMPLATE: TypedDocumentNode<
       code
       name
       cover
+      tags
+      description
     }
   }
 `;

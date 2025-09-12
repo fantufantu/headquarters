@@ -1,12 +1,9 @@
 import { useBoolean } from "@aiszlab/relax";
-import { useLazyQuery, useMutation } from "@apollo/client/react";
-import { Dialog, Form, Input } from "musae";
-import { forwardRef, useImperativeHandle, useState } from "react";
-import {
-  CREATE_RESUME_TEMPLATE,
-  RESUME_TEMPLATE,
-  UPDATE_RESUME_TEMPLATE,
-} from "../../../api/resume-template";
+import { useLazyQuery } from "@apollo/client/react";
+import { Dialog, Form, Input, Textarea } from "musae";
+import { forwardRef, useImperativeHandle } from "react";
+import { RESUME_TEMPLATE } from "../../../api/resume-template";
+import { useResumeTemplateMutation, type FormValue } from "./hooks/use-resume-template-mutation";
 
 export interface EditorRef {
   open: (code?: string) => Promise<void>;
@@ -16,19 +13,12 @@ interface Props {
   onSubmit?: () => void;
 }
 
-interface FormValue {
-  code: string;
-  name: string;
-  cover: string;
-}
-
 const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
   const [isVisible, { turnOn, turnOff }] = useBoolean(false);
   const form = Form.useForm<FormValue>();
   const [isEdit, { setBoolean: setIsEdit }] = useBoolean(false);
   const [queryResumeTemplate] = useLazyQuery(RESUME_TEMPLATE);
-  const [createResumeTemplate] = useMutation(CREATE_RESUME_TEMPLATE);
-  const [updateResumeTemplate] = useMutation(UPDATE_RESUME_TEMPLATE);
+  const { saveResumeTemplate } = useResumeTemplateMutation();
 
   useImperativeHandle(ref, () => {
     return {
@@ -58,20 +48,8 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
     const isValid = await form.validate().catch(() => false);
     if (!isValid) return;
 
-    const { code, ..._values } = form.getFieldsValue() as FormValue;
-    const isSucceed = await (isEdit
-      ? updateResumeTemplate({ variables: { code, input: _values } })
-      : createResumeTemplate({
-          variables: {
-            input: {
-              code,
-              ..._values,
-            },
-          },
-        }).then((_created) => !!_created.data?.createResumeTemplate)
-    ).catch(() => false);
+    await saveResumeTemplate(form.getFieldsValue(), isEdit);
 
-    if (!isSucceed) return;
     turnOff();
     onSubmit?.();
   };
@@ -79,7 +57,7 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
   return (
     <Dialog title="编辑" open={isVisible} onClose={turnOff} onConfirm={submit}>
       <Form form={form}>
-        <Form.Item label="模板 code" name="code" required>
+        <Form.Item label="code" name="code" required>
           <Input placeholder="请输入模板 code" disabled={isEdit} />
         </Form.Item>
 
@@ -89,6 +67,10 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
 
         <Form.Item label="模板封面" name="cover" required>
           <Input placeholder="请输入模板封面" />
+        </Form.Item>
+
+        <Form.Item label="模板描述" name="description" required>
+          <Textarea placeholder="请输入模板描述" />
         </Form.Item>
       </Form>
     </Dialog>
