@@ -1,9 +1,10 @@
 import { useBoolean } from "@aiszlab/relax";
 import { useLazyQuery } from "@apollo/client/react";
-import { Dialog, Form, Input, Textarea } from "musae";
+import { Dialog, Form, Input, Select, Textarea, useMessage } from "musae";
 import { forwardRef, useImperativeHandle } from "react";
 import { RESUME_TEMPLATE } from "../../../api/resume-template";
 import { useResumeTemplateMutation, type FormValue } from "./hooks/use-resume-template-mutation";
+import { useResumeTemplateTagOptions } from "./hooks/use-resume-template-tag-options";
 
 export interface EditorRef {
   open: (code?: string) => Promise<void>;
@@ -19,6 +20,8 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
   const [isEdit, { setBoolean: setIsEdit }] = useBoolean(false);
   const [queryResumeTemplate] = useLazyQuery(RESUME_TEMPLATE);
   const { saveResumeTemplate } = useResumeTemplateMutation();
+  const [messager] = useMessage();
+  const tagOptions = useResumeTemplateTagOptions();
 
   useImperativeHandle(ref, () => {
     return {
@@ -29,7 +32,13 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
           const _resumeTemplate = (
             await queryResumeTemplate({ variables: { code: _code } }).catch(() => null)
           )?.data?.resumeTemplate;
-          if (!_resumeTemplate) return;
+
+          if (!_resumeTemplate) {
+            messager.error({
+              description: "模板不存在，请重试！",
+            });
+            return;
+          }
 
           form.setFieldsValue({
             code: _resumeTemplate.code,
@@ -71,6 +80,10 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
 
         <Form.Item label="模板描述" name="description" required>
           <Textarea placeholder="请输入模板描述" />
+        </Form.Item>
+
+        <Form.Item<FormValue> label="模板标签" name="tags">
+          <Select placeholder="请选择模板标签" options={tagOptions} />
         </Form.Item>
       </Form>
     </Dialog>

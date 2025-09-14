@@ -1,4 +1,4 @@
-import { ApolloClient, from, HttpLink, InMemoryCache } from "@apollo/client";
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { ErrorLink } from "@apollo/client/link/error";
 import { Notification } from "musae";
 import { useAuthentication } from "../store/authentication";
@@ -15,14 +15,13 @@ const client = new ApolloClient({
 
   link: ApolloLink.from([
     new ErrorLink(({ error }) => {
-      console.log("error=======", error);
+      const errorMessage = error.message;
+      if (!errorMessage) return;
 
-      // const errorMessage = graphQLErrors?.[0].message ?? networkError?.message;
-      // if (!errorMessage) return;
-      // Notification.error({
-      //   title: "接口调用异常！",
-      //   description: errorMessage,
-      // });
+      Notification.error({
+        title: "接口调用异常！",
+        description: errorMessage,
+      });
     }),
     new HttpLink({
       uri: "https://api.fantufantu.com",
