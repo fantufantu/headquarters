@@ -44,6 +44,8 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
             code: _resumeTemplate.code,
             name: _resumeTemplate.name,
             cover: _resumeTemplate.cover,
+            description: _resumeTemplate.description,
+            tags: _resumeTemplate.tags,
           });
         }
 
@@ -83,7 +85,7 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
         </Form.Item>
 
         <Form.Item<FormValue> label="模板标签" name="tags">
-          <Select placeholder="请选择模板标签" options={tagOptions} />
+          <Select placeholder="请选择模板标签" options={tagOptions} mode="multiple" />
         </Form.Item>
       </Form>
     </Dialog>
