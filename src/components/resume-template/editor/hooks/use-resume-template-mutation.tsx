@@ -1,11 +1,12 @@
 import { useMutation } from "@apollo/client/react";
 import { CREATE_RESUME_TEMPLATE, UPDATE_RESUME_TEMPLATE } from "../../../../api/resume-template";
 import { useMessage } from "musae";
+import { RemoteFileItem } from "musae/types/upload";
 
 export interface FormValue {
   code: string;
   name: string;
-  cover: string;
+  cover: RemoteFileItem[];
   tags: string[];
   description: string;
 }
@@ -16,10 +17,16 @@ export const useResumeTemplateMutation = () => {
   const [messager] = useMessage();
 
   const saveResumeTemplate = async (_formValues: Partial<FormValue>, isEdit: boolean) => {
-    const { code, name = "", cover = "", tags = [], description = "" } = _formValues;
+    const { code, name = "", cover = [], tags = [], description = "" } = _formValues;
 
     if (!code) {
       messager.error({ description: "请填写简历模板代码" });
+      return;
+    }
+
+    const coverUrl = cover.at(0)?.url;
+    if (!coverUrl) {
+      messager.error({ description: "请上传简历模板封面" });
       return;
     }
 
@@ -29,7 +36,7 @@ export const useResumeTemplateMutation = () => {
           code,
           input: {
             name,
-            cover,
+            cover: coverUrl,
             description,
             tags,
           },
@@ -46,7 +53,7 @@ export const useResumeTemplateMutation = () => {
       variables: {
         input: {
           code,
-          cover,
+          cover: coverUrl,
           name,
           description,
           tags,

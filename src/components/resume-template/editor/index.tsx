@@ -1,10 +1,11 @@
 import { useBoolean } from "@aiszlab/relax";
 import { useLazyQuery } from "@apollo/client/react";
-import { Dialog, Form, Input, Select, Textarea, useMessage } from "musae";
+import { Dialog, Form, Input, Select, Textarea, Upload, useMessage } from "musae";
 import { forwardRef, useImperativeHandle } from "react";
 import { RESUME_TEMPLATE } from "../../../api/resume-template";
 import { useResumeTemplateMutation, type FormValue } from "./hooks/use-resume-template-mutation";
 import { useResumeTemplateTagOptions } from "./hooks/use-resume-template-tag-options";
+import { upload } from "../../../utils/upload";
 
 export interface EditorRef {
   open: (code?: string) => Promise<void>;
@@ -43,7 +44,7 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
           form.setFieldsValue({
             code: _resumeTemplate.code,
             name: _resumeTemplate.name,
-            cover: _resumeTemplate.cover,
+            cover: [{ url: _resumeTemplate.cover }],
             description: _resumeTemplate.description,
             tags: _resumeTemplate.tags,
           });
@@ -76,16 +77,20 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
           <Input placeholder="请输入模板名称" />
         </Form.Item>
 
-        <Form.Item label="模板封面" name="cover" required>
-          <Input placeholder="请输入模板封面" />
-        </Form.Item>
-
         <Form.Item label="模板描述" name="description" required>
           <Textarea placeholder="请输入模板描述" />
         </Form.Item>
 
         <Form.Item<FormValue> label="模板标签" name="tags">
           <Select placeholder="请选择模板标签" options={tagOptions} mode="multiple" />
+        </Form.Item>
+
+        <Form.Item label="模板封面" name="cover" required>
+          <Upload
+            uploader={(data) => {
+              return upload(data);
+            }}
+          />
         </Form.Item>
       </Form>
     </Dialog>
