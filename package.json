@@ -27,23 +27,23 @@
   },
   "dependencies": {
     "@aiszlab/bee": "2.0.6",
-    "@aiszlab/fuzzy": "^2.0.6",
-    "@aiszlab/relax": "^2.0.6",
-    "@apollo/client": "^4.0.4",
+    "@aiszlab/fuzzy": "^2.1.0",
+    "@aiszlab/relax": "^2.1.0",
+    "@apollo/client": "^4.0.7",
     "cos-js-sdk-v5": "^1.10.1",
     "dayjs": "^1.11.18",
     "musae": "1.0.14-beta.5",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "@aiszlab/wasp": "^2.0.6",
-    "@types/node": "^24.3.1",
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.9",
-    "eslint": "^9.35.0",
+    "@aiszlab/wasp": "^2.1.0",
+    "@types/node": "^24.7.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
+    "eslint": "^9.37.0",
     "eslint-config-react-app": "^7.0.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "prettier": {
     "semi": true,
