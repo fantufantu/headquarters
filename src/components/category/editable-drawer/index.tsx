@@ -3,7 +3,7 @@ import { useBoolean, useEvent } from "@aiszlab/relax";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { CREATE_CATEGORY, CATEGORY, UPDATE_CATEGORY } from "../../../api/category";
 import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
-import { Dir, upload } from "../../../utils/upload";
+import { DIR, upload } from "../../../utils/upload";
 import type { UploadedItem } from "musae/types/upload";
 
 interface FormValue {
@@ -84,7 +84,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   });
 
   const uploader = useCallback((file: File) => {
-    return upload(file, Dir.StackLogos);
+    return upload(file, DIR.stack_logos);
   }, []);
 
   return (

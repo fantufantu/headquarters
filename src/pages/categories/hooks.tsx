@@ -29,7 +29,7 @@ export const useColumns = ({
       {
         valueAt: "image",
         title: "logo",
-        render: (image) => {
+        render: (_, { image }) => {
           return <img src={image} alt="logo" width={32} height={32} />;
         },
       },

@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useMutation } from "@apollo/client/react";
 import { UPDATE_USER } from "../../api/user";
 import { useAuthentication } from "../../store/authentication";
-import { Dir, upload } from "../../utils/upload";
+import { DIR, upload } from "../../utils/upload";
 import type { FileItem } from "musae/types/upload";
 
 interface FormValues {
@@ -68,7 +68,7 @@ const Setting = () => {
   });
 
   const uploader = useEvent((file: File) => {
-    return upload(file, Dir.Avatars);
+    return upload(file, DIR.avatars);
   });
 
   const avatars = useMemo<FileItem[]>(
