@@ -2,8 +2,10 @@ import { useQuery } from "@apollo/client/react";
 import { ContributionCalendar } from "musae";
 import { ARTICLE_CONTRIBUTIONS } from "../../api/article";
 import dayjs from "dayjs";
+import { useRef } from "react";
 
 const Home = () => {
+  const currentAtYear = useRef(dayjs().year());
   const { data: { articleContributions = [] } = {} } = useQuery(ARTICLE_CONTRIBUTIONS, {
     variables: {
       filter: {
@@ -19,7 +21,7 @@ const Home = () => {
       <div>最近更新</div>
       <div>
         <ContributionCalendar
-          year={2024}
+          year={currentAtYear.current}
           contributions={articleContributions.map((item) => ({
             contributedAt: dayjs(item.contributedAt),
             count: item.count,
