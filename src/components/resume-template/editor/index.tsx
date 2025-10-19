@@ -90,6 +90,8 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
             uploader={(data) => {
               return upload(data);
             }}
+            renderItem="picture"
+            multiple={false}
           />
         </Form.Item>
       </Form>

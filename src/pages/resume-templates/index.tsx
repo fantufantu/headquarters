@@ -7,7 +7,8 @@ import { useResumeTemplates } from "../../hooks/resume-template.hooks";
 import { ResumeTemplate } from "../../api/resume-template.types";
 
 const ResumeTemplates = () => {
-  const { resumeTemplates, changePage, changeLimit, page, isLoading, limit, total, refetch } = useResumeTemplates();
+  const { resumeTemplates, changePage, changeLimit, page, isLoading, limit, total, refetch } =
+    useResumeTemplates();
 
   const editorRef = useRef<EditorRef>(null);
 
@@ -28,13 +29,15 @@ const ResumeTemplates = () => {
 
       <Table<ResumeTemplate> columns={columns} bordered dataSource={resumeTemplates} />
 
-      <Pagination at={page} pageSize={limit} total={total} onChange={changePage} onPageSizeChange={changeLimit} />
-
-      <Editor
-        ref={editorRef}
-        // 提交后重新获取数据
-        onSubmit={refetch}
+      <Pagination
+        at={page}
+        pageSize={limit}
+        total={total}
+        onChange={changePage}
+        onPageSizeChange={changeLimit}
       />
+
+      <Editor ref={editorRef} onSubmit={refetch} />
     </Loading>
   );
 };
