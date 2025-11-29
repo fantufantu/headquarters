@@ -8,13 +8,13 @@ import { BUCKET_NAME } from "./cloud.types";
  * 获取 issues 列表
  */
 export const queryIssues = async () => {
-  const _prefix = DIR.issues + "/";
+  const _prefix = DIR.ISSUES + "/";
   const [credential, COS] = await Promise.all([
     client
       .query({
         query: COS_CREDENTIAL,
         variables: {
-          bucketName: BUCKET_NAME.fantu,
+          bucketName: BUCKET_NAME.FANTU,
         },
       })
       .then(({ data }) => data?.cosCredential),

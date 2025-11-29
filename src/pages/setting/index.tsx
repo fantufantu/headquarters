@@ -68,7 +68,10 @@ const Setting = () => {
   });
 
   const uploader = useEvent((file: File) => {
-    return upload(file, DIR.avatars);
+    return upload({
+      body: file,
+      dir: DIR.AVATARS,
+    });
   });
 
   const avatars = useMemo<FileItem[]>(

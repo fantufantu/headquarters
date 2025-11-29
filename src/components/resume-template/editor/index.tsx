@@ -6,6 +6,7 @@ import { RESUME_TEMPLATE } from "../../../api/resume-template";
 import { useResumeTemplateMutation, type FormValue } from "./hooks/use-resume-template-mutation";
 import { useResumeTemplateTagOptions } from "./hooks/use-resume-template-tag-options";
 import { upload } from "../../../utils/upload";
+import { BUCKET_NAME } from "../../../api/cloud.types";
 
 export interface EditorRef {
   open: (code?: string) => Promise<void>;
@@ -87,8 +88,11 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
 
         <Form.Item label="模板封面" name="cover" required>
           <Upload
-            uploader={(data) => {
-              return upload(data);
+            uploader={(body) => {
+              return upload({
+                body,
+                bucketName: BUCKET_NAME.FANTU,
+              });
             }}
             renderItem="picture"
             multiple={false}

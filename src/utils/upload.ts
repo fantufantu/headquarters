@@ -2,29 +2,41 @@ import { type UploadBody } from "cos-js-sdk-v5";
 import { client } from "../api";
 import { COS_CREDENTIAL } from "../api/cloud";
 import { exclude } from "@aiszlab/relax";
-import { BUCKET_NAME } from "../api/cloud.types";
+import { BUCKET_NAME, BucketName } from "../api/cloud.types";
 import { ValueOf } from "@aiszlab/relax/types";
 
 export const DIR = {
-  issues: "issues",
-  stack_logos: "stack-logos",
-  avatars: "avatars",
-  resume_templates: "resume-templates",
-  None: "",
+  ISSUES: "issues",
+  STACK_LOGOS: "stack-logos",
+  AVATARS: "avatars",
+  RESUME_TEMPLATES: "resume-templates",
+  NONE: "",
 } as const;
 
 type Dir = ValueOf<typeof DIR>;
 
+interface Uploading {
+  body: UploadBody;
+  dir?: Dir;
+  filename?: string;
+  bucketName?: BucketName;
+}
+
 /**
  * 上传文件至腾讯云`COS`
  */
-export const upload = async (uploading: UploadBody, dir: Dir = DIR.None, filename?: string) => {
+export const upload = async ({
+  body,
+  bucketName = BUCKET_NAME.FANTU,
+  dir = DIR.NONE,
+  filename,
+}: Uploading) => {
   const [credential, COS] = await Promise.all([
     client
       .query({
         query: COS_CREDENTIAL,
         variables: {
-          bucketName: BUCKET_NAME.fantu,
+          bucketName,
         },
       })
       .then(({ data }) => data?.cosCredential),
@@ -44,8 +56,8 @@ export const upload = async (uploading: UploadBody, dir: Dir = DIR.None, filenam
   const _uploaded = await _uploader.putObject({
     Bucket: credential.bucket,
     Region: credential.region,
-    Key: exclude([dir, filename ?? crypto.randomUUID()], [DIR.None]).join("/"),
-    Body: uploading,
+    Key: exclude([dir, filename ?? crypto.randomUUID()], [DIR.NONE]).join("/"),
+    Body: body,
   });
 
   return `https://${_uploaded.Location}`;

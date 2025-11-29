@@ -84,7 +84,10 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   });
 
   const uploader = useCallback((file: File) => {
-    return upload(file, DIR.stack_logos);
+    return upload({
+      body: file,
+      dir: DIR.STACK_LOGOS,
+    });
   }, []);
 
   return (

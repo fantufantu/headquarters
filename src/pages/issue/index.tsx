@@ -18,7 +18,11 @@ const Issue = () => {
 
     const formValues = form.getFieldsValue();
     const blob = new Blob([JSON.stringify(formValues)], { type: "application/json" });
-    const url = await upload(blob, DIR.issues, `${formValues.title}.json`).catch(() => null);
+    const url = await upload({
+      body: blob,
+      dir: DIR.ISSUES,
+      filename: `${formValues.title}.json`,
+    }).catch(() => null);
 
     if (!url) {
       messager.error({ description: "反馈失败！" });
