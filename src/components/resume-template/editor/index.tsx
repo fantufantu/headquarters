@@ -5,7 +5,7 @@ import { forwardRef, useImperativeHandle } from "react";
 import { RESUME_TEMPLATE } from "../../../api/resume-template";
 import { useResumeTemplateMutation, type FormValue } from "./hooks/use-resume-template-mutation";
 import { useResumeTemplateTagOptions } from "./hooks/use-resume-template-tag-options";
-import { upload } from "../../../utils/upload";
+import { DIR, upload } from "../../../utils/upload";
 import { BUCKET_NAME } from "../../../api/cloud.types";
 
 export interface EditorRef {
@@ -91,7 +91,8 @@ const Editor = forwardRef<EditorRef, Props>(({ onSubmit }, ref) => {
             uploader={(body) => {
               return upload({
                 body,
-                bucketName: BUCKET_NAME.FANTU,
+                bucketName: BUCKET_NAME.KNOWTHY,
+                dir: DIR.RESUME_TEMPLATES,
               });
             }}
             renderItem="picture"
