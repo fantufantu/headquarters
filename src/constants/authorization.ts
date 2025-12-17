@@ -6,6 +6,21 @@ export const RESOURCE_CODE = {
    * 文章
    */
   ARTICLE: "article",
+
+  /**
+   * 分类
+   */
+  CATEGORY: "category",
+
+  /**
+   * 简历模板
+   */
+  RESUME_TEMPLATE: "resume_template",
+
+  /**
+   * issue
+   */
+  ISSUE: "issue",
 };
 
 /**

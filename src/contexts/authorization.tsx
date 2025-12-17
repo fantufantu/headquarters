@@ -29,7 +29,12 @@ const AuthorizationProvider = ({ children }: Props) => {
   );
 };
 
-const useAuthorization = () => useContext(AuthorizationContext);
+const useAuthorization = () => {
+  const { authorizations = [] } = useContext(AuthorizationContext);
 
-export default AuthorizationContext;
+  return {
+    authorizations,
+  };
+};
+
 export { useAuthorization, AuthorizationProvider };
