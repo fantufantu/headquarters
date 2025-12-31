@@ -1,8 +1,15 @@
+export interface Who {
+  id: number;
+  username: string;
+  avatar?: string;
+  nickname?: string;
+  emailAddress: string;
+}
+
 /**
- * @description
- * 更新用户信息 dto
+ * 更新用户信息`dto`
  */
-export interface UpdateUserBy {
-  nickname: string
-  avatar?: string | null
+export interface UpdateUserInput {
+  nickname: string;
+  avatar?: string | null;
 }

@@ -15,7 +15,7 @@ export const ARTICLES: TypedDocumentNode<
   }
 > = gql`
   query Articles($pagination: Pagination) {
-    articles(filter: {}, pagination: $pagination) {
+    articles(pagination: $pagination) {
       items {
         id
         title

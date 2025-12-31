@@ -1,5 +1,6 @@
 import { gql, TypedDocumentNode } from "@apollo/client";
-import type { ChangePasswordInput, LoginInput, RegisterInput, Who } from "./authentication.types";
+import type { ChangePasswordInput, LoginInput, RegisterInput } from "./authentication.types";
+import { Who } from "./user.types";
 
 /**
  * @description

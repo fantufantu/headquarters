@@ -1,4 +1,4 @@
-import type { Who } from "../api/authentication.types";
+import type { Who } from "../api/user.types";
 import { client } from "../api";
 import { WHO_AM_I } from "../api/authentication";
 import { random } from "@aiszlab/fuzzy/avatar";
@@ -29,7 +29,7 @@ const useAuthentication = using<Authentication>((setState) => {
 
     // 向服务端进行验证，将验证后的结果存储到全局状态中
     whoAmI: async () => {
-      const _me = (await client.query({ query: WHO_AM_I }).catch(() => null))?.data.whoAmI ?? null;
+      const _me = (await client.query({ query: WHO_AM_I }).catch(() => null))?.data?.whoAmI ?? null;
       if (!_me) return null;
 
       const me: Who = {

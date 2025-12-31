@@ -7,8 +7,7 @@ import { REMOVE_ARTICLE } from "../../api/article";
 import { useMutation } from "@apollo/client/react";
 
 /**
- * @description
- * table columns
+ * 文章列表列配置
  */
 export const useColumns = ({ refetch }: { refetch: () => void }) => {
   const navigate = useNavigate();
