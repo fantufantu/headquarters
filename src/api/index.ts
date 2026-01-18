@@ -1,7 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { ErrorLink } from "@apollo/client/link/error";
 import { Notification } from "musae";
-import { useAuthentication } from "../store/authentication";
+import { useAuthentication } from "@/store/authentication";
 import { ApolloLink } from "@apollo/client";
 
 const client = new ApolloClient({
@@ -24,7 +24,9 @@ const client = new ApolloClient({
       });
     }),
     new HttpLink({
-      uri: "https://api.fantufantu.com",
+      // http://localhost:3900/graphql
+      // https://api.fantufantu.com
+      uri: "http://localhost:3900/graphql",
       fetch: (uri, options) => {
         const _authenticated = useAuthentication.state.authenticated;
         const _headers = new Headers(options?.headers);

@@ -6,7 +6,7 @@ import { LOGOUT } from "../../api/authentication";
 import { createElement, useCallback } from "react";
 import { useAuthentication } from "../../store/authentication";
 import { WbSunny, Bedtime } from "musae/icons";
-import { AuthorizationProvider } from "../../contexts/authorization";
+import { AppConfigProvider } from "../../contexts/app-config.context";
 
 const Layout = () => {
   const navigations = useNavigations();
@@ -26,7 +26,7 @@ const Layout = () => {
   }, [navigate]);
 
   return (
-    <AuthorizationProvider>
+    <AppConfigProvider>
       <Bench
         title="水番二土"
         layout="side"
@@ -75,7 +75,7 @@ const Layout = () => {
       >
         <Outlet />
       </Bench>
-    </AuthorizationProvider>
+    </AppConfigProvider>
   );
 };
 

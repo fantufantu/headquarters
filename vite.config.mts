@@ -1,11 +1,13 @@
-import { defineConfig } from '@aiszlab/wasp/vite'
+import { defineConfig } from "@aiszlab/wasp/vite";
+import { resolve } from "path";
 
 export default defineConfig({
   server: {
-    proxy: {
-      '/graphql': {
-        target: 'http://localhost:3900'
-      }
-    }
-  }
-})
+    proxy: {},
+  },
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "src"),
+    },
+  },
+});

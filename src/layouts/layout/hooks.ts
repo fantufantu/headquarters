@@ -1,6 +1,6 @@
 import type { NavigationItem } from "musae/types/bench";
 import { useMemo } from "react";
-import { useAuthorization } from "../../contexts/authorization";
+import { useAppConfig } from "../../contexts/app-config.context";
 import { RESOURCE_CODE } from "../../constants/authorization";
 
 /**
@@ -9,7 +9,7 @@ import { RESOURCE_CODE } from "../../constants/authorization";
  * 1. 增加用户权限鉴权
  */
 export const useNavigations = () => {
-  const { authorizations } = useAuthorization();
+  const { authorizations } = useAppConfig();
 
   return useMemo<NavigationItem[]>(() => {
     return [
