@@ -24,9 +24,8 @@ const client = new ApolloClient({
       });
     }),
     new HttpLink({
-      // http://localhost:3900/graphql
-      // https://api.fantufantu.com
-      uri: "http://localhost:3900/graphql",
+      // uri: "http://localhost:3900/graphql",
+      uri: "https://api.fantufantu.com",
       fetch: (uri, options) => {
         const _authenticated = useAuthentication.state.authenticated;
         const _headers = new Headers(options?.headers);
