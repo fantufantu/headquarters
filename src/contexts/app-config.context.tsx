@@ -25,7 +25,7 @@ const AppConfigProvider = ({ children }: Props) => {
   }
 
   return (
-    <AppConfigContext.Provider value={{ authorizations: data?.authorized, me: data?.whoAmI }}>
+    <AppConfigContext.Provider value={{ authorizations: data?.authorizedList, me: data?.whoAmI }}>
       {children}
     </AppConfigContext.Provider>
   );
