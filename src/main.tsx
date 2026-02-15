@@ -21,6 +21,7 @@ const Issues = lazy(() => import("./pages/issues"));
 const Setting = lazy(() => import("./pages/setting"));
 const ForgotPassword = lazy(() => import("./pages/forgot-password"));
 const ResumeTemplates = lazy(() => import("./pages/resume-templates"));
+const Authorizations = lazy(() => import("./pages/authorizations"));
 
 bootstrap({
   selectors: "#root",
@@ -76,6 +77,10 @@ bootstrap({
             {
               path: "/setting",
               Component: Setting,
+            },
+            {
+              path: "/authorizations",
+              Component: Authorizations,
             },
           ],
         },

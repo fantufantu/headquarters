@@ -37,6 +37,10 @@ export const useNavigations = () => {
         label: "反馈管理",
         resourceCode: RESOURCE_CODE.ISSUE,
       },
+      {
+        path: "/authorizations",
+        label: "权限管理",
+      },
     ].filter(
       ({ resourceCode }) =>
         !resourceCode ||
