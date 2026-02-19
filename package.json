@@ -28,7 +28,7 @@
   "dependencies": {
     "@aiszlab/bee": "2.0.6",
     "@aiszlab/fuzzy": "^2.1.0",
-    "@aiszlab/relax": "^2.1.0",
+    "@aiszlab/relax": "2.1.2-beta.0",
     "@apollo/client": "^4.0.7",
     "cos-js-sdk-v5": "^1.10.1",
     "dayjs": "^1.11.18",
