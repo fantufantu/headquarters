@@ -1,7 +1,7 @@
-import { CREATE_ROLE } from "@/api/role";
-import { isEmpty, useBoolean } from "@aiszlab/relax";
-import { useApolloClient } from "@apollo/client/react";
-import { Drawer, Form, Input } from "musae";
+import { CREATE_ROLE, ROLE } from "@/api/role";
+import { isEmpty, isUndefined, useBoolean } from "@aiszlab/relax";
+import { useApolloClient, useLazyQuery } from "@apollo/client/react";
+import { Drawer, Form, Input, Loading } from "musae";
 import { RefObject, useImperativeHandle } from "react";
 
 interface FormValue {
@@ -10,7 +10,7 @@ interface FormValue {
 }
 
 export interface RoleEditorRef {
-  open: (roleCode?: string) => void;
+  open: (roleCode?: string) => Promise<void>;
 }
 
 interface Props {
@@ -22,11 +22,30 @@ const RoleEditor = ({ ref, onSuccess }: Props) => {
   const [isVisible, { turnOff, turnOn }] = useBoolean();
   const form = Form.useForm<FormValue>();
   const client = useApolloClient();
+  const {
+    "0": queryRole,
+    "1": { loading },
+  } = useLazyQuery(ROLE);
 
   useImperativeHandle(ref, () => ({
-    open: () => {
+    open: async (_roleCode) => {
       form.reset();
       turnOn();
+
+      if (!_roleCode) return;
+
+      const _role = (
+        await queryRole({
+          variables: {
+            code: _roleCode,
+          },
+        }).catch(() => null)
+      )?.data?.role;
+
+      form.setFieldsValue({
+        code: _role?.code,
+        name: _role?.name,
+      });
     },
   }));
 
@@ -56,30 +75,32 @@ const RoleEditor = ({ ref, onSuccess }: Props) => {
 
   return (
     <Drawer open={isVisible} onClose={close} onConfirm={submit}>
-      <Form form={form}>
-        <Form.Item
-          label="角色编码"
-          name="code"
-          rules={[
-            {
-              validate: async (fieldValue) => !isEmpty(fieldValue),
-              message: "请输入角色编码",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+      <Loading loading={loading || true}>
+        <Form form={form}>
+          <Form.Item
+            label="角色编码"
+            name="code"
+            rules={[
+              {
+                validate: async (fieldValue) => !isEmpty(fieldValue),
+                message: "请输入角色编码",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
 
-        <Form.Item
-          label="角色名称"
-          name="name"
-          rules={[
-            { validate: async (fieldValue) => !isEmpty(fieldValue), message: "请输入角色名称" },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-      </Form>
+          <Form.Item
+            label="角色名称"
+            name="name"
+            rules={[
+              { validate: async (fieldValue) => !isEmpty(fieldValue), message: "请输入角色名称" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Form>
+      </Loading>
     </Drawer>
   );
 };

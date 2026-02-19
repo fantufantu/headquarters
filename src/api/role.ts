@@ -36,3 +36,15 @@ export const CREATE_ROLE: TypedDocumentNode<
     }
   }
 `;
+
+/**
+ * 查询角色详情
+ */
+export const ROLE: TypedDocumentNode<{ role: Role }, { code: string }> = gql`
+  query Role($code: String!) {
+    role(code: $code) {
+      code
+      name
+    }
+  }
+`;

@@ -30,6 +30,7 @@ export const useColumns = ({ authorizationEditorRef, editorRef }: Props) => {
               <Button
                 size="small"
                 variant="text"
+                autoLoading
                 onClick={() => {
                   editorRef.current?.open(record.code);
                 }}
