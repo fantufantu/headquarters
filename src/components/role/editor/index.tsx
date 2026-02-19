@@ -10,7 +10,7 @@ interface FormValue {
 }
 
 export interface RoleEditorRef {
-  open: () => void;
+  open: (roleCode?: string) => void;
 }
 
 interface Props {

@@ -5,12 +5,16 @@ import { Button, Table } from "musae";
 import { useColumns } from "./hooks/use-columns";
 import RoleEditor, { RoleEditorRef } from "@/components/role/editor";
 import { useRef } from "react";
+import RoleAuthorizationEditor, {
+  type RoleAuthorizationEditorRef,
+} from "@/components/role/authorization-editor";
 
 /**
  * 角色管理页面
  */
 const Roles = () => {
   const editorRef = useRef<RoleEditorRef>(null);
+  const authorizationEditorRef = useRef<RoleAuthorizationEditorRef>(null);
   const { page, limit } = usePagination();
   const { data: { paginateRoles: { items: roles = [], total = 0 } = {} } = {} } = useQuery(
     PAGINATE_ROLES,
@@ -24,7 +28,10 @@ const Roles = () => {
     },
   );
 
-  const columns = useColumns({});
+  const columns = useColumns({
+    editorRef,
+    authorizationEditorRef,
+  });
 
   const add = () => {
     editorRef.current?.open();
@@ -39,6 +46,7 @@ const Roles = () => {
       <Table dataSource={roles} columns={columns} />
 
       <RoleEditor ref={editorRef} />
+      <RoleAuthorizationEditor ref={authorizationEditorRef} />
     </div>
   );
 };

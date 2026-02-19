@@ -5754,7 +5754,7 @@ snapshots:
   musae@file:../musae(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(yjs@13.6.27):
     dependencies:
       '@aiszlab/fuzzy': 2.1.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@aiszlab/relax': 2.1.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@aiszlab/relax': 2.1.2-beta.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@babel/runtime': 7.28.6
       '@floating-ui/dom': 1.7.5
       '@lexical/code': 0.40.0

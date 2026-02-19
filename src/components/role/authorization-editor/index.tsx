@@ -2,8 +2,8 @@ import { useBoolean } from "@aiszlab/relax";
 import { Drawer, Form, Transfer } from "musae";
 import { RefObject, useImperativeHandle } from "react";
 
-interface RoleAuthorizationEditorRef {
-  open: () => void;
+export interface RoleAuthorizationEditorRef {
+  open: (roleCode: string) => void;
 }
 
 interface FormValue {
