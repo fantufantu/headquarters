@@ -44,7 +44,7 @@ const Setting = () => {
     const isSucceed = !!(
       await _update({
         variables: {
-          updateUserBy: {
+          input: {
             nickname: nickname ?? "",
             avatar,
           },

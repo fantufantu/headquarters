@@ -54,3 +54,22 @@ export const ASSIGN_ROLES: TypedDocumentNode<
     assignRoles(input: $input)
   }
 `;
+
+/**
+ * 查询用户信息
+ */
+export const WHO_ARE_YOU: TypedDocumentNode<
+  { whoAreYou: Who },
+  {
+    id: number;
+  }
+> = gql`
+  query WhoAreYou($id: Int!) {
+    whoAreYou(id: $id) {
+      id
+      username
+      emailAddress
+      roleCodes
+    }
+  }
+`;

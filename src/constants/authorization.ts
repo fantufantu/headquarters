@@ -25,9 +25,19 @@ export const RESOURCE_CODES = {
   ISSUE: "issue",
 
   /**
+   * 权限
+   */
+  AUTHORIZATION: "authorization",
+
+  /**
    * 角色
    */
   ROLE: "role",
+
+  /**
+   * 用户
+   */
+  USER: "user",
 
   /**
    * 全部资源

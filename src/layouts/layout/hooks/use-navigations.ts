@@ -1,7 +1,8 @@
 import type { NavigationItem } from "musae/types/bench";
 import { useMemo } from "react";
-import { RESOURCE_CODES } from "../../constants/authorization";
-import { useAuthentication } from "@/store/authentication";
+import { RESOURCE_CODES } from "../../../constants/authorization";
+import { useAuthorizationContext } from "@/contexts/authorization";
+import { isAuthorized } from "@/utils/authorization";
 
 /**
  * 用户侧边可见菜单
@@ -9,7 +10,7 @@ import { useAuthentication } from "@/store/authentication";
  * 1. 增加用户权限鉴权
  */
 export const useNavigations = () => {
-  const authorizations = useAuthentication().me?.authorizations ?? [];
+  const { authorized } = useAuthorizationContext();
 
   return useMemo<NavigationItem[]>(() => {
     return [
@@ -28,11 +29,6 @@ export const useNavigations = () => {
         resourceCode: RESOURCE_CODES.CATEGORY,
       },
       {
-        path: "/resume-templates",
-        label: "简历模板管理",
-        resourceCode: RESOURCE_CODES.RESUME_TEMPLATE,
-      },
-      {
         path: "/issues",
         label: "反馈管理",
         resourceCode: RESOURCE_CODES.ISSUE,
@@ -40,19 +36,23 @@ export const useNavigations = () => {
       {
         path: "/authorizations",
         label: "权限管理",
+        resourceCode: RESOURCE_CODES.AUTHORIZATION,
       },
       {
         path: "/roles",
         label: "角色管理",
+        resourceCode: RESOURCE_CODES.ROLE,
       },
       {
         path: "/users",
         label: "用户管理",
+        resourceCode: RESOURCE_CODES.USER,
       },
-    ].filter(
-      ({ resourceCode }) =>
-        !resourceCode ||
-        authorizations.some((authorization) => authorization.resourceCode === resourceCode),
-    );
+      {
+        path: "/resume-templates",
+        label: "简历模板管理",
+        resourceCode: RESOURCE_CODES.RESUME_TEMPLATE,
+      },
+    ].filter(({ resourceCode }) => !resourceCode || isAuthorized(authorized, { resourceCode }));
   }, []);
 };

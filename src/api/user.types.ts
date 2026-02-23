@@ -7,6 +7,7 @@ export interface Who {
   nickname?: string;
   emailAddress: string;
   authorizations?: Authorization[];
+  roleCodes?: string[];
 }
 
 /**
