@@ -16,7 +16,7 @@ const Roles = () => {
   const editorRef = useRef<RoleEditorRef>(null);
   const authorizationEditorRef = useRef<RoleAuthorizationEditorRef>(null);
   const { page, limit } = usePagination();
-  const { data: { paginateRoles: { items: roles = [], total = 0 } = {} } = {} } = useQuery(
+  const { data: { paginateRoles: { items: roles = [], total = 0 } = {} } = {}, loading } = useQuery(
     PAGINATE_ROLES,
     {
       variables: {
@@ -43,7 +43,7 @@ const Roles = () => {
         <Button onClick={add}>新增角色</Button>
       </div>
 
-      <Table dataSource={roles} columns={columns} />
+      <Table dataSource={roles} columns={columns} loading={loading} />
 
       <RoleEditor ref={editorRef} />
       <RoleAuthorizationEditor ref={authorizationEditorRef} />
