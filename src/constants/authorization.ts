@@ -1,3 +1,5 @@
+import { ROLE } from "@/api/role";
+
 /**
  * 系统权限资源
  */
@@ -21,6 +23,11 @@ export const RESOURCE_CODES = {
    * issue
    */
   ISSUE: "issue",
+
+  /**
+   * 角色
+   */
+  ROLE: "role",
 
   /**
    * 全部资源

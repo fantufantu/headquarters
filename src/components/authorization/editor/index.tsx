@@ -6,10 +6,8 @@ import ResourceSelect from "../../inputs/resource-select";
 import ActionSelect from "../../inputs/action-select";
 import { useApolloClient } from "@apollo/client/react";
 import { CREATE_AUTHORIZATION } from "@/api/authorization";
-import TenantSelect from "@/components/inputs/tenant-select";
 
 interface FieldsValue {
-  tenantCode: string;
   resourceCode: string;
   actionCode: string;
 }
@@ -40,7 +38,6 @@ const AuthorizationEditor = ({ ref, onSuccess }: Props) => {
     open: (authorization) => {
       form.reset();
       form.setFieldsValue({
-        tenantCode: authorization?.tenantCode,
         resourceCode: authorization?.resourceCode,
         actionCode: authorization?.actionCode,
       });
@@ -59,7 +56,6 @@ const AuthorizationEditor = ({ ref, onSuccess }: Props) => {
       mutation: CREATE_AUTHORIZATION,
       variables: {
         input: {
-          tenantCode: formValue.tenantCode ?? "",
           resourceCode: formValue.resourceCode ?? "",
           actionCode: formValue.actionCode ?? "",
         },
@@ -77,21 +73,6 @@ const AuthorizationEditor = ({ ref, onSuccess }: Props) => {
   return (
     <Drawer open={isVisible} onConfirm={submit} onClose={turnOff}>
       <Form<FieldsValue> form={form}>
-        <Form.Item
-          name="tenantCode"
-          label="租户"
-          rules={[
-            {
-              message: "请选择租户",
-              validate: async (fieldValue) => {
-                return !isEmpty(fieldValue);
-              },
-            },
-          ]}
-        >
-          <TenantSelect />
-        </Form.Item>
-
         <Form.Item
           name="resourceCode"
           label="资源"

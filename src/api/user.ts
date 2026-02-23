@@ -1,5 +1,5 @@
 import { gql, TypedDocumentNode } from "@apollo/client";
-import type { UpdateUserInput, Who } from "./user.types";
+import type { AssignRolesInput, UpdateUserInput, Who } from "./user.types";
 import { Paginated, Pagination } from "./pagination.types";
 
 /**
@@ -22,7 +22,7 @@ export const UPDATE_USER: TypedDocumentNode<
  * 分页查询用户列表
  */
 export const USERS: TypedDocumentNode<
-  { articles: Paginated<Who> },
+  { paginateUsers: Paginated<Who> },
   {
     pagination?: Pagination;
   }
@@ -34,8 +34,23 @@ export const USERS: TypedDocumentNode<
         username
         avatar
         nickname
+        emailAddress
       }
       total
     }
+  }
+`;
+
+/**
+ * 分配角色
+ */
+export const ASSIGN_ROLES: TypedDocumentNode<
+  { assignRoles: boolean },
+  {
+    input: AssignRolesInput;
+  }
+> = gql`
+  mutation AssignRoles($input: AssignRolesInput!) {
+    assignRoles(input: $input)
   }
 `;

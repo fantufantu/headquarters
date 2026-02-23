@@ -30,7 +30,6 @@ export const CREATE_AUTHORIZATION: TypedDocumentNode<
   { createAuthorization: Authorization },
   {
     input: {
-      tenantCode: string;
       resourceCode: string;
       actionCode: string;
     };

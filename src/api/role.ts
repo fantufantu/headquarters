@@ -1,6 +1,6 @@
 import { gql, type TypedDocumentNode } from "@apollo/client";
 import type { Paginated, Pagination } from "./pagination.types";
-import type { Role } from "./role.types";
+import type { AssignAuthorizationsInput, Role } from "./role.types";
 
 /**
  * 分页查询角色列表
@@ -46,5 +46,32 @@ export const ROLE: TypedDocumentNode<{ role: Role }, { code: string }> = gql`
       code
       name
     }
+  }
+`;
+
+/**
+ * 查询角色权限
+ */
+export const ROLE_AUTHORIZATIONS: TypedDocumentNode<{ role: Role }, { code: string }> = gql`
+  query Role($code: String!) {
+    role(code: $code) {
+      authorizations {
+        id
+        resourceCode
+        actionCode
+      }
+    }
+  }
+`;
+
+/**
+ * 为角色授权
+ */
+export const ASSIGN_AUTHORIZATIONS: TypedDocumentNode<
+  { assignAuthorizations: Role },
+  { input: AssignAuthorizationsInput }
+> = gql`
+  mutation AssignAuthorizations($input: AssignAuthorizationsInput!) {
+    assignAuthorizations(input: $input)
   }
 `;

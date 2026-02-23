@@ -1,9 +1,12 @@
+import { type Authorization } from "./authorization.types";
+
 export interface Who {
   id: number;
   username: string;
   avatar?: string;
   nickname?: string;
   emailAddress: string;
+  authorizations?: Authorization[];
 }
 
 /**
@@ -12,4 +15,12 @@ export interface Who {
 export interface UpdateUserInput {
   nickname: string;
   avatar?: string | null;
+}
+
+/**
+ * 为用户分配角色
+ */
+export interface AssignRolesInput {
+  userId: number;
+  roleCodes: string[];
 }

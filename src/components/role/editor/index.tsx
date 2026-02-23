@@ -75,7 +75,7 @@ const RoleEditor = ({ ref, onSuccess }: Props) => {
 
   return (
     <Drawer open={isVisible} onClose={close} onConfirm={submit}>
-      <Loading loading={loading || true}>
+      <Loading loading={loading}>
         <Form form={form}>
           <Form.Item
             label="角色编码"

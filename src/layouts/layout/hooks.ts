@@ -1,7 +1,7 @@
 import type { NavigationItem } from "musae/types/bench";
 import { useMemo } from "react";
-import { useAppConfig } from "../../contexts/app-config.context";
 import { RESOURCE_CODES } from "../../constants/authorization";
+import { useAuthentication } from "@/store/authentication";
 
 /**
  * 用户侧边可见菜单
@@ -9,7 +9,7 @@ import { RESOURCE_CODES } from "../../constants/authorization";
  * 1. 增加用户权限鉴权
  */
 export const useNavigations = () => {
-  const { authorizations } = useAppConfig();
+  const authorizations = useAuthentication().me?.authorizations ?? [];
 
   return useMemo<NavigationItem[]>(() => {
     return [
@@ -44,6 +44,10 @@ export const useNavigations = () => {
       {
         path: "/roles",
         label: "角色管理",
+      },
+      {
+        path: "/users",
+        label: "用户管理",
       },
     ].filter(
       ({ resourceCode }) =>

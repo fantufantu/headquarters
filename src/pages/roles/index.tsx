@@ -38,7 +38,7 @@ const Roles = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <div>
         <Button onClick={add}>新增角色</Button>
       </div>

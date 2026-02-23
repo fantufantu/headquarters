@@ -23,6 +23,7 @@ const ForgotPassword = lazy(() => import("./pages/forgot-password"));
 const ResumeTemplates = lazy(() => import("./pages/resume-templates"));
 const Authorizations = lazy(() => import("./pages/authorizations"));
 const Roles = lazy(() => import("./pages/roles"));
+const Users = lazy(() => import("./pages/users"));
 
 bootstrap({
   selectors: "#root",
@@ -86,6 +87,10 @@ bootstrap({
             {
               path: "/roles",
               Component: Roles,
+            },
+            {
+              path: "/users",
+              Component: Users,
             },
           ],
         },

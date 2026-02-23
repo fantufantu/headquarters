@@ -34,6 +34,11 @@ export const WHO_AM_I: TypedDocumentNode<{ whoAmI: Who }> = gql`
       nickname
       avatar
       emailAddress
+      authorizations {
+        id
+        resourceCode
+        actionCode
+      }
     }
   }
 `;
