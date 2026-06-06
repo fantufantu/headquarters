@@ -1,4 +1,4 @@
-import { PAGINATE_ROLES } from "@/api/role";
+import { PAGINATE_ROLES } from "@/api/role.api";
 import { usePagination } from "@/hooks/pagination.hooks";
 import { useQuery } from "@apollo/client/react";
 import { Button, Table } from "musae";

@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client/react";
-import { CREATE_RESUME_TEMPLATE, UPDATE_RESUME_TEMPLATE } from "../../../../api/resume-template";
+import { CREATE_RESUME_TEMPLATE, UPDATE_RESUME_TEMPLATE } from "../../../../api/resume-template.api";
 import { useMessage } from "musae";
 import { RemoteFileItem } from "musae/types/upload";
 

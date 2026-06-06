@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client/react";
 import { Button, Form, Input, PasswordInput, useMessage, useTheme } from "musae";
-import { CHANGE_PASSWORD, SEND_CHANGE_PASSWORD_CAPTCHA } from "../../api/authentication";
+import { CHANGE_PASSWORD, SEND_CHANGE_PASSWORD_CAPTCHA } from "../../api/authentication.api";
 import { useEvent } from "@aiszlab/relax";
 import { stringify } from "@aiszlab/relax/class-name";
 import styles from "./styles.module.css";

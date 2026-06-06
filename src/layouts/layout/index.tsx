@@ -2,9 +2,9 @@ import { Bench, Avatar, Popover, Menu, useTheme, IconButton } from "musae";
 import { useNavigations } from "./hooks/use-navigations";
 import { Outlet, useNavigate, useResolvedPath } from "@aiszlab/bee/router";
 import { useMutation } from "@apollo/client/react";
-import { LOGOUT } from "../../api/authentication";
+import { LOGOUT } from "../../api/authentication.api";
 import { createElement, useCallback } from "react";
-import { useAuthentication } from "../../store/authentication";
+import { useAuthentication } from "../../store/authentication.store";
 import { WbSunny, Bedtime } from "musae/icons";
 
 const Layout = () => {

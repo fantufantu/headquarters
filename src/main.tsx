@@ -7,7 +7,7 @@ import "musae/styles.css";
 
 import Application from "./application";
 import Layout from "./layouts/layout";
-import { useAuthentication } from "./store/authentication";
+import { useAuthentication } from "./store/authentication.store";
 import { AuthenticationToken } from "./constants/authentication";
 
 const Home = lazy(() => import("./pages/home"));
@@ -24,6 +24,7 @@ const ResumeTemplates = lazy(() => import("./pages/resume-templates"));
 const Authorizations = lazy(() => import("./pages/authorizations"));
 const Roles = lazy(() => import("./pages/roles"));
 const Users = lazy(() => import("./pages/users"));
+const Cities = lazy(() => import("./pages/cities"));
 
 bootstrap({
   selectors: "#root",
@@ -91,6 +92,10 @@ bootstrap({
             {
               path: "/users",
               Component: Users,
+            },
+            {
+              path: "/cities",
+              Component: Cities,
             },
           ],
         },

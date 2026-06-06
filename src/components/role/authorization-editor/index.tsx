@@ -1,5 +1,5 @@
-import { PAGINATE_AUTHORIZATIONS } from "@/api/authorization";
-import { ASSIGN_AUTHORIZATIONS, ROLE, ROLE_AUTHORIZATIONS } from "@/api/role";
+import { PAGINATE_AUTHORIZATIONS } from "@/api/authorization.api";
+import { ASSIGN_AUTHORIZATIONS, ROLE, ROLE_AUTHORIZATIONS } from "@/api/role.api";
 import { useBoolean } from "@aiszlab/relax";
 import { useApolloClient, useLazyQuery } from "@apollo/client/react";
 import { Drawer, Form, Loading, Transfer } from "musae";

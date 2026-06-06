@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 import { stringify } from "@aiszlab/relax/class-name";
 import { KeyboardDoubleArrowRight } from "musae/icons";
 import { useMutation } from "@apollo/client/react";
-import { SIGN_IN } from "../../api/authentication";
+import { SIGN_IN } from "../../api/authentication.api";
 import { useCallback } from "react";
 import { useWho } from "../../hooks/authentication.hooks";
 import { redirectBy } from "../../utils/redirect-by";

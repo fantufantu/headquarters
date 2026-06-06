@@ -2,7 +2,7 @@ import { Form, Input, Button, Space, Select, useMessage, Loading, RichTextEditor
 import { useNavigate } from "@aiszlab/bee/router";
 import { useCallback } from "react";
 import { useMutation } from "@apollo/client/react";
-import { CREATE_ARTICLE, UPDATE_ARTICLE } from "../../../api/article";
+import { CREATE_ARTICLE, UPDATE_ARTICLE } from "../../../api/article.api";
 import { useArticle, useCategories } from "./hooks";
 import { type FormValues } from "./hooks";
 import type { CreateArticleInput } from "../../../api/article.types";

@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client/react";
-import { USERS } from "../../api/user";
+import { USERS } from "../../api/user.api";
 import { usePagination } from "../../hooks/pagination.hooks";
 import { Loading, Pagination, Table } from "musae";
 import { Who } from "../../api/user.types";

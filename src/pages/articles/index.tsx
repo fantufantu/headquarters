@@ -4,7 +4,7 @@ import { useColumns } from "./hooks";
 import { useNavigate } from "@aiszlab/bee/router";
 import { useCallback } from "react";
 import { useQuery } from "@apollo/client/react";
-import { ARTICLES } from "../../api/article";
+import { ARTICLES } from "../../api/article.api";
 import { usePagination } from "../../hooks/pagination.hooks";
 import { useEvent } from "@aiszlab/relax";
 

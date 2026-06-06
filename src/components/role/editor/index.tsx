@@ -1,4 +1,4 @@
-import { CREATE_ROLE, ROLE } from "@/api/role";
+import { CREATE_ROLE, ROLE } from "@/api/role.api";
 import { isEmpty, isUndefined, useBoolean } from "@aiszlab/relax";
 import { useApolloClient, useLazyQuery } from "@apollo/client/react";
 import { Drawer, Form, Input, Loading } from "musae";

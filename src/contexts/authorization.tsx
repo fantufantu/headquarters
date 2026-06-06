@@ -1,4 +1,4 @@
-import { useAuthentication } from "@/store/authentication";
+import { useAuthentication } from "@/store/authentication.store";
 import { createContext, type ReactNode, useContext, useMemo } from "react";
 
 const AuthorizationContext = createContext<{

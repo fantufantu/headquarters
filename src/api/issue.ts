@@ -1,6 +1,6 @@
 import { client } from ".";
 import { DIR } from "../utils/upload";
-import { COS_CREDENTIAL } from "./cloud";
+import { COS_CREDENTIAL } from "./cloud.api";
 import { BUCKET_NAME } from "./cloud.types";
 
 /**

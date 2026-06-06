@@ -1,4 +1,4 @@
-import { PAGINATE_AUTHORIZATIONS } from "@/api/authorization";
+import { PAGINATE_AUTHORIZATIONS } from "@/api/authorization.api";
 import AuthorizationEditor, { AuthorizationEditorRef } from "@/components/authorization/editor";
 import { usePagination } from "@/hooks/pagination.hooks";
 import { useQuery } from "@apollo/client/react";

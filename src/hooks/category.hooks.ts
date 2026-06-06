@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client/react";
 import { usePagination } from "./pagination.hooks";
-import { CATEGORIES } from "../api/category";
+import { CATEGORIES } from "../api/category.api";
 import { useCallback } from "react";
 
 /**

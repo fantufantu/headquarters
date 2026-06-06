@@ -4,7 +4,7 @@ import { RefObject, useMemo } from "react";
 import { ResumeTemplate } from "../../api/resume-template.types";
 import { EditorRef } from "../../components/resume-template/editor";
 import { useMutation } from "@apollo/client/react";
-import { REMOVE_RESUME_TEMPLATE } from "../../api/resume-template";
+import { REMOVE_RESUME_TEMPLATE } from "../../api/resume-template.api";
 
 /**
  * @description

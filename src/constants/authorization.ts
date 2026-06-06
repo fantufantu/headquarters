@@ -1,4 +1,4 @@
-import { ROLE } from "@/api/role";
+import { ROLE } from "@/api/role.api";
 
 /**
  * 系统权限资源
@@ -40,6 +40,11 @@ export const RESOURCE_CODES = {
   USER: "user",
 
   /**
+   * 城市
+   */
+  CITY: "city",
+
+  /**
    * 全部资源
    */
   ALL: "all",
@@ -53,6 +58,7 @@ export const RESOURCES = new Map([
   [RESOURCE_CODES.CATEGORY, { label: "分类", value: RESOURCE_CODES.CATEGORY }],
   [RESOURCE_CODES.RESUME_TEMPLATE, { label: "简历模板", value: RESOURCE_CODES.RESUME_TEMPLATE }],
   [RESOURCE_CODES.ISSUE, { label: "issue", value: RESOURCE_CODES.ISSUE }],
+  [RESOURCE_CODES.CITY, { label: "城市", value: RESOURCE_CODES.CITY }],
   [RESOURCE_CODES.ALL, { label: "全部", value: RESOURCE_CODES.ALL }],
 ]);
 

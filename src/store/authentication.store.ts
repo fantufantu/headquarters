@@ -1,6 +1,6 @@
 import type { Who } from "../api/user.types";
 import { client } from "../api";
-import { WHO_AM_I } from "../api/authentication";
+import { WHO_AM_I } from "../api/authentication.api";
 import { random } from "@aiszlab/fuzzy/avatar";
 
 import { using } from "@aiszlab/relax/react";

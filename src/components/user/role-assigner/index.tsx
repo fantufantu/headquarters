@@ -1,5 +1,5 @@
-import { PAGINATE_ROLES } from "@/api/role";
-import { ASSIGN_ROLES, WHO_ARE_YOU } from "@/api/user";
+import { PAGINATE_ROLES } from "@/api/role.api";
+import { ASSIGN_ROLES, WHO_ARE_YOU } from "@/api/user.api";
 import { useBoolean } from "@aiszlab/relax";
 import { useApolloClient, useLazyQuery } from "@apollo/client/react";
 import { Drawer, Form, Loading, Transfer } from "musae";

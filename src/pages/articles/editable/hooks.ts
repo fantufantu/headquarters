@@ -5,7 +5,7 @@ import { useParams } from "@aiszlab/bee/router";
 import { useMounted } from "@aiszlab/relax";
 import type { UsedForm } from "musae/types/form";
 import { useCategories as _useCategories } from "../../../hooks/category.hooks";
-import { ARTICLE } from "../../../api/article";
+import { ARTICLE } from "../../../api/article.api";
 
 export interface FormValues {
   title: string;

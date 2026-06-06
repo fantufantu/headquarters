@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useNotification } from 'musae'
-import { useAuthentication } from '../store/authentication'
+import { useAuthentication } from '../store/authentication.store'
 
 /**
  * @description

@@ -1,7 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { ErrorLink } from "@apollo/client/link/error";
 import { Notification } from "musae";
-import { useAuthentication } from "@/store/authentication";
+import { useAuthentication } from "@/store/authentication.store";
 import { ApolloLink } from "@apollo/client";
 
 const client = new ApolloClient({

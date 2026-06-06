@@ -2,7 +2,7 @@ import { useBoolean } from "@aiszlab/relax";
 import { useLazyQuery } from "@apollo/client/react";
 import { Dialog, Form, Input, Select, Textarea, Upload, useMessage } from "musae";
 import { forwardRef, useImperativeHandle } from "react";
-import { RESUME_TEMPLATE } from "../../../api/resume-template";
+import { RESUME_TEMPLATE } from "../../../api/resume-template.api";
 import { useResumeTemplateMutation, type FormValue } from "./hooks/use-resume-template-mutation";
 import { useResumeTemplateTagOptions } from "./hooks/use-resume-template-tag-options";
 import { DIR, upload } from "../../../utils/upload";

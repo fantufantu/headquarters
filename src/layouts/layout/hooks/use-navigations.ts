@@ -53,6 +53,11 @@ export const useNavigations = () => {
         label: "简历模板管理",
         resourceCode: RESOURCE_CODES.RESUME_TEMPLATE,
       },
+      {
+        path: "/cities",
+        label: "城市管理",
+        resourceCode: RESOURCE_CODES.CITY,
+      },
     ].filter(({ resourceCode }) => !resourceCode || isAuthorized(authorized, { resourceCode }));
   }, []);
 };

@@ -5,7 +5,7 @@ import { RefObject, useImperativeHandle } from "react";
 import ResourceSelect from "../../inputs/resource-select";
 import ActionSelect from "../../inputs/action-select";
 import { useApolloClient } from "@apollo/client/react";
-import { CREATE_AUTHORIZATION } from "@/api/authorization";
+import { CREATE_AUTHORIZATION } from "@/api/authorization.api";
 
 interface FieldsValue {
   resourceCode: string;

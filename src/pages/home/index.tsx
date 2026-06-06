@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client/react";
 import { ContributionCalendar } from "musae";
-import { ARTICLE_CONTRIBUTIONS } from "../../api/article";
+import { ARTICLE_CONTRIBUTIONS } from "../../api/article.api";
 import dayjs from "dayjs";
 import { useRef } from "react";
 

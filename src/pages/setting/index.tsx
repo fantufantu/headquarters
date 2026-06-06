@@ -2,8 +2,8 @@ import { Button, Form, Image, Input, Menu, Popconfirm, Popover, Upload, useMessa
 import { first, useEvent, useMounted } from "@aiszlab/relax";
 import { useMemo, useState } from "react";
 import { useMutation } from "@apollo/client/react";
-import { UPDATE_USER } from "../../api/user";
-import { useAuthentication } from "../../store/authentication";
+import { UPDATE_USER } from "../../api/user.api";
+import { useAuthentication } from "../../store/authentication.store";
 import { DIR, upload } from "../../utils/upload";
 import type { FileItem } from "musae/types/upload";
 

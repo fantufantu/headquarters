@@ -1,6 +1,6 @@
 import { type UploadBody } from "cos-js-sdk-v5";
 import { client } from "../api";
-import { COS_CREDENTIAL } from "../api/cloud";
+import { COS_CREDENTIAL } from "../api/cloud.api";
 import { exclude } from "@aiszlab/relax";
 import { BUCKET_NAME, BucketName } from "../api/cloud.types";
 import { ValueOf } from "@aiszlab/relax/types";
@@ -10,6 +10,7 @@ export const DIR = {
   STACK_LOGOS: "stack-logos",
   AVATARS: "avatars",
   RESUME_TEMPLATES: "resume-templates",
+  CITIES: "cities",
   NONE: "",
 } as const;
 

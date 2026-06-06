@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client/react";
 import { usePagination } from "./pagination.hooks";
-import { RESUME_TEMPLATES } from "../api/resume-template";
+import { RESUME_TEMPLATES } from "../api/resume-template.api";
 import { useEvent } from "@aiszlab/relax";
 
 /**

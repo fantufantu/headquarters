@@ -1,7 +1,7 @@
 import { Drawer, Form, Input, Upload } from "musae";
 import { useBoolean, useEvent } from "@aiszlab/relax";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
-import { CREATE_CATEGORY, CATEGORY, UPDATE_CATEGORY } from "../../../api/category";
+import { CREATE_CATEGORY, CATEGORY, UPDATE_CATEGORY } from "../../../api/category.api";
 import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
 import { DIR, upload } from "../../../utils/upload";
 import type { UploadedItem } from "musae/types/upload";

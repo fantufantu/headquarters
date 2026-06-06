@@ -4,7 +4,7 @@ import type { Category } from "../../api/category.types";
 import { Button, Divider, Popconfirm, Space, useMessage } from "musae";
 import { type EditableDrawerRef } from "../../components/category/editable-drawer";
 import { useMutation } from "@apollo/client/react";
-import { REMOVE_CATEGORY } from "../../api/category";
+import { REMOVE_CATEGORY } from "../../api/category.api";
 
 export const useColumns = ({
   editableRef,

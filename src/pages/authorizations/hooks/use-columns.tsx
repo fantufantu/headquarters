@@ -1,4 +1,4 @@
-import { REMOVE_AUTHORIZATION } from "@/api/authorization";
+import { REMOVE_AUTHORIZATION } from "@/api/authorization.api";
 import type { Authorization } from "@/api/authorization.types";
 import { useApolloClient } from "@apollo/client/react";
 import { Button, Popconfirm } from "musae";
