@@ -45,12 +45,12 @@ const Cities = () => {
   });
 
   return (
-    <Loading className="flex flex-col gap-4" loading={loading}>
+    <>
       <div>
         <Button onClick={add}>新增城市</Button>
       </div>
 
-      <Table<City> columns={columns} bordered dataSource={cities} />
+      <Table<City> columns={columns} bordered dataSource={cities} loading={loading} />
 
       <Pagination
         at={page}
@@ -61,7 +61,7 @@ const Cities = () => {
       />
 
       <EditableDrawer ref={ref} onSubmitted={refetch} />
-    </Loading>
+    </>
   );
 };
 
