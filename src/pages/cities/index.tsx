@@ -45,7 +45,7 @@ const Cities = () => {
   });
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <div>
         <Button onClick={add}>新增城市</Button>
       </div>
@@ -61,7 +61,7 @@ const Cities = () => {
       />
 
       <EditableDrawer ref={ref} onSubmitted={refetch} />
-    </>
+    </div>
   );
 };
 
