@@ -58,6 +58,11 @@ export const useNavigations = () => {
         label: "城市管理",
         resourceCode: RESOURCE_CODES.CITY,
       },
+      {
+        path: "/attractions",
+        label: "景点管理",
+        resourceCode: RESOURCE_CODES.ATTRACTION,
+      },
     ].filter(({ resourceCode }) => !resourceCode || isAuthorized(authorized, { resourceCode }));
   }, []);
 };

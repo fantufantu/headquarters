@@ -25,6 +25,7 @@ const Authorizations = lazy(() => import("./pages/authorizations"));
 const Roles = lazy(() => import("./pages/roles"));
 const Users = lazy(() => import("./pages/users"));
 const Cities = lazy(() => import("./pages/cities"));
+const Attractions = lazy(() => import("./pages/attractions"));
 
 bootstrap({
   selectors: "#root",
@@ -96,6 +97,10 @@ bootstrap({
             {
               path: "/cities",
               Component: Cities,
+            },
+            {
+              path: "/attractions",
+              Component: Attractions,
             },
           ],
         },

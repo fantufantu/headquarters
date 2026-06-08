@@ -45,6 +45,11 @@ export const RESOURCE_CODES = {
   CITY: "city",
 
   /**
+   * 景点
+   */
+  ATTRACTION: "attraction",
+
+  /**
    * 全部资源
    */
   ALL: "all",
@@ -59,6 +64,7 @@ export const RESOURCES = new Map([
   [RESOURCE_CODES.RESUME_TEMPLATE, { label: "简历模板", value: RESOURCE_CODES.RESUME_TEMPLATE }],
   [RESOURCE_CODES.ISSUE, { label: "issue", value: RESOURCE_CODES.ISSUE }],
   [RESOURCE_CODES.CITY, { label: "城市", value: RESOURCE_CODES.CITY }],
+  [RESOURCE_CODES.ATTRACTION, { label: "景点", value: RESOURCE_CODES.ATTRACTION }],
   [RESOURCE_CODES.ALL, { label: "全部", value: RESOURCE_CODES.ALL }],
 ]);
 
