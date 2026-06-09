@@ -1,5 +1,5 @@
 import { gql, type TypedDocumentNode } from "@apollo/client";
-import type { AmapCredential, District } from "./amap.types";
+import type { AmapCredential, District, Poi } from "./amap.types";
 import { useAmapStore } from "@/store/amap.store";
 
 /**
@@ -43,4 +43,39 @@ export async function queryDistricts({
   const data = await response.json();
 
   return data.districts;
+}
+
+/**
+ * @description 查询高德地图景点 POI
+ */
+export async function queryTouristAttractions({
+  keywords,
+  cityCode,
+}: {
+  keywords?: string;
+  cityCode?: string;
+}): Promise<Poi[]> {
+  const apiKey = (await useAmapStore.state.loadCredential())?.apiKey;
+
+  if (!apiKey) {
+    throw new Error("无法获取高德地图 API 密钥");
+  }
+
+  const url = new URL("https://restapi.amap.com/v5/place/text");
+  url.searchParams.set("key", apiKey);
+  url.searchParams.set("types", "110000");
+  url.searchParams.set("city_limit", "true");
+
+  if (keywords) {
+    url.searchParams.set("keywords", keywords);
+  }
+
+  if (cityCode) {
+    url.searchParams.set("region", cityCode);
+  }
+
+  const response = await fetch(url.toString());
+  const data = await response.json();
+
+  return data.pois ?? [];
 }

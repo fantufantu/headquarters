@@ -1,13 +1,13 @@
-import { Drawer, Form, Input } from "musae";
+import { Drawer, Form } from "musae";
 import { useBoolean, useEvent } from "@aiszlab/relax";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { CREATE_ATTRACTION, ATTRACTION, UPDATE_ATTRACTION } from "../../../api/attraction.api";
-import { forwardRef, useImperativeHandle, useState } from "react";
+import { forwardRef, useImperativeHandle, useState, useRef } from "react";
 import CitySelect, { type CityValue } from "@/components/inputs/city-select";
+import AttractionSelect from "@/components/inputs/attraction-select";
 
 interface FormValue {
-  code: string;
-  name: string;
+  attraction: CityValue;
   city: CityValue;
 }
 
@@ -27,6 +27,8 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   const [update] = useMutation(UPDATE_ATTRACTION);
 
   const [code, setCode] = useState<string>();
+  const city = Form.useWatch("city", form);
+  const skipClearRef = useRef(false);
 
   useImperativeHandle(ref, () => {
     return {
@@ -41,26 +43,40 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
         )?.data?.attraction;
         if (!_attraction) return;
 
+        skipClearRef.current = true;
         form.setFieldsValue({
-          code: _attraction.code,
-          name: _attraction.name,
+          attraction: { code: _attraction.code, name: _attraction.name },
           city: { code: _attraction.cityCode, name: _attraction.cityCode },
         });
       },
     };
   });
 
+  const handleFormChange = useEvent((_values: Partial<FormValue>, names: (keyof FormValue)[]) => {
+    if (!names.includes("city")) return;
+    if (skipClearRef.current) {
+      skipClearRef.current = false;
+      return;
+    }
+    form.setFieldsValue({ attraction: undefined as unknown as CityValue });
+  });
+
   const submit = useEvent(async () => {
     const isValid = await form.validate().catch(() => false);
     if (!isValid) return;
 
-    const { code: _code, name, city } = form.getFieldsValue();
-    const cityCode = city?.code ?? "";
+    const { attraction, city: _city } = form.getFieldsValue();
+    const cityCode = _city?.code ?? "";
     const isSucceed = code
-      ? (await update({ variables: { code, input: { name: name!, cityCode } } })).data
+      ? (await update({ variables: { code, input: { name: attraction!.name, cityCode } } })).data
           ?.updateAttraction
-      : (await create({ variables: { input: { code: _code!, name: name!, cityCode } } })).data
-          ?.createAttraction;
+      : (
+          await create({
+            variables: {
+              input: { code: attraction!.code, name: attraction!.name, cityCode },
+            },
+          })
+        ).data?.createAttraction;
 
     if (!isSucceed) return;
     turnOff();
@@ -74,17 +90,13 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
       title={code ? "编辑景点" : "新增景点"}
       onConfirm={submit}
     >
-      <Form form={form}>
-        <Form.Item name="code" label="景点编码" required>
-          <Input disabled={!!code} />
-        </Form.Item>
-
-        <Form.Item name="name" label="景点名称" required>
-          <Input />
-        </Form.Item>
-
+      <Form form={form} onChange={handleFormChange}>
         <Form.Item name="city" label="城市" required>
-          <CitySelect />
+          <CitySelect source="api" />
+        </Form.Item>
+
+        <Form.Item name="attraction" label="景点" required>
+          <AttractionSelect disabled={!!code || !city?.code} cityCode={city?.code} />
         </Form.Item>
       </Form>
     </Drawer>
