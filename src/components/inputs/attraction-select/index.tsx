@@ -2,7 +2,7 @@ import { Select } from "musae";
 import { useDebounceCallback, useEvent } from "@aiszlab/relax";
 import { useState } from "react";
 import { queryTouristAttractions } from "@/api/amap.api";
-import { SelectProps } from "musae/types/select";
+import { SelectProps, SelectComplexValue } from "musae/types/select";
 import type { CityValue } from "@/components/inputs/city-select";
 
 export type { CityValue };
@@ -12,11 +12,6 @@ interface Props {
   onChange?: (value?: CityValue) => void;
   disabled?: boolean;
   cityCode?: string;
-}
-
-interface _SelectValue {
-  value: string;
-  label: string;
 }
 
 const AttractionSelect = ({ value, onChange, disabled, cityCode }: Props) => {
@@ -35,29 +30,24 @@ const AttractionSelect = ({ value, onChange, disabled, cityCode }: Props) => {
     setOptions(pois ?? []);
   }, 500);
 
-  const handleChange = useEvent((val: _SelectValue | undefined) => {
-    if (!val) {
-      onChange?.(undefined);
-      return;
-    }
-    onChange?.({ code: val.value, name: val.label });
+  const handleChange = useEvent((val?: SelectComplexValue) => {
+    onChange?.(val && { code: val.value.toString(), name: val.label?.toString() ?? "" });
   });
 
   return (
-    <Select<_SelectValue>
+    <Select<SelectComplexValue>
       complex
       searchable
       disabled={disabled}
       value={
-        value
-          ? {
-              value: value.code,
-              label: value.name,
-            }
-          : void 0
+        value && {
+          value: value.code,
+          label: value.name,
+        }
       }
       onChange={handleChange}
       onSearch={searchAttraction}
+      onFilter={false}
       options={options}
     />
   );

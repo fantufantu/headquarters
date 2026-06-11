@@ -24,6 +24,7 @@ export const ATTRACTIONS: TypedDocumentNode<
         code
         name
         cityCode
+        image
       }
       total
     }
@@ -45,6 +46,11 @@ export const ATTRACTION: TypedDocumentNode<
       code
       name
       cityCode
+      image
+      city {
+        code
+        name
+      }
     }
   }
 `;

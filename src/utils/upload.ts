@@ -11,6 +11,7 @@ export const DIR = {
   AVATARS: "avatars",
   RESUME_TEMPLATES: "resume-templates",
   CITIES: "cities",
+  ATTRACTIONS: "attractions",
   NONE: "",
 } as const;
 

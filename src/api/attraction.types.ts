@@ -2,6 +2,11 @@ export interface Attraction {
   code: string;
   name: string;
   cityCode: string;
+  image: string;
+  city: {
+    code: string;
+    name: string;
+  };
 }
 
 export interface FilterAttractionsInput {
@@ -12,6 +17,7 @@ export interface CreateAttractionInput {
   code: string;
   name: string;
   cityCode: string;
+  image: string;
 }
 
-export type UpdateAttractionInput = Partial<Pick<CreateAttractionInput, "name" | "cityCode">>;
+export type UpdateAttractionInput = Partial<CreateAttractionInput>;
