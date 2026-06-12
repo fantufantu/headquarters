@@ -20,7 +20,7 @@ export const useColumns = ({
         title: "景点名称",
       },
       {
-        valueAt: "cityCode",
+        valueAt: "city.name",
         title: "城市编码",
       },
       {
