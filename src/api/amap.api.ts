@@ -63,7 +63,6 @@ export async function queryTouristAttractions({
 
   const url = new URL("https://restapi.amap.com/v5/place/text");
   url.searchParams.set("key", apiKey);
-  url.searchParams.set("types", "110000");
   url.searchParams.set("city_limit", "true");
 
   if (keywords) {
