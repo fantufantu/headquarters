@@ -1,7 +1,7 @@
 import type { Column } from "musae/types/table";
 import { useMemo, type RefObject } from "react";
 import type { Attraction } from "../../api/attraction.types";
-import { Button, Space } from "musae";
+import { Button, Space, Image } from "musae";
 import { type EditableDrawerRef } from "../../components/attraction/editable-drawer";
 
 export const useColumns = ({
@@ -20,8 +20,14 @@ export const useColumns = ({
         title: "景点名称",
       },
       {
+        key: "image",
+        title: "图片",
+        width: 120,
+        render: (_, { image }) => <Image src={image} width={160} height={120} />,
+      },
+      {
         valueAt: "city.name",
-        title: "城市编码",
+        title: "城市",
       },
       {
         key: "actions",

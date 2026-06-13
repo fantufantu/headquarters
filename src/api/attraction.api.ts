@@ -24,6 +24,9 @@ export const ATTRACTIONS: TypedDocumentNode<
         code
         name
         cityCode
+        city {
+          name
+        }
         image
       }
       total

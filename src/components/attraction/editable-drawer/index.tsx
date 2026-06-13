@@ -3,16 +3,10 @@ import { useBoolean, useEvent } from "@aiszlab/relax";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { CREATE_ATTRACTION, ATTRACTION, UPDATE_ATTRACTION } from "../../../api/attraction.api";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import CitySelect, { type CityValue } from "@/components/inputs/city-select";
-import AttractionSelect from "@/components/inputs/attraction-select";
+import CitySelect from "@/components/inputs/city-select";
+import AttractionField from "@/components/fields/attraction-field";
 import { upload } from "@/utils/upload";
-import { FileItem } from "musae/types/upload";
-
-interface FormValue {
-  attraction: CityValue;
-  city: CityValue;
-  image: FileItem[];
-}
+import { type FormValue } from "./types";
 
 export interface EditableDrawerRef {
   open: (code?: string) => void;
@@ -30,7 +24,6 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   const [update] = useMutation(UPDATE_ATTRACTION);
 
   const [code, setCode] = useState<string>();
-  const city = Form.useWatch("city", form);
 
   useImperativeHandle(ref, () => {
     return {
@@ -113,12 +106,10 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
     >
       <Form form={form} onChange={handleFormChange}>
         <Form.Item name="city" label="城市" required>
-          <CitySelect source="api" />
+          <CitySelect source="api" disabled={!!code} />
         </Form.Item>
 
-        <Form.Item name="attraction" label="景点" required>
-          <AttractionSelect disabled={!!code || !city?.code} cityCode={city?.code} />
-        </Form.Item>
+        <AttractionField disabled={!!code} />
 
         <Form.Item name="image" label="图片" required>
           <Upload uploader={uploadImage} />

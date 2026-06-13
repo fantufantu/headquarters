@@ -9,6 +9,7 @@ import EditableDrawer, {
 } from "../../components/attraction/editable-drawer";
 import { useRef } from "react";
 import { useEvent } from "@aiszlab/relax";
+import AttractionFilter, { type FilterRef } from "./filter";
 
 const Attractions = () => {
   const { page, changePage, changeLimit, limit } = usePagination();
@@ -25,7 +26,21 @@ const Attractions = () => {
     },
   });
 
-  const ref = useRef<EditableDrawerRef>(null);
+  const editorRef = useRef<EditableDrawerRef>(null);
+  const filterRef = useRef<FilterRef>(null);
+
+  const handleSearch = useEvent(() => {
+    const filter = filterRef.current?.getValues();
+    changePage(1);
+
+    _refetch({
+      filter: { cityCode: filter?.cityCode },
+      pagination: {
+        page: 1,
+        limit,
+      },
+    });
+  });
 
   const refetch = useEvent(() => {
     changePage(1);
@@ -39,17 +54,22 @@ const Attractions = () => {
   });
 
   const columns = useColumns({
-    editableRef: ref,
+    editableRef: editorRef,
   });
 
   const add = useEvent(() => {
-    ref.current?.open();
+    editorRef.current?.open();
   });
 
   return (
     <div className="flex flex-col gap-4">
-      <div>
+      <div className="flex items-center gap-4">
         <Button onClick={add}>新增景点</Button>
+      </div>
+
+      <div className="flex items-center gap-4">
+        <AttractionFilter ref={filterRef} />
+        <Button onClick={handleSearch}>查询</Button>
       </div>
 
       <Table<Attraction> columns={columns} bordered dataSource={attractions} loading={loading} />
@@ -62,7 +82,7 @@ const Attractions = () => {
         onPageSizeChange={changeLimit}
       />
 
-      <EditableDrawer ref={ref} onSubmitted={refetch} />
+      <EditableDrawer ref={editorRef} onSubmitted={refetch} />
     </div>
   );
 };

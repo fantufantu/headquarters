@@ -15,6 +15,7 @@ interface Props {
   value?: CityValue;
   onChange?: (value?: CityValue) => void;
   source?: "amap" | "api";
+  disabled?: boolean;
 }
 
 interface _SelectValue {
@@ -22,7 +23,7 @@ interface _SelectValue {
   label: string;
 }
 
-const CitySelect = ({ value, onChange, source = "api" }: Props) => {
+const CitySelect = ({ value, onChange, source = "api", disabled }: Props) => {
   const [options, setOptions] = useState<NonNullable<SelectProps["options"]>>([]);
   const [fetchCities] = useLazyQuery(CITIES);
 
@@ -64,17 +65,17 @@ const CitySelect = ({ value, onChange, source = "api" }: Props) => {
     <Select<_SelectValue>
       complex
       searchable
+      disabled={disabled}
       value={
-        value
-          ? {
-              value: value.code,
-              label: value.name,
-            }
-          : void 0
+        value && {
+          value: value.code,
+          label: value.name,
+        }
       }
       onChange={handleChange}
       onSearch={searchCity}
       options={options}
+      placeholder="请搜索编码或名称"
     />
   );
 };

@@ -11,6 +11,7 @@ export interface Attraction {
 
 export interface FilterAttractionsInput {
   keyword?: string;
+  cityCode?: string;
 }
 
 export interface CreateAttractionInput {

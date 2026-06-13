@@ -10,11 +10,11 @@ const AuthorizationContextProvider = ({ children }: { children: ReactNode }) => 
 
   // 构建权限树
   const authorized = useMemo(() => {
-    return (authorizations ?? []).reduce((authorized, { resourceCode, actionCode }) => {
-      const actions = authorized.get(resourceCode) ?? new Set<string>();
+    return (authorizations ?? []).reduce((prev, { resourceCode, actionCode }) => {
+      const actions = prev.get(resourceCode) ?? new Set<string>();
       actions.add(actionCode);
-      authorized.set(resourceCode, actions);
-      return authorized;
+      prev.set(resourceCode, actions);
+      return prev;
     }, new Map<string, Set<string>>());
   }, [authorizations]);
 
