@@ -57,7 +57,7 @@ export const useColumns = ({
                   refetch();
                 }}
               >
-                <Button variant="text" size="small">
+                <Button variant="text" size="small" color="error">
                   删除
                 </Button>
               </Popconfirm>
