@@ -1,14 +1,21 @@
 import type { Column } from "musae/types/table";
 import { useMemo, type RefObject } from "react";
 import type { Attraction } from "../../api/attraction.types";
-import { Button, Space, Image } from "musae";
+import { Button, Divider, Popconfirm, Space, Image, useMessage } from "musae";
 import { type EditableDrawerRef } from "../../components/attraction/editable-drawer";
+import { useMutation } from "@apollo/client/react";
+import { DELETE_ATTRACTION } from "../../api/attraction.api";
 
 export const useColumns = ({
   editableRef,
+  refetch,
 }: {
   editableRef: RefObject<EditableDrawerRef | null>;
+  refetch: VoidFunction;
 }) => {
+  const [_delete] = useMutation(DELETE_ATTRACTION);
+  const [messager] = useMessage();
+
   return useMemo<Column<Attraction>[]>(() => {
     return [
       {
@@ -38,10 +45,26 @@ export const useColumns = ({
               <Button variant="text" size="small" onClick={() => editableRef.current?.open(code)}>
                 编辑
               </Button>
+              <Divider orientation="vertical" />
+              <Popconfirm
+                title="请确认"
+                content="确认删除当前景点"
+                onConfirm={async () => {
+                  const isSucceed = !!(await _delete({ variables: { code } })).data
+                    ?.deleteAttraction;
+                  if (!isSucceed) return;
+                  messager.success({ description: "删除成功！" });
+                  refetch();
+                }}
+              >
+                <Button variant="text" size="small">
+                  删除
+                </Button>
+              </Popconfirm>
             </Space>
           );
         },
       },
     ];
-  }, [editableRef]);
+  }, [_delete, editableRef, messager, refetch]);
 };

@@ -88,3 +88,18 @@ export const UPDATE_ATTRACTION: TypedDocumentNode<
     updateAttraction(code: $code, input: $input)
   }
 `;
+
+/**
+ * @description
+ * 删除景点
+ */
+export const DELETE_ATTRACTION: TypedDocumentNode<
+  { deleteAttraction: boolean },
+  {
+    code: string;
+  }
+> = gql`
+  mutation DeleteAttraction($code: String!) {
+    deleteAttraction(code: $code)
+  }
+`;

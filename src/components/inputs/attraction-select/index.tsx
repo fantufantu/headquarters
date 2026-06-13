@@ -24,7 +24,7 @@ const AttractionSelect = ({ value, onChange, disabled, cityCode }: Props) => {
       );
       return pois;
     },
-    { debounceWait: 500 },
+    { debounceWait: 500, deps: [cityCode] },
   );
 
   const handleChange = useEvent((val?: SelectComplexValue) => {

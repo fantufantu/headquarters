@@ -55,6 +55,7 @@ const Attractions = () => {
 
   const columns = useColumns({
     editableRef: editorRef,
+    refetch,
   });
 
   const add = useEvent(() => {
