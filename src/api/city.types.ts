@@ -2,6 +2,7 @@ export interface City {
   code: string;
   name: string;
   image: string;
+  attractionCount?: number;
 }
 
 export interface FilterCitiesInput {

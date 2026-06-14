@@ -82,7 +82,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
     const cityCode = _city?.code ?? "";
     const image = _image?.[0]?.url ?? "";
     const isSucceed = code
-      ? (await update({ variables: { code, input: { name: attraction!.name, cityCode, image } } }))
+      ? (await update({ variables: { code, input: { image } } }))
           .data?.updateAttraction
       : (
           await create({

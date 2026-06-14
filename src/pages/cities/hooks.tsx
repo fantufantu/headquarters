@@ -20,6 +20,10 @@ export const useColumns = ({
         title: "城市名称",
       },
       {
+        valueAt: "attractionCount",
+        title: "景区数量",
+      },
+      {
         key: "actions",
         title: "操作",
         render: (_, { code }) => {

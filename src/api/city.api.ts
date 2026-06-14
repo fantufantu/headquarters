@@ -18,6 +18,7 @@ export const CITIES: TypedDocumentNode<
       items {
         code
         name
+        attractionCount
       }
       total
     }

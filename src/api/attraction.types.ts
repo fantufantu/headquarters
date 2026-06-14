@@ -21,4 +21,6 @@ export interface CreateAttractionInput {
   image: string;
 }
 
-export type UpdateAttractionInput = Partial<CreateAttractionInput>;
+export interface UpdateAttractionInput {
+  image?: string;
+}
