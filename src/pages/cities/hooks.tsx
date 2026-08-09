@@ -20,6 +20,13 @@ export const useColumns = ({
         title: "城市名称",
       },
       {
+        valueAt: "level" as keyof City,
+        title: "层级",
+        render: (_: unknown, record: City) => {
+          return record.level === "province" ? "省" : record.level === "city" ? "市" : record.level;
+        },
+      },
+      {
         valueAt: "attractionCount",
         title: "景区数量",
       },
