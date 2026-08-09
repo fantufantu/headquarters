@@ -7,12 +7,12 @@ interface Props {
 }
 
 function AttractionField({ disabled: _disabled = false }: Props) {
-  const city = Form.useWatch<FormValue, "city">("city");
-  const isDisabled = _disabled || !city?.code;
+  const district = Form.useWatch<FormValue, "district">("district");
+  const isDisabled = _disabled || !district?.code;
 
   return (
     <Form.Item name="attraction" label="景点" required>
-      <AttractionSelect disabled={isDisabled} cityCode={city?.code} />
+      <AttractionSelect disabled={isDisabled} cityCode={district?.code} />
     </Form.Item>
   );
 }

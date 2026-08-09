@@ -3,7 +3,7 @@ import { useBoolean, useEvent } from "@aiszlab/relax";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { CREATE_ATTRACTION, ATTRACTION, UPDATE_ATTRACTION } from "../../../api/attraction.api";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import CitySelect from "@/components/inputs/city-select";
+import DistrictSelect from "@/components/inputs/district-select";
 import AttractionField from "@/components/fields/attraction-field";
 import { upload } from "@/utils/upload";
 import { type FormValue } from "./types";
@@ -41,7 +41,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
 
         form.setFieldsValue({
           attraction: { code: _attraction.code, name: _attraction.name },
-          city: { code: _attraction.city.code, name: _attraction.city.name },
+          district: { code: _attraction.district.code, name: _attraction.district.name },
           image: [
             {
               status: "success",
@@ -56,7 +56,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   const handleFormChange = useEvent((_values: Partial<FormValue>, names: (keyof FormValue)[]) => {
     const fieldNames = new Set(names);
 
-    if (fieldNames.has("city")) {
+    if (fieldNames.has("district")) {
       form.setFieldsValue({
         attraction: void 0,
       });
@@ -78,8 +78,8 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
     const isValid = await form.validate().catch(() => false);
     if (!isValid) return;
 
-    const { attraction, city: _city, image: _image } = form.getFieldsValue();
-    const cityCode = _city?.code ?? "";
+    const { attraction, district: _district, image: _image } = form.getFieldsValue();
+    const cityCode = _district?.code ?? "";
     const image = _image?.[0]?.url ?? "";
     const isSucceed = code
       ? (await update({ variables: { code, input: { image } } }))
@@ -105,8 +105,8 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
       onConfirm={submit}
     >
       <Form form={form} onChange={handleFormChange}>
-        <Form.Item name="city" label="城市" required>
-          <CitySelect source="api" disabled={!!code} />
+        <Form.Item name="district" label="行政区" required>
+          <DistrictSelect source="api" disabled={!!code} />
         </Form.Item>
 
         <AttractionField disabled={!!code} />

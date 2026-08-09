@@ -10,7 +10,7 @@ export const DIR = {
   STACK_LOGOS: "stack-logos",
   AVATARS: "avatars",
   RESUME_TEMPLATES: "resume-templates",
-  CITIES: "cities",
+  DISTRICTS: "districts",
   ATTRACTIONS: "attractions",
   NONE: "",
 } as const;

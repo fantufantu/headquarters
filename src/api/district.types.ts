@@ -1,4 +1,4 @@
-export interface City {
+export interface District {
   code: string;
   name: string;
   level: string;
@@ -7,11 +7,11 @@ export interface City {
   attractionCount?: number;
 }
 
-export interface FilterCitiesInput {
+export interface FilterDistrictsInput {
   keyword?: string;
 }
 
-export interface CreateCityInput {
+export interface CreateDistrictInput {
   code: string;
   name: string;
   image: string;
@@ -19,4 +19,4 @@ export interface CreateCityInput {
   parentCode?: string;
 }
 
-export type UpdateCityInput = Partial<CreateCityInput>;
+export type UpdateDistrictInput = Partial<CreateDistrictInput>;

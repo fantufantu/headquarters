@@ -86,9 +86,9 @@ export const useNavigations = () => {
           label: "旅游应用管理",
           children: [
             {
-              path: "/cities",
-              label: "城市管理",
-              resourceCode: RESOURCE_CODES.CITY,
+              path: "/districts",
+              label: "行政区管理",
+              resourceCode: RESOURCE_CODES.DISTRICT,
             },
             {
               path: "/attractions",

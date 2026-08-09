@@ -1,15 +1,15 @@
 import { useState, useCallback } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { useEvent } from "@aiszlab/relax";
-import type { District } from "@/api/amap.types";
-import type { City } from "@/api/city.types";
+import type { AmapDistrict } from "@/api/amap.types";
+import type { District } from "@/api/district.types";
 import { queryDistricts } from "@/api/amap.api";
 import {
-  CITIES,
-  CREATE_CITY,
-  UPDATE_CITY,
-  DELETE_CITY,
-} from "@/api/city.api";
+  DISTRICTS,
+  CREATE_DISTRICT,
+  UPDATE_DISTRICT,
+  DELETE_DISTRICT,
+} from "@/api/district.api";
 
 /** 高德树打平后的扁平结构 */
 export interface FlatDistrict {
@@ -23,16 +23,16 @@ export interface FlatDistrict {
 export interface SyncDiff {
   added: FlatDistrict[];
   modified: FlatDistrict[];
-  deleted: City[];
+  deleted: District[];
 }
 
 /**
  * 递归打平高德行政区域树，只保留 province 和 city 层级
- * @param districts - 高德返回的 District 数组
+ * @param districts - 高德返回的 AmapDistrict 数组
  * @param parentCode - 父级 adcode（省份的父级是国家 adcode）
  */
 function flattenDistricts(
-  districts: District[],
+  districts: AmapDistrict[],
   parentCode?: string,
 ): FlatDistrict[] {
   const result: FlatDistrict[] = [];
@@ -63,9 +63,9 @@ function flattenDistricts(
  * - 两边都有、name 不同 → 修改
  * - DB 有、Amap 无 → 删除
  */
-function diffCities(
+function diffDistricts(
   amapData: FlatDistrict[],
-  dbData: City[],
+  dbData: District[],
 ): SyncDiff {
   const dbMap = new Map(dbData.map((c) => [c.code, c]));
   const amapSet = new Set(amapData.map((d) => d.code));
@@ -94,21 +94,21 @@ export function useSync() {
   const [progress, setProgress] = useState({ current: 0, total: 0 });
   const [diff, setDiff] = useState<SyncDiff | null>(null);
 
-  const [fetchCities] = useLazyQuery(CITIES);
-  const [createCity] = useMutation(CREATE_CITY);
-  const [updateCity] = useMutation(UPDATE_CITY);
-  const [deleteCity] = useMutation(DELETE_CITY);
+  const [fetchDistricts] = useLazyQuery(DISTRICTS);
+  const [createDistrict] = useMutation(CREATE_DISTRICT);
+  const [updateDistrict] = useMutation(UPDATE_DISTRICT);
+  const [deleteDistrict] = useMutation(DELETE_DISTRICT);
 
   /** Step 1+2+3: 拉取数据、打平、diff，返回 diff 结果（不执行同步） */
   const analyze = useEvent(async (): Promise<SyncDiff | null> => {
     // 并行拉取两端数据
     const [dbResult, amapDistricts] = await Promise.all([
-      fetchCities().catch(() => null),
+      fetchDistricts().catch(() => null),
       queryDistricts({ keywords: "中国", subdistrict: 2 }).catch(() => null),
     ]);
 
-    if (!dbResult?.data?.cities?.items) return null;
-    const dbCities: City[] = dbResult.data.cities.items;
+    // 后端接口未实现时异常，当作空数据处理
+    const dbDistricts: District[] = dbResult?.data?.districts?.items ?? [];
 
     if (!amapDistricts?.length) return null;
 
@@ -120,7 +120,7 @@ export function useSync() {
       china.adcode,
     );
 
-    const result = diffCities(flatDistricts, dbCities);
+    const result = diffDistricts(flatDistricts, dbDistricts);
     setDiff(result);
     return result;
   });
@@ -136,7 +136,7 @@ export function useSync() {
 
     // 新增
     for (const item of added) {
-      await createCity({
+      await createDistrict({
         variables: {
           input: {
             code: item.code,
@@ -153,7 +153,7 @@ export function useSync() {
 
     // 修改
     for (const item of modified) {
-      await updateCity({
+      await updateDistrict({
         variables: {
           code: item.code,
           input: { name: item.name },
@@ -165,7 +165,7 @@ export function useSync() {
 
     // 删除
     for (const item of deleted) {
-      await deleteCity({
+      await deleteDistrict({
         variables: { code: item.code },
       }).catch(() => null);
       current++;

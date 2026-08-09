@@ -1,28 +1,28 @@
 import type { Column } from "musae/types/table";
 import { useMemo, type RefObject } from "react";
-import type { City } from "../../api/city.types";
+import type { District } from "../../api/district.types";
 import { Button, Space } from "musae";
-import { type EditableDrawerRef } from "../../components/city/editable-drawer";
+import { type EditableDrawerRef } from "../../components/district/editable-drawer";
 
 export const useColumns = ({
   editableRef,
 }: {
   editableRef: RefObject<EditableDrawerRef | null>;
 }) => {
-  return useMemo<Column<City>[]>(() => {
+  return useMemo<Column<District>[]>(() => {
     return [
       {
         valueAt: "code",
-        title: "城市编码",
+        title: "行政区编码",
       },
       {
         valueAt: "name",
-        title: "城市名称",
+        title: "行政区名称",
       },
       {
-        valueAt: "level" as keyof City,
+        valueAt: "level" as keyof District,
         title: "层级",
-        render: (_: unknown, record: City) => {
+        render: (_: unknown, record: District) => {
           return record.level === "province" ? "省" : record.level === "city" ? "市" : record.level;
         },
       },

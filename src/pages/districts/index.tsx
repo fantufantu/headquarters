@@ -1,21 +1,21 @@
 import { Table, Pagination, Loading, Button, Popconfirm, Notification } from "musae";
 import { useQuery } from "@apollo/client/react";
-import { CITIES } from "../../api/city.api";
+import { DISTRICTS } from "../../api/district.api";
 import { usePagination } from "../../hooks/pagination.hooks";
-import type { City } from "../../api/city.types";
+import type { District } from "../../api/district.types";
 import { useColumns } from "./hooks";
-import EditableDrawer, { type EditableDrawerRef } from "../../components/city/editable-drawer";
+import EditableDrawer, { type EditableDrawerRef } from "../../components/district/editable-drawer";
 import { useRef } from "react";
 import { useEvent } from "@aiszlab/relax";
 import { useSync } from "./sync.hook";
 
-const Cities = () => {
+const Districts = () => {
   const { page, changePage, changeLimit, limit } = usePagination();
   const {
-    data: { cities: { items: cities = [], total = 0 } = {} } = {},
+    data: { districts: { items: districts = [], total = 0 } = {} } = {},
     loading,
     refetch: _refetch,
-  } = useQuery(CITIES, {
+  } = useQuery(DISTRICTS, {
     variables: {
       pagination: {
         limit,
@@ -64,7 +64,7 @@ const Cities = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-4">
-        <Button onClick={add}>新增城市</Button>
+        <Button onClick={add}>新增行政区</Button>
         {!diff ? (
           <Button onClick={handleSyncClick} loading={syncing}>
             同步数据
@@ -85,7 +85,7 @@ const Cities = () => {
         )}
       </div>
 
-      <Table<City> columns={columns} bordered dataSource={cities} loading={loading} />
+      <Table<District> columns={columns} bordered dataSource={districts} loading={loading} />
 
       <Pagination
         at={page}
@@ -100,4 +100,4 @@ const Cities = () => {
   );
 };
 
-export default Cities;
+export default Districts;

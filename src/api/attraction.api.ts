@@ -24,7 +24,7 @@ export const ATTRACTIONS: TypedDocumentNode<
         code
         name
         cityCode
-        city {
+        district {
           name
         }
         image
@@ -50,7 +50,7 @@ export const ATTRACTION: TypedDocumentNode<
       name
       cityCode
       image
-      city {
+      district {
         code
         name
       }
