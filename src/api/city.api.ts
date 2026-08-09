@@ -18,6 +18,8 @@ export const CITIES: TypedDocumentNode<
       items {
         code
         name
+        level
+        parentCode
         attractionCount
       }
       total
@@ -39,6 +41,8 @@ export const CITY: TypedDocumentNode<
     city(code: $code) {
       code
       name
+      level
+      parentCode
       image
     }
   }
@@ -72,5 +76,17 @@ export const UPDATE_CITY: TypedDocumentNode<
 > = gql`
   mutation UpdateCity($code: String!, $input: UpdateCityInput!) {
     updateCity(code: $code, input: $input)
+  }
+`;
+
+/**
+ * @description 删除城市
+ */
+export const DELETE_CITY: TypedDocumentNode<
+  { deleteCity: boolean },
+  { code: string }
+> = gql`
+  mutation DeleteCity($code: String!) {
+    deleteCity(code: $code)
   }
 `;
