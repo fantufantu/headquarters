@@ -19,11 +19,56 @@ export interface FlatDistrict {
   parentCode: string;
 }
 
+/** 修改项：同时保留新旧名称 */
+export interface ModifiedDistrict extends FlatDistrict {
+  oldName: string;
+}
+
 /** Diff 结果 */
 export interface SyncDiff {
   added: FlatDistrict[];
-  modified: FlatDistrict[];
+  modified: ModifiedDistrict[];
   deleted: District[];
+}
+
+/** 表格展示用的统一行类型 */
+export interface SyncRow {
+  changeType: "added" | "modified" | "deleted";
+  code: string;
+  name: string;
+  oldName?: string;
+  level: string;
+  parentCode: string;
+}
+
+/** 将 diff 结果转换为表格展示用的统一行 */
+export function toSyncRows(diff: SyncDiff): SyncRow[] {
+  const added: SyncRow[] = diff.added.map((d) => ({
+    changeType: "added",
+    code: d.code,
+    name: d.name,
+    level: d.level,
+    parentCode: d.parentCode,
+  }));
+
+  const modified: SyncRow[] = diff.modified.map((d) => ({
+    changeType: "modified",
+    code: d.code,
+    name: d.name,
+    oldName: d.oldName,
+    level: d.level,
+    parentCode: d.parentCode,
+  }));
+
+  const deleted: SyncRow[] = diff.deleted.map((d) => ({
+    changeType: "deleted",
+    code: d.code,
+    name: d.name,
+    level: d.level,
+    parentCode: d.parentCode ?? "",
+  }));
+
+  return [...added, ...modified, ...deleted];
 }
 
 /**
@@ -71,14 +116,14 @@ function diffDistricts(
   const amapSet = new Set(amapData.map((d) => d.code));
 
   const added: FlatDistrict[] = [];
-  const modified: FlatDistrict[] = [];
+  const modified: ModifiedDistrict[] = [];
 
   for (const district of amapData) {
     const existing = dbMap.get(district.code);
     if (!existing) {
       added.push(district);
     } else if (existing.name !== district.name) {
-      modified.push(district);
+      modified.push({ ...district, oldName: existing.name });
     }
   }
 
