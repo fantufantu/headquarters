@@ -1,4 +1,4 @@
-import { Table, Pagination, Button, Dialog, Tag, Notification } from "musae";
+import { Table, Pagination, Button, Drawer, Tag, Notification } from "musae";
 import { useQuery } from "@apollo/client/react";
 import { DISTRICTS } from "../../api/district.api";
 import { usePagination } from "../../hooks/pagination.hooks";
@@ -110,19 +110,16 @@ const Districts = () => {
         </Button>
       </div>
 
-      <Dialog
-        title="同步确认"
+      <Drawer
+        title={syncing ? `同步中... ${progress.current}/${progress.total}` : "同步确认"}
         open={!!diff}
         onClose={resetDiff}
         onConfirm={handleSyncConfirm}
         closable={!syncing}
-        confirm={{
-          children: syncing ? `同步中... ${progress.current}/${progress.total}` : "确认同步",
-        }}
-        cancel={syncing ? false : { children: "取消" }}
+        size={800}
       >
         <Table<SyncRow> columns={diffColumns} bordered dataSource={diff ? toSyncRows(diff) : []} />
-      </Dialog>
+      </Drawer>
 
       <Table<District> columns={columns} bordered dataSource={districts} loading={loading} />
 
