@@ -2,7 +2,7 @@ import { PAGINATE_ROLES } from "@/api/role.api";
 import { ASSIGN_ROLES, WHO_ARE_YOU } from "@/api/user.api";
 import { useBoolean } from "@aiszlab/relax";
 import { useApolloClient, useLazyQuery } from "@apollo/client/react";
-import { Drawer, Form, Loading, Transfer } from "musae";
+import { SideSheet, Form, Loading, Transfer } from "musae";
 import { TransferOption } from "musae/types/transfer";
 import { RefObject, useImperativeHandle, useMemo, useState } from "react";
 
@@ -97,7 +97,7 @@ const UserRoleAssigner = ({ ref }: Props) => {
   }, [roles]);
 
   return (
-    <Drawer title="分配角色" open={isVisible} onClose={turnOff} onConfirm={submit} size={600}>
+    <SideSheet title="分配角色" open={isVisible} onClose={turnOff} onConfirm={submit} size={600}>
       <Loading loading={isLoading}>
         <Form form={form}>
           <Form.Item label="角色" name="roleCodes">
@@ -105,7 +105,7 @@ const UserRoleAssigner = ({ ref }: Props) => {
           </Form.Item>
         </Form>
       </Loading>
-    </Drawer>
+    </SideSheet>
   );
 };
 

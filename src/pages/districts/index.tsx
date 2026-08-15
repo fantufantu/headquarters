@@ -1,4 +1,4 @@
-import { Table, Pagination, Button, Drawer, Tag, Notification } from "musae";
+import { Table, Pagination, Button, SideSheet, Tag, Notification } from "musae";
 import { useQuery } from "@apollo/client/react";
 import { DISTRICTS } from "../../api/district.api";
 import { usePagination } from "../../hooks/pagination.hooks";
@@ -9,6 +9,7 @@ import EditableDrawer, { type EditableDrawerRef } from "../../components/distric
 import { useRef } from "react";
 import { useEvent } from "@aiszlab/relax";
 import { useSync, toSyncRows, type SyncRow } from "./sync.hook";
+import { DISTRICT_LEVEL_LABELS } from "@/constants/district";
 
 const Districts = () => {
   const { page, changePage, changeLimit, limit } = usePagination();
@@ -96,7 +97,7 @@ const Districts = () => {
       key: "level",
       title: "层级",
       render: (_: unknown, record: SyncRow) => {
-        return record.level === "province" ? "省" : record.level === "city" ? "市" : record.level;
+        return DISTRICT_LEVEL_LABELS.get(record.level) ?? record.level;
       },
     },
   ];
@@ -110,7 +111,7 @@ const Districts = () => {
         </Button>
       </div>
 
-      <Drawer
+      <SideSheet
         title={syncing ? `同步中... ${progress.current}/${progress.total}` : "同步确认"}
         open={!!diff}
         onClose={resetDiff}
@@ -119,7 +120,7 @@ const Districts = () => {
         size={800}
       >
         <Table<SyncRow> columns={diffColumns} bordered dataSource={diff ? toSyncRows(diff) : []} />
-      </Drawer>
+      </SideSheet>
 
       <Table<District> columns={columns} bordered dataSource={districts} loading={loading} />
 

@@ -1,4 +1,4 @@
-import { Drawer, Form, Upload } from "musae";
+import { SideSheet, Form, Upload } from "musae";
 import { useBoolean, useEvent } from "@aiszlab/relax";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { CREATE_ATTRACTION, ATTRACTION, UPDATE_ATTRACTION } from "../../../api/attraction.api";
@@ -98,7 +98,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   });
 
   return (
-    <Drawer
+    <SideSheet
       open={isOpen}
       onClose={turnOff}
       title={code ? "编辑景点" : "新增景点"}
@@ -115,7 +115,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
           <Upload uploader={uploadImage} />
         </Form.Item>
       </Form>
-    </Drawer>
+    </SideSheet>
   );
 });
 
