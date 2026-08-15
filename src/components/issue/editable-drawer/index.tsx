@@ -1,4 +1,4 @@
-import { Drawer, Form } from "musae";
+import { SideSheet, Form } from "musae";
 import { useBoolean, useEvent } from "@aiszlab/relax";
 import { forwardRef, useImperativeHandle } from "react";
 import { DIR, upload } from "../../../utils/upload";
@@ -44,9 +44,9 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   });
 
   return (
-    <Drawer open={isOpen} onClose={turnOff} title="编辑分类" onConfirm={submit}>
+    <SideSheet open={isOpen} onClose={turnOff} title="编辑分类" onConfirm={submit}>
       <IssueForm form={form} />
-    </Drawer>
+    </SideSheet>
   );
 });
 

@@ -1,4 +1,4 @@
-import { Drawer, Form, Upload } from "musae";
+import { SideSheet, Form, Upload } from "musae";
 import { useBoolean, useEvent } from "@aiszlab/relax";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { CREATE_DISTRICT, DISTRICT, UPDATE_DISTRICT } from "../../../api/district.api";
@@ -87,7 +87,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   });
 
   return (
-    <Drawer
+    <SideSheet
       open={isOpen}
       onClose={turnOff}
       title={code ? "编辑行政区" : "新增行政区"}
@@ -102,7 +102,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
           <Upload uploader={uploadImage} />
         </Form.Item>
       </Form>
-    </Drawer>
+    </SideSheet>
   );
 });
 

@@ -1,6 +1,6 @@
 import { Authorization } from "@/api/authorization.types";
 import { isEmpty, useBoolean } from "@aiszlab/relax";
-import { Drawer, Form } from "musae";
+import { SideSheet, Form } from "musae";
 import { RefObject, useImperativeHandle } from "react";
 import ResourceSelect from "../../inputs/resource-select";
 import ActionSelect from "../../inputs/action-select";
@@ -71,7 +71,7 @@ const AuthorizationEditor = ({ ref, onSuccess }: Props) => {
   };
 
   return (
-    <Drawer open={isVisible} onConfirm={submit} onClose={turnOff}>
+    <SideSheet open={isVisible} onConfirm={submit} onClose={turnOff}>
       <Form<FieldsValue> form={form}>
         <Form.Item
           name="resourceCode"
@@ -103,7 +103,7 @@ const AuthorizationEditor = ({ ref, onSuccess }: Props) => {
           <ActionSelect />
         </Form.Item>
       </Form>
-    </Drawer>
+    </SideSheet>
   );
 };
 
