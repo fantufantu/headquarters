@@ -49,7 +49,7 @@ const DistrictSelect = ({ value, onChange, source = "api", disabled }: Props) =>
       ?.values()
       .filter(
         (district) =>
-          district.level === DISTRICT_LEVEL.province || district.level === DISTRICT_LEVEL.city,
+          district.level === DISTRICT_LEVEL.PROVINCE || district.level === DISTRICT_LEVEL.CITY,
       )
       .map(({ adcode, name }) => ({ value: adcode, label: name }))
       .toArray();

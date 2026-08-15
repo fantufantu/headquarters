@@ -1,5 +1,7 @@
+import type { ActionCode, ResourceCode } from "./enums.types";
+
 export interface Authorization {
   id: number;
-  resourceCode: string;
-  actionCode: string;
+  resourceCode: ResourceCode;
+  actionCode: ActionCode;
 }

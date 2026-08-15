@@ -66,7 +66,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   const uploadImage = useEvent(async (file: File) => {
     return await upload({
       body: file,
-      bucketName: "cabin_cab",
+      bucketName: "FANTU",
       dir: "attractions",
     }).catch((error) => {
       console.error(error);
@@ -82,8 +82,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
     const cityCode = _district?.code ?? "";
     const image = _image?.[0]?.url ?? "";
     const isSucceed = code
-      ? (await update({ variables: { code, input: { image } } }))
-          .data?.updateAttraction
+      ? (await update({ variables: { code, input: { image } } })).data?.updateAttraction
       : (
           await create({
             variables: {

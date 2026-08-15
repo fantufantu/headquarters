@@ -1,7 +1,6 @@
 import { client } from ".";
 import { DIR } from "../utils/upload";
 import { COS_CREDENTIAL } from "./cloud.api";
-import { BUCKET_NAME } from "./cloud.types";
 
 /**
  * @description
@@ -14,7 +13,7 @@ export const queryIssues = async () => {
       .query({
         query: COS_CREDENTIAL,
         variables: {
-          bucketName: BUCKET_NAME.FANTU,
+          bucketName: "FANTU",
         },
       })
       .then(({ data }) => data?.cosCredential),

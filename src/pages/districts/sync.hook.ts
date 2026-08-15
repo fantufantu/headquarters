@@ -33,7 +33,7 @@ export interface SyncRow {
   code: string;
   name: string;
   oldName?: string;
-  level: string;
+  level: District["level"];
   parentCode: string;
 }
 
@@ -76,7 +76,7 @@ function flattenDistricts(districts: AmapDistrict[], parentCode?: string): FlatD
   const result: FlatDistrict[] = [];
 
   for (const district of districts) {
-    if (district.level === DISTRICT_LEVEL.province || district.level === DISTRICT_LEVEL.city) {
+    if (district.level === DISTRICT_LEVEL.PROVINCE || district.level === DISTRICT_LEVEL.CITY) {
       result.push({
         code: district.adcode,
         name: district.name,
@@ -118,7 +118,7 @@ function diffDistricts(amapData: FlatDistrict[], dbData: District[]): SyncDiff {
   const deleted = dbData.filter(
     (district) =>
       !amapSet.has(district.code) &&
-      (district.level === DISTRICT_LEVEL.province || district.level === DISTRICT_LEVEL.city),
+      (district.level === DISTRICT_LEVEL.PROVINCE || district.level === DISTRICT_LEVEL.CITY),
   );
 
   return { added, modified, deleted };

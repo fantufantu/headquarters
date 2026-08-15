@@ -1,17 +1,18 @@
 import { ACTIONS } from "@/constants/authorization";
 import { Select } from "musae";
 import { useMemo } from "react";
+import type { ActionCode } from "@/api/enums.types";
 
 const ActionSelect = ({
   value,
   onChange,
 }: {
-  value?: string;
-  onChange?: (value: string | undefined) => void;
+  value?: ActionCode;
+  onChange?: (value: ActionCode | undefined) => void;
 }) => {
   const options = useMemo(() => ACTIONS.values().toArray(), []);
 
-  return <Select<string> value={value} onChange={onChange} options={options} />;
+  return <Select<ActionCode> value={value} onChange={onChange} options={options} />;
 };
 
 export default ActionSelect;

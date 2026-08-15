@@ -1,6 +1,7 @@
 import { gql, TypedDocumentNode } from "@apollo/client";
 import { Paginated, Pagination } from "./pagination.types";
 import { Authorization } from "./authorization.types";
+import type { ActionCode, ResourceCode } from "./enums.types";
 
 /**
  * 分页查询权限点列表
@@ -30,8 +31,8 @@ export const CREATE_AUTHORIZATION: TypedDocumentNode<
   { createAuthorization: Authorization },
   {
     input: {
-      resourceCode: string;
-      actionCode: string;
+      resourceCode: ResourceCode;
+      actionCode: ActionCode;
     };
   }
 > = gql`

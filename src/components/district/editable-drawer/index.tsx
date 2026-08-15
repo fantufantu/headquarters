@@ -37,9 +37,8 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
         setCode(_code);
 
         if (!_code) return;
-        const _district = (
-          await refetchDistrict({ variables: { code: _code } }).catch(() => null)
-        )?.data?.district;
+        const _district = (await refetchDistrict({ variables: { code: _code } }).catch(() => null))
+          ?.data?.district;
         if (!_district) return;
 
         form.setFieldsValue({
@@ -78,7 +77,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   const uploadImage = useEvent(async (file: File) => {
     return await upload({
       body: file,
-      bucketName: "cabin_cab",
+      bucketName: "FANTU",
       dir: "districts",
     }).catch((error) => {
       console.error(error);

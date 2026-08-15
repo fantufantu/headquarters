@@ -6,10 +6,11 @@ import ResourceSelect from "../../inputs/resource-select";
 import ActionSelect from "../../inputs/action-select";
 import { useApolloClient } from "@apollo/client/react";
 import { CREATE_AUTHORIZATION } from "@/api/authorization.api";
+import type { ActionCode, ResourceCode } from "@/api/enums.types";
 
 interface FieldsValue {
-  resourceCode: string;
-  actionCode: string;
+  resourceCode: ResourceCode;
+  actionCode: ActionCode;
 }
 
 export interface AuthorizationEditorRef {
@@ -56,8 +57,8 @@ const AuthorizationEditor = ({ ref, onSuccess }: Props) => {
       mutation: CREATE_AUTHORIZATION,
       variables: {
         input: {
-          resourceCode: formValue.resourceCode ?? "",
-          actionCode: formValue.actionCode ?? "",
+          resourceCode: formValue.resourceCode!,
+          actionCode: formValue.actionCode!,
         },
       },
     });

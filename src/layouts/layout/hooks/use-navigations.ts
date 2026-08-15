@@ -4,6 +4,11 @@ import { RESOURCE_CODES } from "../../../constants/authorization";
 import { useAuthorizationContext } from "@/contexts/authorization";
 import { isAuthorized } from "@/utils/authorization";
 
+type AuthorizedNavigationItem = NavigationItem & {
+  children?: AuthorizedNavigationItem[];
+  resourceCode?: string;
+};
+
 /**
  * 递归过滤需要授权的菜单项
  */
@@ -40,7 +45,7 @@ export const useNavigations = () => {
   const { authorized } = useAuthorizationContext();
 
   return useMemo<NavigationItem[]>(() => {
-    return filterAuthorized(
+    return filterAuthorized<AuthorizedNavigationItem>(
       [
         {
           path: "/",

@@ -1,59 +1,20 @@
-import { ROLE } from "@/api/role.api";
+import type { ActionCode, ResourceCode } from "@/api/enums.types";
 
 /**
  * 系统权限资源
  */
 export const RESOURCE_CODES = {
-  /**
-   * 文章
-   */
-  ARTICLE: "article",
-
-  /**
-   * 分类
-   */
-  CATEGORY: "category",
-
-  /**
-   * 简历模板
-   */
-  RESUME_TEMPLATE: "resume_template",
-
-  /**
-   * issue
-   */
-  ISSUE: "issue",
-
-  /**
-   * 权限
-   */
-  AUTHORIZATION: "authorization",
-
-  /**
-   * 角色
-   */
-  ROLE: "role",
-
-  /**
-   * 用户
-   */
-  USER: "user",
-
-  /**
-   * 行政区
-   */
-  DISTRICT: "district",
-
-  /**
-   * 景点
-   */
-  ATTRACTION: "attraction",
-
-  /**
-   * 全部资源
-   */
-  ALL: "all",
-};
+  ARTICLE: "ARTICLE",
+  CATEGORY: "CATEGORY",
+  RESUME_TEMPLATE: "RESUME_TEMPLATE",
+  ISSUE: "ISSUE",
+  AUTHORIZATION: "AUTHORIZATION",
+  ROLE: "ROLE",
+  USER: "USER",
+  DISTRICT: "DISTRICT",
+  ATTRACTION: "ATTRACTION",
+  ALL: "ALL",
+} as const satisfies Record<ResourceCode, ResourceCode>;
 
 /**
  * 系统权限资源元数据
@@ -63,6 +24,9 @@ export const RESOURCES = new Map([
   [RESOURCE_CODES.CATEGORY, { label: "分类", value: RESOURCE_CODES.CATEGORY }],
   [RESOURCE_CODES.RESUME_TEMPLATE, { label: "简历模板", value: RESOURCE_CODES.RESUME_TEMPLATE }],
   [RESOURCE_CODES.ISSUE, { label: "issue", value: RESOURCE_CODES.ISSUE }],
+  [RESOURCE_CODES.AUTHORIZATION, { label: "权限", value: RESOURCE_CODES.AUTHORIZATION }],
+  [RESOURCE_CODES.ROLE, { label: "角色", value: RESOURCE_CODES.ROLE }],
+  [RESOURCE_CODES.USER, { label: "用户", value: RESOURCE_CODES.USER }],
   [RESOURCE_CODES.DISTRICT, { label: "行政区", value: RESOURCE_CODES.DISTRICT }],
   [RESOURCE_CODES.ATTRACTION, { label: "景点", value: RESOURCE_CODES.ATTRACTION }],
   [RESOURCE_CODES.ALL, { label: "全部", value: RESOURCE_CODES.ALL }],
@@ -72,12 +36,12 @@ export const RESOURCES = new Map([
  * 系统权限操作
  */
 export const ACTION_CODES = {
-  CREATE: "Create",
-  READ: "Read",
-  UPDATE: "Update",
-  DELETE: "Delete",
-  ALL: "All",
-};
+  CREATE: "CREATE",
+  READ: "READ",
+  UPDATE: "UPDATE",
+  DELETE: "DELETE",
+  ALL: "ALL",
+} as const satisfies Record<ActionCode, ActionCode>;
 
 /**
  * 系统权限操作元数据

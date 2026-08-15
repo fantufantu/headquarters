@@ -2,7 +2,7 @@ import { type UploadBody } from "cos-js-sdk-v5";
 import { client } from "../api";
 import { COS_CREDENTIAL } from "../api/cloud.api";
 import { exclude } from "@aiszlab/relax";
-import { BUCKET_NAME, BucketName } from "../api/cloud.types";
+import type { BucketName } from "../api/cloud.types";
 import { ValueOf } from "@aiszlab/relax/types";
 
 export const DIR = {
@@ -29,7 +29,7 @@ interface Uploading {
  */
 export const upload = async ({
   body,
-  bucketName = BUCKET_NAME.FANTU,
+  bucketName = "FANTU",
   dir = DIR.NONE,
   filename,
 }: Uploading) => {
