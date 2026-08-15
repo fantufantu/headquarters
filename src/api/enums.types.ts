@@ -24,7 +24,13 @@ export const ACTION_CODE = {
 
 export type ActionCode = keyof typeof ACTION_CODE;
 
-export type BucketName = "FANTU" | "KNOWTHY";
+export const BUCKET_NAME = {
+  FANTU: "fantu",
+  KNOWTHY: "knowthy",
+  CABIN_CAB: "cabin_cab",
+} as const;
+
+export type BucketName = keyof typeof BUCKET_NAME;
 
 export const DISTRICT_LEVEL = {
   PROVINCE: "province",
