@@ -5,7 +5,6 @@ import { queryDistricts } from "@/api/amap.api";
 import { useLazyQuery } from "@apollo/client/react";
 import { DISTRICTS } from "@/api/district.api";
 import { SelectProps } from "musae/types/select";
-import { DISTRICT_LEVEL } from "@/constants/district";
 
 export interface DistrictValue {
   code: string;
@@ -47,10 +46,6 @@ const DistrictSelect = ({ value, onChange, source = "api", disabled }: Props) =>
 
     const districts = (await queryDistricts({ keywords }).catch(() => null))
       ?.values()
-      .filter(
-        (district) =>
-          district.level === DISTRICT_LEVEL.PROVINCE || district.level === DISTRICT_LEVEL.CITY,
-      )
       .map(({ adcode, name }) => ({ value: adcode, label: name }))
       .toArray();
 

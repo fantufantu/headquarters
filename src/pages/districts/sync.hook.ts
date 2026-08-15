@@ -5,7 +5,6 @@ import type { AmapDistrict } from "@/api/amap.types";
 import type { District } from "@/api/district.types";
 import { queryDistricts } from "@/api/amap.api";
 import { DISTRICTS, CREATE_DISTRICT, UPDATE_DISTRICT, DELETE_DISTRICT } from "@/api/district.api";
-import { DISTRICT_LEVEL } from "@/constants/district";
 
 /** 高德树打平后的扁平结构 */
 export interface FlatDistrict {
@@ -68,7 +67,7 @@ export function toSyncRows(diff: SyncDiff): SyncRow[] {
 }
 
 /**
- * 递归打平高德行政区域树，只保留 province 和 city 层级
+ * 递归打平高德行政区域树，保留高德返回的全部层级
  * @param districts - 高德返回的 AmapDistrict 数组
  * @param parentCode - 父级 adcode（省份的父级是国家 adcode）
  */
@@ -76,14 +75,12 @@ function flattenDistricts(districts: AmapDistrict[], parentCode?: string): FlatD
   const result: FlatDistrict[] = [];
 
   for (const district of districts) {
-    if (district.level === DISTRICT_LEVEL.PROVINCE || district.level === DISTRICT_LEVEL.CITY) {
-      result.push({
-        code: district.adcode,
-        name: district.name,
-        level: district.level,
-        parentCode: parentCode ?? "",
-      });
-    }
+    result.push({
+      code: district.adcode,
+      name: district.name,
+      level: district.level,
+      parentCode: parentCode ?? "",
+    });
 
     if (district.districts?.length) {
       result.push(...flattenDistricts(district.districts, district.adcode));
@@ -115,11 +112,7 @@ function diffDistricts(amapData: FlatDistrict[], dbData: District[]): SyncDiff {
     }
   }
 
-  const deleted = dbData.filter(
-    (district) =>
-      !amapSet.has(district.code) &&
-      (district.level === DISTRICT_LEVEL.PROVINCE || district.level === DISTRICT_LEVEL.CITY),
-  );
+  const deleted = dbData.filter((district) => !amapSet.has(district.code));
 
   return { added, modified, deleted };
 }
@@ -139,7 +132,7 @@ export function useSync() {
     // 并行拉取两端数据
     const [dbResult, amapDistricts] = await Promise.all([
       fetchDistricts().catch(() => null),
-      queryDistricts({ keywords: "中国", subdistrict: 2 }).catch(() => null),
+      queryDistricts({ keywords: "中国", subdistrict: 3 }).catch(() => null),
     ]);
 
     // 后端接口未实现时异常，当作空数据处理
@@ -147,10 +140,7 @@ export function useSync() {
 
     if (!amapDistricts?.length) return null;
 
-    // 高德返回的第一项是"中国"（country 层级），
-    // 其 districts 字段是省级列表
-    const china = amapDistricts[0];
-    const flatDistricts = flattenDistricts(china.districts ?? [], china.adcode);
+    const flatDistricts = flattenDistricts(amapDistricts);
 
     const result = diffDistricts(flatDistricts, dbDistricts);
     setDiff(result);
