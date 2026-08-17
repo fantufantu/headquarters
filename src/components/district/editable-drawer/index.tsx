@@ -5,6 +5,7 @@ import { CREATE_DISTRICT, DISTRICT, UPDATE_DISTRICT } from "../../../api/distric
 import { forwardRef, useImperativeHandle, useState } from "react";
 import DistrictSelect, { type DistrictValue } from "@/components/inputs/district-select";
 import { upload } from "@/utils/upload";
+import { BUCKET_NAME } from "@/api/cloud.types";
 import { FileItem } from "musae/types/upload";
 
 interface FormValue {
@@ -77,7 +78,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   const uploadImage = useEvent(async (file: File) => {
     return await upload({
       body: file,
-      bucketName: "FANTU",
+      bucketName: BUCKET_NAME.FANTU,
       dir: "districts",
     }).catch((error) => {
       console.error(error);
