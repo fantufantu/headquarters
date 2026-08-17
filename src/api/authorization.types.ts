@@ -1,4 +1,4 @@
-import type { ActionCode, ResourceCode } from "./enums.types";
+import type { ActionCode, ResourceCode } from "@/constants/enums";
 
 export interface Authorization {
   id: number;

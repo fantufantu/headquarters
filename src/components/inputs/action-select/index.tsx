@@ -1,7 +1,7 @@
 import { ACTIONS } from "@/constants/authorization";
 import { Select } from "musae";
 import { useMemo } from "react";
-import type { ActionCode } from "@/api/enums.types";
+import type { ActionCode } from "@/constants/enums";
 
 const ActionSelect = ({
   value,

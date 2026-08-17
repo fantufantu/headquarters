@@ -1,7 +1,7 @@
 import { RESOURCES } from "@/constants/authorization";
 import { Select } from "musae";
 import { useMemo } from "react";
-import type { ResourceCode } from "@/api/enums.types";
+import type { ResourceCode } from "@/constants/enums";
 
 const ResourceSelect = ({
   value,

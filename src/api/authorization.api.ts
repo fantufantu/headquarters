@@ -1,7 +1,7 @@
 import { gql, TypedDocumentNode } from "@apollo/client";
 import { Paginated, Pagination } from "./pagination.types";
 import { Authorization } from "./authorization.types";
-import type { ActionCode, ResourceCode } from "./enums.types";
+import type { ActionCode, ResourceCode } from "@/constants/enums";
 
 /**
  * 分页查询权限点列表

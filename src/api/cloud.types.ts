@@ -1,4 +1,4 @@
-export { BUCKET_NAME, type BucketName } from "./enums.types";
+export type { BucketName } from "@/constants/enums";
 
 /**
  * 腾讯云`COS`临时秘钥

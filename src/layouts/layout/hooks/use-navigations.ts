@@ -1,6 +1,6 @@
 import type { NavigationItem } from "musae/types/bench";
 import { useMemo } from "react";
-import { RESOURCE_CODES } from "../../../constants/authorization";
+import { RESOURCE_CODE } from "../../../constants/enums";
 import { useAuthorizationContext } from "@/contexts/authorization";
 import { isAuthorized } from "@/utils/authorization";
 
@@ -54,37 +54,37 @@ export const useNavigations = () => {
         {
           path: "/articles",
           label: "文章管理",
-          resourceCode: RESOURCE_CODES.ARTICLE,
+          resourceCode: RESOURCE_CODE.ARTICLE,
         },
         {
           path: "/categories",
           label: "分类管理",
-          resourceCode: RESOURCE_CODES.CATEGORY,
+          resourceCode: RESOURCE_CODE.CATEGORY,
         },
         {
           path: "/issues",
           label: "反馈管理",
-          resourceCode: RESOURCE_CODES.ISSUE,
+          resourceCode: RESOURCE_CODE.ISSUE,
         },
         {
           path: "/authorizations",
           label: "权限管理",
-          resourceCode: RESOURCE_CODES.AUTHORIZATION,
+          resourceCode: RESOURCE_CODE.AUTHORIZATION,
         },
         {
           path: "/roles",
           label: "角色管理",
-          resourceCode: RESOURCE_CODES.ROLE,
+          resourceCode: RESOURCE_CODE.ROLE,
         },
         {
           path: "/users",
           label: "用户管理",
-          resourceCode: RESOURCE_CODES.USER,
+          resourceCode: RESOURCE_CODE.USER,
         },
         {
           path: "/resume-templates",
           label: "简历模板管理",
-          resourceCode: RESOURCE_CODES.RESUME_TEMPLATE,
+          resourceCode: RESOURCE_CODE.RESUME_TEMPLATE,
         },
         {
           path: "",
@@ -93,12 +93,12 @@ export const useNavigations = () => {
             {
               path: "/districts",
               label: "行政区管理",
-              resourceCode: RESOURCE_CODES.DISTRICT,
+              resourceCode: RESOURCE_CODE.DISTRICT,
             },
             {
               path: "/attractions",
               label: "景点管理",
-              resourceCode: RESOURCE_CODES.ATTRACTION,
+              resourceCode: RESOURCE_CODE.ATTRACTION,
             },
           ],
         },

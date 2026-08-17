@@ -1,9 +1,9 @@
 /**
  * 行政区层级
  */
-export { DISTRICT_LEVEL } from "@/api/enums.types";
+export { DISTRICT_LEVEL } from "./enums";
 
-import { DISTRICT_LEVEL } from "@/api/enums.types";
+import { DISTRICT_LEVEL } from "./enums";
 
 /**
  * 行政区层级名称

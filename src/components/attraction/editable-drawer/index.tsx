@@ -6,7 +6,7 @@ import { forwardRef, useImperativeHandle, useState } from "react";
 import DistrictSelect from "@/components/inputs/district-select";
 import AttractionField from "@/components/fields/attraction-field";
 import { upload } from "@/utils/upload";
-import { BUCKET_NAME } from "@/api/cloud.types";
+import { BUCKET_NAME } from "@/constants/enums";
 import { type FormValue } from "./types";
 
 export interface EditableDrawerRef {

@@ -1,9 +1,9 @@
 /**
  * 系统内置租户
  */
-export { TENANT_CODE } from "@/api/enums.types";
+export { TENANT_CODE } from "./enums";
 
-import { TENANT_CODE } from "@/api/enums.types";
+import { TENANT_CODE } from "./enums";
 
 /**
  * 系统内置租户元数据
