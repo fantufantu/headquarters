@@ -67,7 +67,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   const uploadImage = useEvent(async (file: File) => {
     return await upload({
       body: file,
-      bucketName: BUCKET_NAME.FANTU,
+      bucketName: BUCKET_NAME.CABIN_CAB,
       dir: "attractions",
     }).catch((error) => {
       console.error(error);
