@@ -5,6 +5,7 @@ import { CREATE_DISTRICT, DISTRICT, UPDATE_DISTRICT } from "../../../api/distric
 import { forwardRef, useImperativeHandle, useState } from "react";
 import DistrictSelect, { type DistrictValue } from "@/components/inputs/district-select";
 import { upload } from "@/utils/upload";
+import { BUCKET_NAME } from "@/constants/enums";
 import { FileItem } from "musae/types/upload";
 
 interface FormValue {
@@ -37,9 +38,8 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
         setCode(_code);
 
         if (!_code) return;
-        const _district = (
-          await refetchDistrict({ variables: { code: _code } }).catch(() => null)
-        )?.data?.district;
+        const _district = (await refetchDistrict({ variables: { code: _code } }).catch(() => null))
+          ?.data?.district;
         if (!_district) return;
 
         form.setFieldsValue({
@@ -78,7 +78,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   const uploadImage = useEvent(async (file: File) => {
     return await upload({
       body: file,
-      bucketName: "cabin_cab",
+      bucketName: BUCKET_NAME.CABIN_CAB,
       dir: "districts",
     }).catch((error) => {
       console.error(error);
