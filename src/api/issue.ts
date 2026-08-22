@@ -1,7 +1,7 @@
 import { client } from ".";
+import { BUCKET_NAME } from "@/constants/enums";
 import { DIR } from "../utils/upload";
 import { COS_CREDENTIAL } from "./cloud.api";
-import { BUCKET_NAME } from "./cloud.types";
 
 /**
  * @description

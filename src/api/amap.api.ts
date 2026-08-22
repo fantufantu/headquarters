@@ -1,5 +1,5 @@
 import { gql, type TypedDocumentNode } from "@apollo/client";
-import type { AmapCredential, District, Poi } from "./amap.types";
+import type { AmapCredential, AmapDistrict, Poi } from "./amap.types";
 import { useAmapStore } from "@/store/amap.store";
 
 /**
@@ -24,7 +24,7 @@ export async function queryDistricts({
 }: {
   keywords?: string;
   subdistrict?: 0 | 1 | 2 | 3;
-}): Promise<District[] | undefined> {
+}): Promise<AmapDistrict[] | undefined> {
   const apiKey = (await useAmapStore.state.loadCredential())?.apiKey;
 
   if (!apiKey) {

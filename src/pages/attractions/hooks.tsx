@@ -33,8 +33,8 @@ export const useColumns = ({
         render: (_, { image }) => <Image src={image} width={160} height={120} />,
       },
       {
-        valueAt: "city.name",
-        title: "城市",
+        valueAt: "district.name",
+        title: "行政区",
       },
       {
         key: "actions",

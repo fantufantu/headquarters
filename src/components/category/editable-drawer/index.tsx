@@ -1,4 +1,4 @@
-import { Drawer, Form, Input, Upload } from "musae";
+import { SideSheet, Form, Input, Upload } from "musae";
 import { useBoolean, useEvent } from "@aiszlab/relax";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { CREATE_CATEGORY, CATEGORY, UPDATE_CATEGORY } from "../../../api/category.api";
@@ -91,7 +91,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   }, []);
 
   return (
-    <Drawer open={isOpen} onClose={turnOff} title="编辑分类" onConfirm={submit}>
+    <SideSheet open={isOpen} onClose={turnOff} title="编辑分类" onConfirm={submit}>
       <Form form={form}>
         <Form.Item name="code" label="唯一标识" required>
           <Input />
@@ -105,7 +105,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
           <Upload uploader={uploader} limit={1} renderItem="picture" />
         </Form.Item>
       </Form>
-    </Drawer>
+    </SideSheet>
   );
 });
 

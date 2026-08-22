@@ -2,7 +2,7 @@ import { useTheme, Form, Input, Button, PasswordInput } from "musae";
 import styles from "./styles.module.css";
 import { useEvent } from "@aiszlab/relax";
 import { stringify } from "@aiszlab/relax/class-name";
-import { KeyboardDoubleArrowRight } from "musae/icons";
+import { IconKeyboardDoubleArrowRight } from "musae/icons";
 import { Link } from "@aiszlab/bee/router";
 import { useMutation } from "@apollo/client/react";
 import { SEND_REIGSTER_CAPTCHA, SIGN_UP } from "../../api/authentication.api";
@@ -121,7 +121,7 @@ const SignIn = () => {
               <CaptchaField dependency="emailAddress" onSend={sendCaptcha} />
 
               <Form.Item>
-                <Button className="w-52" suffix={<KeyboardDoubleArrowRight />} onClick={signUp}>
+                <Button className="w-52" suffix={<IconKeyboardDoubleArrowRight />} onClick={signUp}>
                   Sign Up
                 </Button>
               </Form.Item>

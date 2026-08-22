@@ -1,4 +1,4 @@
-import { ACTION_CODES, RESOURCE_CODES } from "@/constants/authorization";
+import { ACTION_CODE, RESOURCE_CODE } from "@/constants/enums";
 
 /**
  * 检查当前权限点是否被授权
@@ -6,7 +6,7 @@ import { ACTION_CODES, RESOURCE_CODES } from "@/constants/authorization";
 export const isAuthorized = (
   authorized: Map<string, Set<string>> | undefined,
   {
-    actionCode = ACTION_CODES.READ,
+    actionCode = ACTION_CODE.READ,
     resourceCode,
   }: {
     resourceCode: string;
@@ -15,9 +15,9 @@ export const isAuthorized = (
 ) => {
   return (
     (authorized?.get(resourceCode)?.has(actionCode) ||
-      authorized?.get(resourceCode)?.has(ACTION_CODES.ALL) ||
-      authorized?.get(RESOURCE_CODES.ALL)?.has(actionCode) ||
-      authorized?.get(RESOURCE_CODES.ALL)?.has(ACTION_CODES.ALL)) ??
+      authorized?.get(resourceCode)?.has(ACTION_CODE.ALL) ||
+      authorized?.get(RESOURCE_CODE.ALL)?.has(actionCode) ||
+      authorized?.get(RESOURCE_CODE.ALL)?.has(ACTION_CODE.ALL)) ??
     false
   );
 };

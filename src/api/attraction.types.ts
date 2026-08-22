@@ -3,7 +3,7 @@ export interface Attraction {
   name: string;
   cityCode: string;
   image: string;
-  city: {
+  district: {
     code: string;
     name: string;
   };

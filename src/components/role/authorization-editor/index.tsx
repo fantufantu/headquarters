@@ -2,7 +2,7 @@ import { PAGINATE_AUTHORIZATIONS } from "@/api/authorization.api";
 import { ASSIGN_AUTHORIZATIONS, ROLE, ROLE_AUTHORIZATIONS } from "@/api/role.api";
 import { useBoolean } from "@aiszlab/relax";
 import { useApolloClient, useLazyQuery } from "@apollo/client/react";
-import { Drawer, Form, Loading, Transfer } from "musae";
+import { SideSheet, Form, Loading, Transfer } from "musae";
 import { RefObject, useImperativeHandle, useMemo, useState } from "react";
 
 export interface RoleAuthorizationEditorRef {
@@ -100,7 +100,7 @@ const RoleAuthorizationEditor = ({ ref }: Props) => {
   });
 
   return (
-    <Drawer open={isVisible} onClose={close} onConfirm={submit} size={600}>
+    <SideSheet open={isVisible} onClose={close} onConfirm={submit} size={600}>
       <Loading loading={loading}>
         <Form form={form}>
           <Form.Item label="分配权限点" name="authorizationIds">
@@ -108,7 +108,7 @@ const RoleAuthorizationEditor = ({ ref }: Props) => {
           </Form.Item>
         </Form>
       </Loading>
-    </Drawer>
+    </SideSheet>
   );
 };
 

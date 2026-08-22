@@ -1,7 +1,7 @@
 import { useTheme, Form, Input, Checkbox, Button, PasswordInput } from "musae";
 import styles from "./styles.module.css";
 import { stringify } from "@aiszlab/relax/class-name";
-import { KeyboardDoubleArrowRight } from "musae/icons";
+import { IconKeyboardDoubleArrowRight } from "musae/icons";
 import { useMutation } from "@apollo/client/react";
 import { SIGN_IN } from "../../api/authentication.api";
 import { useCallback } from "react";
@@ -138,7 +138,7 @@ const SignIn = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button className="w-52" suffix={<KeyboardDoubleArrowRight />} onClick={login}>
+                <Button className="w-52" suffix={<IconKeyboardDoubleArrowRight />} onClick={login}>
                   Sign In
                 </Button>
               </Form.Item>

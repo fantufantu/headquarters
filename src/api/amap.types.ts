@@ -9,13 +9,13 @@ export interface AmapCredential {
 /**
  * 高德行政区域数据结构
  */
-export interface District {
+export interface AmapDistrict {
   /** 区域编码 */
   adcode: string;
   /** 区域中心点 */
   center: string;
   /** 下级行政区列表 */
-  districts: District[];
+  districts: AmapDistrict[];
   /** 行政区级别 */
   level: string;
   /** 行政区名称 */

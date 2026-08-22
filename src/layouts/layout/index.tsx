@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client/react";
 import { LOGOUT } from "../../api/authentication.api";
 import { createElement, useCallback } from "react";
 import { useAuthentication } from "../../store/authentication.store";
-import { WbSunny, Bedtime } from "musae/icons";
+import { IconWbSunny, IconBedtime } from "musae/icons";
 
 const Layout = () => {
   const navigations = useNavigations();
@@ -36,8 +36,8 @@ const Layout = () => {
       }}
       trailing={
         <div className="flex gap-4">
-          <IconButton onClick={toggle} variant="text" size="small">
-            {createElement(mode === "light" ? Bedtime : WbSunny)}
+          <IconButton onClick={() => { toggle(); }} variant="text" size="small">
+            {createElement(mode === "light" ? IconBedtime : IconWbSunny)}
           </IconButton>
           <Popover
             content={
