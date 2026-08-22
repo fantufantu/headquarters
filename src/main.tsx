@@ -24,7 +24,7 @@ const ResumeTemplates = lazy(() => import("./pages/resume-templates"));
 const Authorizations = lazy(() => import("./pages/authorizations"));
 const Roles = lazy(() => import("./pages/roles"));
 const Users = lazy(() => import("./pages/users"));
-const Cities = lazy(() => import("./pages/cities"));
+const Districts = lazy(() => import("./pages/districts"));
 const Attractions = lazy(() => import("./pages/attractions"));
 
 bootstrap({
@@ -95,8 +95,8 @@ bootstrap({
               Component: Users,
             },
             {
-              path: "/cities",
-              Component: Cities,
+              path: "/districts",
+              Component: Districts,
             },
             {
               path: "/attractions",

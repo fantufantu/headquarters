@@ -1,7 +1,7 @@
 import { CREATE_ROLE, ROLE } from "@/api/role.api";
 import { isEmpty, isUndefined, useBoolean } from "@aiszlab/relax";
 import { useApolloClient, useLazyQuery } from "@apollo/client/react";
-import { Drawer, Form, Input, Loading } from "musae";
+import { SideSheet, Form, Input, Loading } from "musae";
 import { RefObject, useImperativeHandle } from "react";
 
 interface FormValue {
@@ -74,7 +74,7 @@ const RoleEditor = ({ ref, onSuccess }: Props) => {
   };
 
   return (
-    <Drawer open={isVisible} onClose={close} onConfirm={submit}>
+    <SideSheet open={isVisible} onClose={close} onConfirm={submit}>
       <Loading loading={loading}>
         <Form form={form}>
           <Form.Item
@@ -101,7 +101,7 @@ const RoleEditor = ({ ref, onSuccess }: Props) => {
           </Form.Item>
         </Form>
       </Loading>
-    </Drawer>
+    </SideSheet>
   );
 };
 

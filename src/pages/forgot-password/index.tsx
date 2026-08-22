@@ -6,7 +6,7 @@ import { stringify } from "@aiszlab/relax/class-name";
 import styles from "./styles.module.css";
 import { Link, useNavigate } from "@aiszlab/bee/router";
 import CaptchaField from "../../components/authentication/captcha-field";
-import { KeyboardDoubleArrowRight } from "musae/icons";
+import { IconKeyboardDoubleArrowRight } from "musae/icons";
 
 interface FormValues {
   emailAddress: string;
@@ -126,7 +126,7 @@ const ForgotPassword = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button className="w-52" suffix={<KeyboardDoubleArrowRight />} onClick={submit}>
+                <Button className="w-52" suffix={<IconKeyboardDoubleArrowRight />} onClick={submit}>
                   Change Password
                 </Button>
               </Form.Item>

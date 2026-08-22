@@ -1,11 +1,12 @@
-import { Drawer, Form, Upload } from "musae";
+import { SideSheet, Form, Upload } from "musae";
 import { useBoolean, useEvent } from "@aiszlab/relax";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { CREATE_ATTRACTION, ATTRACTION, UPDATE_ATTRACTION } from "../../../api/attraction.api";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import CitySelect from "@/components/inputs/city-select";
+import DistrictSelect from "@/components/inputs/district-select";
 import AttractionField from "@/components/fields/attraction-field";
 import { upload } from "@/utils/upload";
+import { BUCKET_NAME } from "@/constants/enums";
 import { type FormValue } from "./types";
 
 export interface EditableDrawerRef {
@@ -41,7 +42,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
 
         form.setFieldsValue({
           attraction: { code: _attraction.code, name: _attraction.name },
-          city: { code: _attraction.city.code, name: _attraction.city.name },
+          district: { code: _attraction.district.code, name: _attraction.district.name },
           image: [
             {
               status: "success",
@@ -56,7 +57,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   const handleFormChange = useEvent((_values: Partial<FormValue>, names: (keyof FormValue)[]) => {
     const fieldNames = new Set(names);
 
-    if (fieldNames.has("city")) {
+    if (fieldNames.has("district")) {
       form.setFieldsValue({
         attraction: void 0,
       });
@@ -66,7 +67,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   const uploadImage = useEvent(async (file: File) => {
     return await upload({
       body: file,
-      bucketName: "cabin_cab",
+      bucketName: BUCKET_NAME.CABIN_CAB,
       dir: "attractions",
     }).catch((error) => {
       console.error(error);
@@ -78,12 +79,11 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
     const isValid = await form.validate().catch(() => false);
     if (!isValid) return;
 
-    const { attraction, city: _city, image: _image } = form.getFieldsValue();
-    const cityCode = _city?.code ?? "";
+    const { attraction, district: _district, image: _image } = form.getFieldsValue();
+    const cityCode = _district?.code ?? "";
     const image = _image?.[0]?.url ?? "";
     const isSucceed = code
-      ? (await update({ variables: { code, input: { image } } }))
-          .data?.updateAttraction
+      ? (await update({ variables: { code, input: { image } } })).data?.updateAttraction
       : (
           await create({
             variables: {
@@ -98,15 +98,15 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   });
 
   return (
-    <Drawer
+    <SideSheet
       open={isOpen}
       onClose={turnOff}
       title={code ? "编辑景点" : "新增景点"}
       onConfirm={submit}
     >
       <Form form={form} onChange={handleFormChange}>
-        <Form.Item name="city" label="城市" required>
-          <CitySelect source="api" disabled={!!code} />
+        <Form.Item name="district" label="行政区" required>
+          <DistrictSelect source="api" disabled={!!code} />
         </Form.Item>
 
         <AttractionField disabled={!!code} />
@@ -115,7 +115,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
           <Upload uploader={uploadImage} />
         </Form.Item>
       </Form>
-    </Drawer>
+    </SideSheet>
   );
 });
 

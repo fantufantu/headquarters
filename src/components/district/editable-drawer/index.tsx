@@ -1,14 +1,15 @@
-import { Drawer, Form, Upload } from "musae";
+import { SideSheet, Form, Upload } from "musae";
 import { useBoolean, useEvent } from "@aiszlab/relax";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
-import { CREATE_CITY, CITY, UPDATE_CITY } from "../../../api/city.api";
+import { CREATE_DISTRICT, DISTRICT, UPDATE_DISTRICT } from "../../../api/district.api";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import CitySelect, { type CityValue } from "@/components/inputs/city-select";
+import DistrictSelect, { type DistrictValue } from "@/components/inputs/district-select";
 import { upload } from "@/utils/upload";
+import { BUCKET_NAME } from "@/constants/enums";
 import { FileItem } from "musae/types/upload";
 
 interface FormValue {
-  city: CityValue;
+  district: DistrictValue;
   image: FileItem[];
 }
 
@@ -23,9 +24,9 @@ interface Props {
 const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, ref) => {
   const [isOpen, { turnOff, turnOn }] = useBoolean(false);
   const form = Form.useForm<FormValue>();
-  const [refetchCity] = useLazyQuery(CITY);
-  const [create] = useMutation(CREATE_CITY);
-  const [update] = useMutation(UPDATE_CITY);
+  const [refetchDistrict] = useLazyQuery(DISTRICT);
+  const [create] = useMutation(CREATE_DISTRICT);
+  const [update] = useMutation(UPDATE_DISTRICT);
 
   const [code, setCode] = useState<string>();
 
@@ -37,16 +38,16 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
         setCode(_code);
 
         if (!_code) return;
-        const _city = (await refetchCity({ variables: { code: _code } }).catch(() => null))?.data
-          ?.city;
-        if (!_city) return;
+        const _district = (await refetchDistrict({ variables: { code: _code } }).catch(() => null))
+          ?.data?.district;
+        if (!_district) return;
 
         form.setFieldsValue({
-          city: { code: _city.code, name: _city.name },
+          district: { code: _district.code, name: _district.name },
           image: [
             {
               status: "success",
-              url: _city.image,
+              url: _district.image,
             },
           ],
         });
@@ -58,15 +59,16 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
     const isValid = await form.validate().catch(() => false);
     if (!isValid) return;
 
-    const { city, image: _image } = form.getFieldsValue();
+    const { district, image: _image } = form.getFieldsValue();
     const image = _image?.[0]?.url ?? "";
     const isSucceed = code
-      ? (await update({ variables: { code, input: { name: city!.name, image } } })).data?.updateCity
+      ? (await update({ variables: { code, input: { name: district!.name, image } } })).data
+          ?.updateDistrict
       : (
           await create({
-            variables: { input: { code: city!.code, name: city!.name, image: image! } },
+            variables: { input: { code: district!.code, name: district!.name, image: image! } },
           })
-        ).data?.createCity;
+        ).data?.createDistrict;
 
     if (!isSucceed) return;
     turnOff();
@@ -76,8 +78,8 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   const uploadImage = useEvent(async (file: File) => {
     return await upload({
       body: file,
-      bucketName: "cabin_cab",
-      dir: "cities",
+      bucketName: BUCKET_NAME.CABIN_CAB,
+      dir: "districts",
     }).catch((error) => {
       console.error(error);
       return "";
@@ -85,22 +87,22 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   });
 
   return (
-    <Drawer
+    <SideSheet
       open={isOpen}
       onClose={turnOff}
-      title={code ? "编辑城市" : "新增城市"}
+      title={code ? "编辑行政区" : "新增行政区"}
       onConfirm={submit}
     >
       <Form form={form}>
-        <Form.Item name="city" label="城市">
-          <CitySelect />
+        <Form.Item name="district" label="行政区">
+          <DistrictSelect />
         </Form.Item>
 
         <Form.Item name="image" label="图片" required>
           <Upload uploader={uploadImage} />
         </Form.Item>
       </Form>
-    </Drawer>
+    </SideSheet>
   );
 });
 

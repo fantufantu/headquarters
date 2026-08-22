@@ -1,6 +1,6 @@
 import { Form, Input } from "musae";
 import { forwardRef, useImperativeHandle } from "react";
-import CitySelect, { type CityValue } from "@/components/inputs/city-select";
+import DistrictSelect, { type DistrictValue } from "@/components/inputs/district-select";
 
 export interface FilterValues {
   keyword?: string;
@@ -16,13 +16,13 @@ interface Props {
 }
 
 const AttractionFilter = forwardRef<FilterRef, Props>(({ onChange }, ref) => {
-  const form = Form.useForm<{ keyword: string; city: CityValue | undefined }>();
+  const form = Form.useForm<{ keyword: string; district: DistrictValue | undefined }>();
 
   useImperativeHandle(ref, () => ({
     getValues: () => {
       const keyword = form.getFieldValue<string>("keyword");
-      const city = form.getFieldValue<CityValue>("city");
-      return { keyword, cityCode: city?.code };
+      const district = form.getFieldValue<DistrictValue>("district");
+      return { keyword, cityCode: district?.code };
     },
   }));
 
@@ -31,8 +31,8 @@ const AttractionFilter = forwardRef<FilterRef, Props>(({ onChange }, ref) => {
       <Form.Item name="keyword" label="关键词">
         <Input placeholder="请输入关键词" />
       </Form.Item>
-      <Form.Item name="city" label="城市">
-        <CitySelect />
+      <Form.Item name="district" label="行政区">
+        <DistrictSelect />
       </Form.Item>
     </Form>
   );
