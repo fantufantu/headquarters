@@ -1,11 +1,9 @@
 /**
  * 系统内置租户
  */
-export const TENANT_CODE = {
-  KNOWTHY: "knowthy",
-  FANTU: "fantu",
-  HEADQUARTERS: "headquarters",
-} as const;
+export { TENANT_CODE } from "./enums";
+
+import { TENANT_CODE } from "./enums";
 
 /**
  * 系统内置租户元数据

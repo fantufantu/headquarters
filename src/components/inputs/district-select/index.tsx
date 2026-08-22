@@ -46,7 +46,6 @@ const DistrictSelect = ({ value, onChange, source = "api", disabled }: Props) =>
 
     const districts = (await queryDistricts({ keywords }).catch(() => null))
       ?.values()
-      .filter((district) => district.level === "province" || district.level === "city")
       .map(({ adcode, name }) => ({ value: adcode, label: name }))
       .toArray();
 

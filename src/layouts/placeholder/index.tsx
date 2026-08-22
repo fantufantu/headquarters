@@ -8,7 +8,7 @@ const Placeholder = () => {
         <Skeleton className='w-8 h-8 rounded-full' />
       </Layout.Header>
 
-      <Layout.Sider className='pl-8 flex flex-col gap-4'>
+      <Layout.Sidebar className='pl-8 flex flex-col gap-4'>
         {Array.from({ length: 2 }).map((_, row) => {
           return [
             <Skeleton className='h-6' key={`${row}-1`} />,
@@ -19,7 +19,7 @@ const Placeholder = () => {
             </div>
           ]
         })}
-      </Layout.Sider>
+      </Layout.Sidebar>
 
       <Layout.Main className='px-12 flex flex-col gap-4'>
         <Skeleton className='w-40 h-10' />

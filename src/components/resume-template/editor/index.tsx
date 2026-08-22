@@ -6,7 +6,7 @@ import { RESUME_TEMPLATE } from "../../../api/resume-template.api";
 import { useResumeTemplateMutation, type FormValue } from "./hooks/use-resume-template-mutation";
 import { useResumeTemplateTagOptions } from "./hooks/use-resume-template-tag-options";
 import { DIR, upload } from "../../../utils/upload";
-import { BUCKET_NAME } from "../../../api/cloud.types";
+import { BUCKET_NAME } from "../../../constants/enums";
 
 export interface EditorRef {
   open: (code?: string) => Promise<void>;

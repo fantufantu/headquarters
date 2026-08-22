@@ -2,7 +2,7 @@ import { type UploadBody } from "cos-js-sdk-v5";
 import { client } from "../api";
 import { COS_CREDENTIAL } from "../api/cloud.api";
 import { exclude } from "@aiszlab/relax";
-import { BUCKET_NAME, BucketName } from "../api/cloud.types";
+import { BUCKET_NAME } from "@/constants/enums";
 import { ValueOf } from "@aiszlab/relax/types";
 
 export const DIR = {
@@ -16,12 +16,13 @@ export const DIR = {
 } as const;
 
 type Dir = ValueOf<typeof DIR>;
+type Bucket = ValueOf<typeof BUCKET_NAME>;
 
 interface Uploading {
   body: UploadBody;
   dir?: Dir;
   filename?: string;
-  bucketName?: BucketName;
+  bucketName?: Bucket;
 }
 
 /**

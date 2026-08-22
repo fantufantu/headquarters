@@ -3,6 +3,7 @@ import { useMemo, type RefObject } from "react";
 import type { District } from "../../api/district.types";
 import { Button, Space } from "musae";
 import { type EditableDrawerRef } from "../../components/district/editable-drawer";
+import { DISTRICT_LEVEL_LABELS } from "@/constants/district";
 
 export const useColumns = ({
   editableRef,
@@ -23,7 +24,7 @@ export const useColumns = ({
         valueAt: "level" as keyof District,
         title: "层级",
         render: (_: unknown, record: District) => {
-          return record.level === "province" ? "省" : record.level === "city" ? "市" : record.level;
+          return DISTRICT_LEVEL_LABELS.get(record.level) ?? record.level;
         },
       },
       {

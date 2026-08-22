@@ -1,4 +1,4 @@
-import { Drawer, Form, Upload } from "musae";
+import { SideSheet, Form, Upload } from "musae";
 import { useBoolean, useEvent } from "@aiszlab/relax";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { CREATE_ATTRACTION, ATTRACTION, UPDATE_ATTRACTION } from "../../../api/attraction.api";
@@ -6,6 +6,7 @@ import { forwardRef, useImperativeHandle, useState } from "react";
 import DistrictSelect from "@/components/inputs/district-select";
 import AttractionField from "@/components/fields/attraction-field";
 import { upload } from "@/utils/upload";
+import { BUCKET_NAME } from "@/constants/enums";
 import { type FormValue } from "./types";
 
 export interface EditableDrawerRef {
@@ -66,7 +67,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   const uploadImage = useEvent(async (file: File) => {
     return await upload({
       body: file,
-      bucketName: "cabin_cab",
+      bucketName: BUCKET_NAME.CABIN_CAB,
       dir: "attractions",
     }).catch((error) => {
       console.error(error);
@@ -82,8 +83,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
     const cityCode = _district?.code ?? "";
     const image = _image?.[0]?.url ?? "";
     const isSucceed = code
-      ? (await update({ variables: { code, input: { image } } }))
-          .data?.updateAttraction
+      ? (await update({ variables: { code, input: { image } } })).data?.updateAttraction
       : (
           await create({
             variables: {
@@ -98,7 +98,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
   });
 
   return (
-    <Drawer
+    <SideSheet
       open={isOpen}
       onClose={turnOff}
       title={code ? "编辑景点" : "新增景点"}
@@ -115,7 +115,7 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
           <Upload uploader={uploadImage} />
         </Form.Item>
       </Form>
-    </Drawer>
+    </SideSheet>
   );
 });
 
