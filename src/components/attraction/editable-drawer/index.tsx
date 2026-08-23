@@ -80,14 +80,14 @@ const EditableDrawer = forwardRef<EditableDrawerRef, Props>(({ onSubmitted }, re
     if (!isValid) return;
 
     const { attraction, district: _district, image: _image } = form.getFieldsValue();
-    const cityCode = _district?.code ?? "";
+    const districtCode = _district?.code ?? "";
     const image = _image?.[0]?.url ?? "";
     const isSucceed = code
       ? (await update({ variables: { code, input: { image } } })).data?.updateAttraction
       : (
           await create({
             variables: {
-              input: { code: attraction!.code, name: attraction!.name, cityCode, image },
+              input: { code: attraction!.code, name: attraction!.name, districtCode, image },
             },
           })
         ).data?.createAttraction;

@@ -1,7 +1,7 @@
 export interface Attraction {
   code: string;
   name: string;
-  cityCode: string;
+  districtCode: string;
   image: string;
   district: {
     code: string;
@@ -11,13 +11,13 @@ export interface Attraction {
 
 export interface FilterAttractionsInput {
   keyword?: string;
-  cityCode?: string;
+  districtCode?: string;
 }
 
 export interface CreateAttractionInput {
   code: string;
   name: string;
-  cityCode: string;
+  districtCode: string;
   image: string;
 }
 

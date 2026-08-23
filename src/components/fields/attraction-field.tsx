@@ -12,7 +12,7 @@ function AttractionField({ disabled: _disabled = false }: Props) {
 
   return (
     <Form.Item name="attraction" label="景点" required>
-      <AttractionSelect disabled={isDisabled} cityCode={district?.code} />
+      <AttractionSelect disabled={isDisabled} districtCode={district?.code} />
     </Form.Item>
   );
 }

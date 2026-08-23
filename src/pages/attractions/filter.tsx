@@ -4,7 +4,7 @@ import DistrictSelect, { type DistrictValue } from "@/components/inputs/district
 
 export interface FilterValues {
   keyword?: string;
-  cityCode?: string;
+  districtCode?: string;
 }
 
 export interface FilterRef {
@@ -22,7 +22,7 @@ const AttractionFilter = forwardRef<FilterRef, Props>(({ onChange }, ref) => {
     getValues: () => {
       const keyword = form.getFieldValue<string>("keyword");
       const district = form.getFieldValue<DistrictValue>("district");
-      return { keyword, cityCode: district?.code };
+      return { keyword, districtCode: district?.code };
     },
   }));
 

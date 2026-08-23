@@ -12,19 +12,19 @@ interface Props {
   value?: AttractionValue;
   onChange?: (value?: AttractionValue) => void;
   disabled?: boolean;
-  cityCode?: string;
+  districtCode?: string;
 }
 
-const AttractionSelect = ({ value, onChange, disabled, cityCode }: Props) => {
+const AttractionSelect = ({ value, onChange, disabled, districtCode }: Props) => {
   const { data: options, run: searchAttraction } = useRequest(
     async (keywords?: string) => {
       if (!keywords) return [];
-      const pois = (await queryTouristAttractions({ keywords, cityCode }).catch(() => null))?.map(
+      const pois = (await queryTouristAttractions({ keywords, districtCode }).catch(() => null))?.map(
         ({ id, name }) => ({ value: id, label: name }),
       );
       return pois;
     },
-    { debounceWait: 500, deps: [cityCode] },
+    { debounceWait: 500, deps: [districtCode] },
   );
 
   const handleChange = useEvent((val?: SelectComplexValue) => {
