@@ -4,7 +4,7 @@ import { useEvent } from "@aiszlab/relax";
 import type { AmapDistrict } from "@/api/amap.types";
 import type { District } from "@/api/district.types";
 import { queryDistricts } from "@/api/amap.api";
-import { DISTRICTS, CREATE_DISTRICT, UPDATE_DISTRICT, DELETE_DISTRICT } from "@/api/district.api";
+import { DISTRICTS, SYNC_DISTRICTS } from "@/api/district.api";
 
 /** 高德树打平后的扁平结构 */
 export interface FlatDistrict {
@@ -24,6 +24,7 @@ export interface SyncDiff {
   added: FlatDistrict[];
   modified: ModifiedDistrict[];
   deleted: District[];
+  snapshot: FlatDistrict[];
 }
 
 /** 表格展示用的统一行类型 */
@@ -114,7 +115,7 @@ function diffDistricts(amapData: FlatDistrict[], dbData: District[]): SyncDiff {
 
   const deleted = dbData.filter((district) => !amapSet.has(district.code));
 
-  return { added, modified, deleted };
+  return { added, modified, deleted, snapshot: amapData };
 }
 
 export function useSync() {
@@ -123,9 +124,7 @@ export function useSync() {
   const [diff, setDiff] = useState<SyncDiff | null>(null);
 
   const [fetchDistricts] = useLazyQuery(DISTRICTS);
-  const [createDistrict] = useMutation(CREATE_DISTRICT);
-  const [updateDistrict] = useMutation(UPDATE_DISTRICT);
-  const [deleteDistrict] = useMutation(DELETE_DISTRICT);
+  const [syncDistricts] = useMutation(SYNC_DISTRICTS);
 
   /** Step 1+2+3: 拉取数据、打平、diff，返回 diff 结果（不执行同步） */
   const analyze = useEvent(async (): Promise<SyncDiff | null> => {
@@ -149,54 +148,17 @@ export function useSync() {
 
   /** Step 4: 执行同步 */
   const execute = useEvent(async (diff: SyncDiff) => {
-    const { added, modified, deleted } = diff;
-    const total = added.length + modified.length + deleted.length;
-    let current = 0;
-
     setSyncing(true);
-    setProgress({ current: 0, total });
+    setProgress({ current: 0, total: 1 });
 
-    // 新增
-    for (const item of added) {
-      await createDistrict({
-        variables: {
-          input: {
-            code: item.code,
-            name: item.name,
-            level: item.level,
-            parentCode: item.parentCode,
-            image: "",
-          },
-        },
-      }).catch(() => null);
-      current++;
-      setProgress({ current, total });
+    try {
+      await syncDistricts({ variables: { input: diff.snapshot } });
+      setProgress({ current: 1, total: 1 });
+      setDiff(null);
+    } finally {
+      setSyncing(false);
+      setProgress({ current: 0, total: 0 });
     }
-
-    // 修改
-    for (const item of modified) {
-      await updateDistrict({
-        variables: {
-          code: item.code,
-          input: { name: item.name },
-        },
-      }).catch(() => null);
-      current++;
-      setProgress({ current, total });
-    }
-
-    // 删除
-    for (const item of deleted) {
-      await deleteDistrict({
-        variables: { code: item.code },
-      }).catch(() => null);
-      current++;
-      setProgress({ current, total });
-    }
-
-    setSyncing(false);
-    setProgress({ current: 0, total: 0 });
-    setDiff(null);
   });
 
   const resetDiff = useCallback(() => setDiff(null), []);

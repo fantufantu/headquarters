@@ -3,6 +3,7 @@ import type {
   District,
   CreateDistrictInput,
   FilterDistrictsInput,
+  SyncDistrictInput,
   UpdateDistrictInput,
 } from "./district.types";
 import type { Pagination, Paginated } from "./pagination.types";
@@ -93,5 +94,17 @@ export const DELETE_DISTRICT: TypedDocumentNode<
 > = gql`
   mutation DeleteDistrict($code: String!) {
     deleteDistrict(code: $code)
+  }
+`;
+
+/**
+ * @description 使用行政区快照同步数据
+ */
+export const SYNC_DISTRICTS: TypedDocumentNode<
+  { syncDistricts: boolean },
+  { input: SyncDistrictInput[] }
+> = gql`
+  mutation SyncDistricts($input: [SyncDistrictInput!]!) {
+    syncDistricts(input: $input)
   }
 `;

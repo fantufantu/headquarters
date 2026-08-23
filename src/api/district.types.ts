@@ -20,3 +20,8 @@ export interface CreateDistrictInput {
 }
 
 export type UpdateDistrictInput = Partial<CreateDistrictInput>;
+
+export type SyncDistrictInput = Pick<
+  CreateDistrictInput,
+  "code" | "name" | "level" | "parentCode"
+>;
