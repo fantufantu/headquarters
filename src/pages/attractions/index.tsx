@@ -34,7 +34,7 @@ const Attractions = () => {
     changePage(1);
 
     _refetch({
-      filter: { keyword: filter?.keyword, cityCode: filter?.cityCode },
+      filter: { keyword: filter?.keyword, districtCode: filter?.districtCode },
       pagination: {
         page: 1,
         limit,

@@ -50,10 +50,10 @@ export async function queryDistricts({
  */
 export async function queryTouristAttractions({
   keywords,
-  cityCode,
+  districtCode,
 }: {
   keywords?: string;
-  cityCode?: string;
+  districtCode?: string;
 }): Promise<Poi[]> {
   const apiKey = (await useAmapStore.state.loadCredential())?.apiKey;
 
@@ -69,8 +69,8 @@ export async function queryTouristAttractions({
     url.searchParams.set("keywords", keywords);
   }
 
-  if (cityCode) {
-    url.searchParams.set("region", cityCode);
+  if (districtCode) {
+    url.searchParams.set("region", districtCode);
   }
 
   const response = await fetch(url.toString());

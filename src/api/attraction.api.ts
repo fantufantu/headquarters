@@ -23,7 +23,7 @@ export const ATTRACTIONS: TypedDocumentNode<
       items {
         code
         name
-        cityCode
+        districtCode
         district {
           name
         }
@@ -48,7 +48,7 @@ export const ATTRACTION: TypedDocumentNode<
     attraction(code: $code) {
       code
       name
-      cityCode
+      districtCode
       image
       district {
         code
